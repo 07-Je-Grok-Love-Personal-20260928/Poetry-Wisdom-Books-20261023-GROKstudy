@@ -65,7 +65,7 @@ def page(pid, hero, main, accent='#f5b83d'):
 <div class="toc-h">全站页面</div><ol class="toc-pages">{pnav}</ol></div></aside>
 <div id="scrim"></div>
 <main id="main"><div class="hero">{hero}</div>{main}{pn}
-<footer class="foot"><p>📚 {TAG} · 版本 {VERSION} · {DATE}（台北时间）</p><p>信经与三项联合信条原文逐字取自 <a href="https://ccifellowship.org" target="_blank" rel="noopener">ccifellowship.org</a>；经文取自和合本（新标点，信望爱站 FHL 接口）。本站讲解文字为学习用概述。</p></footer></main>
+<footer class="foot"><p>📚 {TAG} · 版本 {VERSION} · {DATE}（台北时间）</p><p>信经与三项联合信条原文逐字取自 <a href="https://ccifellowship.org" target="_blank" rel="noopener">ccifellowship.org</a>；威斯敏斯特标准逐字取自 <a href="https://rtf-usa.com/wp-content/uploads/2024/08/RTF-Westminster-Standards-FINAL-DIGITAL.pdf" target="_blank" rel="noopener">RTF-USA 简体中文新版</a>；经文取自和合本（新标点，信望爱站 FHL 接口）。本站讲解文字为学习用概述。</p></footer></main>
 <button id="totop" aria-label="回到顶部">↑</button>
 <script src="assets/search.js?v={VERSION}"></script><script src="assets/app.js?v={VERSION}"></script></body></html>'''
 def hero(icon, title, sub, core, chips=(), extra=''):

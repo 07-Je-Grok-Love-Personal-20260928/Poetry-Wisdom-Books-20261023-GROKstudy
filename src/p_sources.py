@@ -3,14 +3,16 @@ from lib import *
 from shell import S, H3, hero
 def L(u, t=None): return f'<a href="{u}" target="_blank" rel="noopener">{t or u}</a>'
 def build():
-    hr = hero('🔗', '来源与方法', '引用原则 · 资料来源 · 版本记录', '本站所有信条、信经与 CCI 讲章的引文均逐字取自 ccifellowship.org；经文取自和合本（新标点）；无法逐字核实的内容一律标注为“本站概述”。',
+    hr = hero('🔗', '来源与方法', '引用原则 · 资料来源 · 版本记录', '本站所有信条、信经与 CCI 讲章的引文均逐字取自 ccifellowship.org；威斯敏斯特标准逐字取自 RTF-USA 简体中文新版；经文取自和合本（新标点），每一处短引语都已用脚本核对。无法逐字核实的内容一律标注为“本站概述”。',
               [(f'版本 {VERSION}', '#3ddc97'), (f'日期 {DATE}', '#f5b83d'), ('GROKstudy', '#b48cff')])
     m = []
     m.append(S('o-rule', '📏', '引用原则',
         grid(card('信条与信经：逐字', '三大信经、海德堡要理问答、比利时信条、多特信经的引文全部取自 CCI 网站的抓取原文（JSON），生成页面时用程序检查每个摘录的起止文字确实存在于原文中；三大信经另外与在线页面逐段核对。', '📜', '#5ab0ff'),
              card('经文：和合本', '经文段落（引用框）由信望爱站（bible.fhl.net）API 取得和合本（新标点，简体），不手打。正文中的短引语为和合本文字。', '📖', '#3ddc97'),
              card('CCI 讲章与书籍', '摘录自 CCI 网站的讲章与《我属于主》《圣经故事》等，每段附原文链接。', '⛪', '#f5b83d'),
-             card('其他资料：概述', '威斯敏斯特标准、其他改革宗教会与神学院的资料只作概述或链接，标明“本站概述”，不作原文引用。', '🏛️', '#b48cff'),
+             card('威斯敏斯特标准：逐字（v1.1.0）', '威斯敏斯特信仰告白、大/小要理问答的引文逐字取自 RTF-USA《威斯敏斯特标准》简体中文新版（贾少彬 译，2024，PDF），每段注明 PDF 页码；生成页面时用程序逐字核对 PDF 原文，未通过核对的段落（WSC 4、WLC 109）不作引用。', '🏛️', '#b48cff'),
+             card('其他资料：概述', '其他改革宗教会与神学院的资料只作概述或链接，标明“本站概述”，不作原文引用。', '🏫', '#2fd3d3'),
+             card('引号的用法', '“……”加出处＝逐字引文（和合本、CCI、RTF 译本）；「……」或标注“意译／概括／本站译”＝转述，不是原文。v1.1.0 用脚本（tools/vcheck.py）把全站带出处的短引语逐一与和合本核对。', '❝', '#5ab0ff'),
              card('不确定的事', '地理位置不确定者用虚线圈标示；学术上有争议的年代、作者问题列出不同观点。', '❔', '#ff9f43'),
              card('本站主题关联', '信条原文中没有引用、但本站认为有神学关联的地方，明确标注“本站主题关联”。', '🔗', '#ff7eb6'))))
     m.append(S('o-cci', '⛪', 'CCI（ccifellowship.org）原文来源',
@@ -25,10 +27,10 @@ def build():
             ['中国改革宗教会（ccreformed.org）', L('https://www.ccreformed.org/'), '信仰立场；讲章（如诗篇130）'], ['改革宗初学者（reformedbeginner.net）', L('https://www.reformedbeginner.net/'), '约伯记导论、大公信经介绍'],
             ['加拿大归正教会（canrc.org）', L('https://canrc.org/'), '《赞美手册》、唱诗篇传统'], ['北美联合改革宗教会（urcna.org）', L('https://www.urcna.org/'), '信条'],
             ['传承改革宗（heritagereformed.com）', L('https://heritagereformed.com/'), '信条与教义'], ['美国基督教改革宗教会（prca.org）', L('https://prca.org/'), '圣约观（胡克码）'],
-            ['正统长老会（opc.org）', L('https://www.opc.org/confessions.html'), '威斯敏斯特标准'], ['加拿大改革宗神学院（canadianreformedseminary.ca）', L('https://canadianreformedseminary.ca/'), '欧陆改革宗神学'],
+            ['RTF-USA《威斯敏斯特标准》简体中文新版（贾少彬 译，2024）', L('https://rtf-usa.com/wp-content/uploads/2024/08/RTF-Westminster-Standards-FINAL-DIGITAL.pdf', 'rtf-usa.com（PDF）'), '威斯敏斯特标准逐字引文的来源'], ['正统长老会（opc.org）', L('https://www.opc.org/confessions.html'), '威斯敏斯特标准英文原文'], ['加拿大改革宗神学院（canadianreformedseminary.ca）', L('https://canadianreformedseminary.ca/'), '欧陆改革宗神学'],
             ['威斯敏斯特神学院（wts.edu）', L('https://www.wts.edu/'), '圣经神学传统'], ['加拿大归正神学院（crts.edu）', L('https://crts.edu/'), '欧陆改革宗神学'],
             ['信望爱站（bible.fhl.net）', L('https://bible.fhl.net/'), '和合本经文 API'], ['Natural Earth', L('https://www.naturalearthdata.com/'), '地图底图（公有领域）']])))
     m.append(S('o-ver', '🏷️', '版本记录',
-        table(['版本', '日期（台北）', '说明'], [[VERSION, DATE, '首次发布：首页、整本圣经、五卷书各一页、信条对照、三大信经背诵版、信经对比、速记中心、来源页；12 幅以上 SVG 地图、时间线、思维导图、测验与翻卡。']]) +
+        table(['版本', '日期（台北）', '说明'], [['v1.1.0', '2026-10-24', '经文核对与威斯敏斯特标准：用脚本把全站带出处的短引语与和合本逐字核对，修正用字差异（如“不致缺乏”“息灭”“甚么”），并把转述改为「」或标注意译／概括；在约伯记、诗篇、箴言、传道书、雅歌和整本圣经页新增威斯敏斯特标准逐字引文（RTF-USA 译本，注明 PDF 页码）；信条页新增逐字的威斯敏斯特经文脚注索引；三种宽度（390/768/1440）重新做版面检查。'], ['v1.0.0', '2026-10-23', '首次发布：首页、整本圣经、五卷书各一页、信条对照、三大信经背诵版、信经对比、速记中心、来源页；12 幅以上 SVG 地图、时间线、思维导图、测验与翻卡。']]) +
         C('note', '纠错', '如发现引文与 CCI 原文或和合本不符，请以原文为准，并欢迎在 GitHub 仓库提出 issue。')))
     return hr, ''.join(m)

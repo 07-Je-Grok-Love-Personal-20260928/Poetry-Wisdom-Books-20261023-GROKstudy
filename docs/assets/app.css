@@ -215,3 +215,10 @@ details.acc>summary{cursor:pointer;font-weight:700;padding:8px 2px}
 q.cq{quotes:"“" "”";font-family:"Noto Serif SC",serif}
 html{background:var(--bg)}
 .tbl.sum{min-width:760px}
+/* v1.1.0 威斯敏斯特标准逐字引文 */
+.conf.wm{--cb:var(--purple)}
+.conf.wm .q{font-weight:700;margin:0 0 4px}
+details.refs li.hit{color:var(--ink);font-weight:700;background:color-mix(in srgb,var(--gold) 16%,transparent);border-radius:6px}
+#f-west details.acc li{margin:6px 0;line-height:1.7;overflow-wrap:anywhere}
+#f-west .chip{--c:var(--purple);font-size:12px;white-space:nowrap}
+#f-west .muted{color:var(--mute);font-size:.88em}
