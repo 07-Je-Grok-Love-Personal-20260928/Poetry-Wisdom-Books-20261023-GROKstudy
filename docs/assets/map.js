@@ -38,14 +38,16 @@ function initLive(f){if(f._lm)return;var data=JSON.parse(f.dataset.live),box=$('
   var reset=L.control({position:'topright'});reset.onAdd=function(){var x=L.DomUtil.create('button','lm-reset');x.type='button';x.title='重置视野';x.textContent='⤾';L.DomEvent.on(x,'click',function(e){L.DomEvent.stop(e);m.fitBounds(b,{padding:[10,10]})});return x};reset.addTo(m);
   var cur=null,tried={},order=SRC.map(function(_,i){return i});
   var pref=store('pw-tile');if(pref){var pi=SRC.findIndex(function(s){return s.id===pref});if(pi>0){order.splice(order.indexOf(pi),1);order.unshift(pi)}}
-  SRC.forEach(function(s,i){var bt=d.createElement('button');bt.type='button';bt.className='ls';bt.dataset.i=i;bt.textContent=s.n;bt.onclick=function(){tried={};use(i,true)};bar.appendChild(bt)});
+  var z0=m.getZoom();order=order.filter(function(i){return SRC[i].mx>=z0-2||i===order[0]&&pref}).concat(order.filter(function(i){return !(SRC[i].mx>=z0-2||i===order[0]&&pref)}));
+  SRC.forEach(function(s,i){var bt=d.createElement('button');bt.type='button';bt.className='ls';bt.dataset.i=i;bt.textContent=s.n+(s.mx<z0-2?' ⁺':'');if(s.mx<z0-2)bt.title='此来源最高只到第 '+s.mx+' 级，本图会放大显示（较模糊）';bt.onclick=function(){tried={};use(i,true)};bar.appendChild(bt)});
   function mark(i,cls){var bt=$('.ls[data-i="'+i+'"]',bar);if(!bt)return;bt.classList.remove('on','fail','ok');if(cls)bt.classList.add(cls)}
   function next(reason){var cand=order.filter(function(i){return !tried[i]});if(!cand.length){st.innerHTML='⚠️ 所有实时底图暂时无法载入（可能离线或网络受限）。请改看 <b>🎨 情景讲解图</b> 或 <b>🗺️ 地形图（离线）</b>，地点、说明完全相同。';return}
    var nx=cand[0];st.textContent='⏳ '+SRC[cur].n+' '+reason+'，自动切换到：'+SRC[nx].n;use(nx,false)}
   function use(i,manual){if(f._tl){m.removeLayer(f._tl);clearTimeout(f._to)}cur=i;tried[i]=1;var s=SRC[i],ok=0,err=0,done=false;
    $$('.ls',bar).forEach(function(x){x.classList.remove('on')});mark(i,'on');
    var tl=L.tileLayer(s.u,{subdomains:s.s||'abc',maxZoom:19,maxNativeZoom:s.mx,attribution:s.a,crossOrigin:false,detectRetina:false});f._tl=tl;
-   tl.on('tileload',function(){ok++;if(!done&&ok>=2){done=true;clearTimeout(f._to);st.textContent='✅ 当前底图：'+s.n+(manual?'':'（自动选择）')+' · 可点上方按钮切换来源';store('pw-tile',s.id);var bt=$('.ls[data-i="'+i+'"]',bar);if(bt)bt.classList.add('ok')}});
+   function good(){done=true;clearTimeout(f._to);st.textContent='✅ 当前底图：'+s.n+(manual?'':'（自动选择）')+' · 可点上方按钮切换来源';store('pw-tile',s.id);var bt=$('.ls[data-i="'+i+'"]',bar);if(bt)bt.classList.add('ok')}
+   tl.on('tileload',function(){ok++;if(!done&&ok>=2)good()});tl.on('load',function(){if(!done&&ok>=1)good()});
    tl.on('tileerror',function(){err++;if(!done&&err>=4&&ok===0){done=true;clearTimeout(f._to);mark(i,'fail');next('载入失败')}});
    f._to=setTimeout(function(){if(!done&&ok===0){done=true;mark(i,'fail');next('超时')}},manual?12000:7000);
    tl.addTo(m);st.textContent='⏳ 正在载入：'+s.n+'…'}
