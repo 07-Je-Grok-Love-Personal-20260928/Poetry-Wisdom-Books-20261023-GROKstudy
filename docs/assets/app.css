@@ -384,4 +384,5 @@ html.scrolling svg *,html.scrolling .anim *,html.scrolling .dg *{animation-play-
 .must-tag,.must-demo{display:inline-block;font:800 12.5px/1 system-ui,sans-serif;letter-spacing:.08em;color:#1b1400;background:var(--gold);border-radius:99px;padding:5px 10px}
 .must-tag{position:absolute;top:-12px;left:14px}
 /* v3 阅读进度条：支持滚动时间线的浏览器由合成线程驱动，不需要 JS */
-@supports (animation-timeline:scroll()){#prog{transform:scaleX(0)!important;animation:progx linear both;animation-timeline:scroll(root block)}@keyframes progx{to{transform:scaleX(1)}}}
+@supports (animation-timeline:scroll()){#prog{animation:progx linear both;animation-timeline:scroll(root block)}@keyframes progx{to{transform:scaleX(1)}}}
+.sec h2,.sec h3,.call-h,.part-t{overflow-wrap:anywhere}
