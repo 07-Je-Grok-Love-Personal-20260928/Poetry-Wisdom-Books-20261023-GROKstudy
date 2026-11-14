@@ -33,23 +33,84 @@ LEGEND = ('<div class="lg">'
   '<div><span><span class="mk-dash">橙色虚线</span></span><small>有争议、位置或年代不确定</small></div>'
   '<div><span><span class="mk-sin">红色字</span></span><small>罪、错误观点、警告</small></div>'
   '<div><span><span class="mk-app">绿色底纹</span></span><small>生活应用</small></div>'
+  '<div><span><span class="mk-num">前 586 年</span></span><small>年代、数字（青色等宽标签）</small></div>'
+  '<div><span><span class="must-demo">📌 必背</span></span><small>金色边框区块：必须背下来的经文和口诀</small></div>'
   '<div><span>“……”＋出处</span><small>逐字引文（和合本／CCI／RTF）；「……」＝转述、概括</small></div>'
   '</div><div class="lgc">'
   '<span style="--cc:var(--gold)">🔑 要点</span><span style="--cc:var(--red)">⚠️ 难点</span><span style="--cc:var(--pink)">🧠 记忆</span><span style="--cc:var(--purple)">📜 信条</span>'
   '<span style="--cc:var(--green)">🌱 应用</span><span style="--cc:var(--red)">🚫 警示</span><span style="--cc:var(--purple)">✝️ 基督</span><span style="--cc:var(--blue)">🤝 圣约</span>'
   '<span style="--cc:var(--orange)">🏺 背景</span><span style="--cc:var(--teal)">🧭 地理</span><span style="--cc:var(--teal)">🔭 观点</span><span style="--cc:var(--mute)">📝 说明</span></div>')
-def build_toc(main):
-    items = re.findall(r'<(h2|h3) id="([^"]+)">(.*?)</\1>', main)
-    out = []; open_ = False
-    for lv, id, t in items:
-        t = re.sub(r'<[^>]+>', '', t)
-        if lv == 'h2':
-            if open_: out.append('</ul></li>')
-            out.append(f'<li class="t2"><a href="#{id}">{t}</a><ul>'); open_ = True
-        else:
-            out.append(f'<li class="t3"><a href="#{id}">{t}</a></li>')
-    if open_: out.append('</ul></li>')
-    return ''.join(out).replace('<ul></ul>', '')
+CN = '一二三四五六七八九十'
+def cnum(n):
+    if n <= 10: return CN[n-1]
+    if n < 20: return '十' + CN[n-11]
+    return CN[n//10-1] + '十' + (CN[n%10-1] if n % 10 else '')
+# 书卷页：把各节分成五个部分（一级目录）
+BOOK_PARTS = [('核心与总览', '💎', ('core', 'glance', 'bible', 'cov')),
+              ('历史 · 地理 · 文化', '🧭', ('time', 'geo', 'trade', 'zion', 'kingdom', 'pilgrim', 'anemap', 'auth', 'ctx')),
+              ('结构与神学', '🧱', ('why', 'struct', 'theo', 'hard')),
+              ('信条与多角度', '📜', ('conf', 'wm', 'views')),
+              ('应用与记忆', '🌱', ('app', 'cci2', 'mem'))]
+PAGE_PARTS = {
+  'bible': [('核心与正典', '💎', ('core', 'canon')), ('圣经神学与圣约', '🤝', ('bt', 'cov')), ('历史与地理', '🧭', ('time', 'geo')),
+            ('智慧、诗歌与信条', '🦉', ('wm', 'wis', 'poetry')), ('学习路径', '🧭', ('path',))],
+  'compare': [('总览与对照', '⚖️', ('over', 'side', 'same', 'diff')), ('历史：异端与会议', '🏛️', ('here', 'map')), ('为什么三份 · 记忆', '🧠', ('why', 'wis', 'mem'))],
+}
+for _p in ('job', 'psalms', 'proverbs', 'eccl', 'song'): PAGE_PARTS[_p] = BOOK_PARTS
+def structure(pid, main):
+    """建立三级结构：一级＝部分（或无部分时的节），二级＝节／小标题，三级＝小标题／提示框。给正文标题加编号，返回 (main, toc_html)。"""
+    parts = PAGE_PARTS.get(pid)
+    tok = re.compile(r'<section id="([^"]+)" class="([^"]*)"><h2 id="[^"]+"><span class="hi">([^<]*)</span>(.*?)</h2>|<h3 id="([^"]+)">(.*?)</h3>|<div class="call-h">(.*?)</div>', re.S)
+    out = []; pos = 0; tree = []; cur_part = None; part_of = {}
+    if parts:
+        for k, (t, ic, sfx) in enumerate(parts, 1):
+            for x in sfx: part_of[x] = k
+    n1 = n2 = n3 = 0; ccount = {}
+    sec_n = 0
+    def node(lv, id, num, title, icon=''):
+        return dict(lv=lv, id=id, num=num, t=re.sub(r'<[^>]+>', '', title).strip(), ic=icon, ch=[])
+    for m in tok.finditer(main):
+        out.append(main[pos:m.start()]); pos = m.end()
+        if m.group(1):
+            sid, cl, ic, title = m.group(1), m.group(2), m.group(3), m.group(4)
+            if parts:
+                k = part_of.get(sid.split('-', 1)[1], cur_part or 1)
+                if k != cur_part:
+                    cur_part = k; n1 += 1; n2 = 0
+                    pt, pic, _ = parts[k-1]
+                    out.append(f'<div class="part" id="{pid}-part{k}"><span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span></div>')
+                    tree.append(node(1, f'{pid}-part{k}', f'{cnum(n1)}、', pt, pic))
+                n2 += 1; n3 = 0; num = f'{n1}.{n2}'
+                nd = node(2, sid, num, title, ic); tree[-1]['ch'].append(nd)
+                out.append(f'<section id="{sid}" class="{cl}"><h2 id="{sid}-h"><span class="hi">{ic}</span><span class="hn">{num}</span>{title}</h2>')
+            else:
+                n1 += 1; n2 = 0; num = f'{cnum(n1)}、'
+                tree.append(node(1, sid, num, title, ic))
+                out.append(f'<section id="{sid}" class="{cl}"><h2 id="{sid}-h"><span class="hi">{ic}</span><span class="hn">{num}</span>{title}</h2>')
+            cur_sec = sid
+        elif m.group(5) or m.group(7) is not None:
+            if not tree: out.append(m.group(0)); continue
+            is_h3 = bool(m.group(5))
+            title = m.group(6) if is_h3 else m.group(7)
+            if parts:
+                parent = tree[-1]['ch'][-1] if tree[-1]['ch'] else tree[-1]
+                n3 += 1; num = f'{n1}.{n2}.{n3}'; lv = 3
+            else:
+                parent = tree[-1]; n2 += 1; num = f'{n1}.{n2}'; lv = 2
+            if is_h3: hid = m.group(5)
+            else:
+                ccount[cur_sec] = ccount.get(cur_sec, 0) + 1; hid = f'{cur_sec}-c{ccount[cur_sec]}'
+            parent['ch'].append(node(lv, hid, num, title))
+            if is_h3: out.append(f'<h3 id="{hid}"><span class="hn">{num}</span>{title}</h3>')
+            else: out.append(f'<div class="call-h" id="{hid}"><span class="hn">{num}</span>{title}</div>')
+    out.append(main[pos:])
+    def li(nd):
+        kids = ''.join(li(c) for c in nd['ch'])
+        tg = f'<button class="tx" type="button" aria-label="展开/折叠" aria-expanded="false"></button>' if kids else '<span class="tx0"></span>'
+        ic = f'<i>{nd["ic"]}</i>' if nd['ic'] and nd['lv'] < 3 else ''
+        return (f'<li class="tl{nd["lv"]}" data-k="{nd["id"]}"><div class="tr">{tg}<a href="#{nd["id"]}"><span class="tn">{nd["num"]}</span>{ic}<span class="tt">{html.escape(nd["t"])}</span></a></div>'
+                + (f'<ol>{kids}</ol>' if kids else '') + '</li>')
+    return ''.join(out), ''.join(li(n) for n in tree), tree
 def page(pid, hero, main, accent='#f5b83d'):
     me = [p for p in PAGES if p[0] == pid][0]
     # sections lacking id on h2 -> add
@@ -63,8 +124,8 @@ def page(pid, hero, main, accent='#f5b83d'):
         return f'<section id="{sid}" class="{cl.strip()}">'
     main = re.sub(r'<section id="([^"]+)" class="([^"]*)">', _cls, main)
     main = re.sub(r'<section id="([^"]+)" class="([^"]*)"><h2>', lambda m: f'<section id="{m.group(1)}" class="{m.group(2)}"><h2 id="{m.group(1)}-h">', main)
-    toc = build_toc(main)
-    S_IDX.extend({'p': pid + '.html', 'pt': me[2], 'id': id, 't': re.sub(r'<[^>]+>', '', t)} for lv, id, t in re.findall(r'<(h2|h3) id="([^"]+)">(.*?)</\1>', main))
+    main, toc, _tree = structure(pid, main)
+    S_IDX.extend({'p': pid + '.html', 'pt': me[2], 'id': id, 't': re.sub(r'<span class="hn">.*?</span>|<[^>]+>', '', t)} for lv, id, t in re.findall(r'<(h2|h3) id="([^"]+)">(.*?)</\1>', main))
     nav = ''.join(f'<a class="pg{" on" if p[0]==pid else ""}" href="{p[0]}.html"><i>{p[1]}</i><span>{p[2]}</span></a>' for p in PAGES)
     pnav = ''.join(f'<li><a class="{"on" if p[0]==pid else ""}" href="{p[0]}.html"><i>{p[1]}</i>{p[2]}<small>{p[3]}</small></a></li>' for p in PAGES)
     i = [p[0] for p in PAGES].index(pid)
@@ -75,7 +136,7 @@ def page(pid, hero, main, accent='#f5b83d'):
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{title}</title><meta name="description" content="约伯记·诗篇·箴言·传道书·雅歌 —— 欧陆改革宗、圣经神学与圣约神学深度解读（{TAG}）">
 <meta name="theme-color" content="#090d21"><link rel="icon" href="assets/icon.svg"><meta name="color-scheme" content="dark light">
-<script>try{{var t=localStorage.getItem('pw-theme');if(t)document.documentElement.dataset.theme=t;var f=localStorage.getItem('pw-fs');if(f)document.documentElement.style.setProperty('--fs',f+'px');if(localStorage.getItem('pw-toc')==='0')document.documentElement.classList.add('toc-off')}}catch(e){{}}</script>
+<script>try{{var t=localStorage.getItem('pw-theme');if(t)document.documentElement.dataset.theme=t;var f=localStorage.getItem('pw-fs');if(f)document.documentElement.style.setProperty('--fs',f+'px');if(localStorage.getItem('pw-toc')==='0')document.documentElement.classList.add('toc-off');var w=+localStorage.getItem('pw-tocw');if(w>=220)document.documentElement.style.setProperty('--tocw',Math.min(w,innerWidth*.96)+'px')}}catch(e){{}}</script>
 <link rel="stylesheet" href="assets/app.css?v={VERSION}">
 <script src="assets/app.js?v={VERSION}" defer></script>{'<script src="assets/map.js?v=' + VERSION + '" defer></script>' if 'class="mapfig"' in main else ''}</head>
 <body class="p-{pid}" style="--accent:{accent}">
@@ -85,10 +146,10 @@ def page(pid, hero, main, accent='#f5b83d'):
 <a class="brand" href="index.html"><b>诗歌智慧书</b><small>GROKstudy · {VERSION}</small></a>
 <nav class="pages" aria-label="页面">{nav}</nav>
 <div class="tools"><button class="ib" id="legbtn" aria-label="标记图例" title="标记图例（L）">🖍️</button><button class="ib" id="fsm" aria-label="缩小字号">A-</button><button class="ib" id="fsp" aria-label="放大字号">A+</button><button class="ib" id="themebtn" aria-label="切换主题">🌓</button></div></header>
-<aside id="toc" aria-label="目录"><div class="toc-in">
+<aside id="toc" aria-label="目录"><div class="toc-bar"><b>📑 目录</b><span><button class="mini" id="tocfull" title="全宽／还原">⤢</button><button class="mini" id="tocx" title="隐藏目录">✕</button></span></div><div class="toc-in">
 <input id="q" type="search" placeholder="🔍 搜索全站标题…" aria-label="搜索"><ol id="qres"></ol>
-<div class="toc-h">本页目录 <button class="mini" id="tocall">全部展开</button></div><ol class="toc-list">{toc}</ol>
-<div class="toc-h">全站页面</div><ol class="toc-pages">{pnav}</ol></div></aside>
+<div class="toc-h">本页目录<span class="toc-lv" role="group" aria-label="展开层级"><button class="mini" data-lv="1" title="只看一级">一级</button><button class="mini" data-lv="2" title="展开到二级">二级</button><button class="mini" data-lv="3" title="全部展开">三级</button></span></div><ol class="toc-list" data-pid="{pid}">{toc}</ol>
+<div class="toc-h">全站页面</div><ol class="toc-pages">{pnav}</ol></div><div id="tocgrip" role="separator" aria-orientation="vertical" aria-label="拖动调整目录宽度" tabindex="0" title="拖动调整宽度（双击还原）"></div></aside>
 <div id="scrim"></div>
 <div id="legpop" role="dialog" aria-label="笔记标记图例"><h4>🖍️ 笔记标记图例 <button class="mini" id="legx" aria-label="关闭图例">关闭</button></h4>{LEGEND}</div>
 <main id="main"><div class="hero">{hero}</div>{main}{pn}
