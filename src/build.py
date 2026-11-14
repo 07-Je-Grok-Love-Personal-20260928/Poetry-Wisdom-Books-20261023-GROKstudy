@@ -7,8 +7,7 @@ ACC = dict(index='#f5b83d', bible='#5ab0ff', job='#ff9f43', psalms='#3ddc97', pr
 MOD = dict(index='p_index', bible='p_bible', job='p_job', psalms='p_psalms', proverbs='p_proverbs', eccl='p_eccl', song='p_song', confessions='p_conf', creeds='p_creeds', compare='p_compare', memory='p_memory', sources='p_sources')
 only = sys.argv[1:]
 os.makedirs(OUT + '/assets', exist_ok=True)
-for f in os.listdir(os.path.join(os.path.dirname(__file__), '..', 'static')):
-    shutil.copy(os.path.join(os.path.dirname(__file__), '..', 'static', f), OUT + '/assets/' + f)
+shutil.copytree(os.path.join(os.path.dirname(__file__), '..', 'static'), OUT + '/assets', dirs_exist_ok=True)
 for pid, _, _, _ in shell.PAGES:
     if only and pid not in only: continue
     try: mod = importlib.import_module(MOD[pid])

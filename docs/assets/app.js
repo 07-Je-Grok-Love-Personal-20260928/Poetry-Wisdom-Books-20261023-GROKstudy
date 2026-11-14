@@ -6,7 +6,13 @@ var wide=function(){return innerWidth>1100};
 $('#tocbtn').onclick=function(){if(wide()){h.classList.toggle('toc-off');store('pw-toc',h.classList.contains('toc-off')?'0':'1')}else h.classList.toggle('toc-open')};
 $('#scrim').onclick=function(){h.classList.remove('toc-open')};
 $$('#toc a').forEach(function(a){a.addEventListener('click',function(){if(!wide())h.classList.remove('toc-open')})});
-d.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.key==='t'||e.key==='T')$('#tocbtn').click();if(e.key==='Escape')h.classList.remove('toc-open')});
+d.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.key==='t'||e.key==='T')$('#tocbtn').click();if(e.key==='l'||e.key==='L')h.classList.toggle('leg-on');if(e.key==='Escape'){h.classList.remove('toc-open');h.classList.remove('leg-on')}});
+// 图例
+$('#legbtn').onclick=function(e){e.stopPropagation();h.classList.toggle('leg-on')};$('#legx').onclick=function(){h.classList.remove('leg-on')};
+d.addEventListener('click',function(e){if(h.classList.contains('leg-on')&&!e.target.closest('#legpop,#legbtn'))h.classList.remove('leg-on')});
+d.addEventListener('visibilitychange',function(){h.classList.toggle('hidden-tab',d.hidden)});
+// 视频：点击后才载入（不拖慢页面）
+d.addEventListener('click',function(e){var b=e.target.closest('.media button');if(!b)return;var f=d.createElement('iframe');f.src=b.dataset.src;f.title=b.dataset.title||'视频';f.allow='accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen';f.loading='lazy';f.referrerPolicy='strict-origin-when-cross-origin';b.replaceWith(f)});
 $('#tocall').onclick=function(){var t=$('#toc');t.classList.toggle('all');this.textContent=t.classList.contains('all')?'收起':'全部展开'};
 // 主题与字号
 $('#themebtn').onclick=function(){var t=h.dataset.theme==='day'?'night':'day';h.dataset.theme=t;store('pw-theme',t)};
@@ -24,10 +30,14 @@ if('IntersectionObserver' in window){
  Object.keys(links).forEach(function(id){var el=d.getElementById(id);if(el)io.observe(el)});
  var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('inview');rv.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
  $$('.reveal,.anim').forEach(function(el){rv.observe(el)});
-}else $$('.reveal').forEach(function(e){e.classList.add('inview')});
-// 搜索
-var q=$('#q'),qr=$('#qres');
-if(q&&window.PW_IDX)q.addEventListener('input',function(){var v=q.value.trim();qr.innerHTML='';if(!v)return;var n=0;PW_IDX.forEach(function(x){if(n<30&&(x.t.indexOf(v)>=0||x.pt.indexOf(v)>=0)){n++;var li=d.createElement('li');li.innerHTML='<a href="'+x.p+'#'+x.id+'"><small>'+x.pt+'</small>'+x.t.replace(/</g,'&lt;')+'</a>';qr.appendChild(li)}});if(!n)qr.innerHTML='<li style="font-size:13px;color:var(--mute);padding:4px 10px">无匹配标题</li>'});
+ var lv=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('live',e.isIntersecting)})},{rootMargin:'80px 0px'});
+ $$('.anim,.dg').forEach(function(el){lv.observe(el)});
+}else $$('.reveal,.anim,.dg').forEach(function(e){e.classList.add('inview','live')});
+// 搜索（索引按需载入）
+var q=$('#q'),qr=$('#qres'),sl=false;
+function loadIdx(cb){if(window.PW_IDX)return cb();if(sl)return;sl=true;var s=d.createElement('script');s.src='assets/search.js';s.onload=function(){sl=false;cb();if(q.value)doQ()};d.head.appendChild(s)}
+if(q){q.addEventListener('focus',function(){loadIdx(function(){})});q.addEventListener('input',function(){loadIdx(doQ)})}
+function doQ(){var v=q.value.trim();qr.innerHTML='';if(!v)return;var n=0;PW_IDX.forEach(function(x){if(n<30&&(x.t.indexOf(v)>=0||x.pt.indexOf(v)>=0)){n++;var li=d.createElement('li');li.innerHTML='<a href="'+x.p+'#'+x.id+'"><small>'+x.pt+'</small>'+x.t.replace(/</g,'&lt;')+'</a>';qr.appendChild(li)}});if(!n)qr.innerHTML='<li style="font-size:13px;color:var(--mute);padding:4px 10px">无匹配标题</li>'}
 // 翻转卡片
 d.addEventListener('click',function(e){var f=e.target.closest('.flip');if(f)f.classList.toggle('on')});
 // 测验
@@ -49,3 +59,7 @@ var pid=(location.pathname.split('/').pop()||'index.html');var vis=JSON.parse(st
 $$('.path a.card').forEach(function(a){if(vis[a.getAttribute('href')])a.insertAdjacentHTML('beforeend','<span class="done-mark">✔ 已读</span>')});
 var pc=$('#pcount');if(pc)pc.textContent=Object.keys(vis).length;
 })();
+// 滚动时暂停 SVG 内的动画（SVG 子元素动画无法由 GPU 合成，滚动中暂停可避免每帧重绘），停止滚动 180ms 后恢复
+(function(){var de=document.documentElement,t=null,on=false;
+function svgs(f){document.querySelectorAll('svg.scene.live,svg.map.live,.anim.live svg,.dg.live svg,svg.anim.live,svg.dg.live').forEach(function(s){if(s.pauseAnimations){try{f?s.pauseAnimations():s.unpauseAnimations()}catch(_){}}})}
+addEventListener('scroll',function(){if(!on){on=true;de.classList.add('scrolling');svgs(true)}clearTimeout(t);t=setTimeout(function(){on=false;de.classList.remove('scrolling');svgs(false)},180)},{passive:true})})();
