@@ -1,7 +1,7 @@
 {
 "summary": {
 "ok": 250,
-"term": 177,
+"term": 179,
 "bible-found": 95,
 "cci-found": 74
 },
@@ -5315,6 +5315,24 @@ null,
 "noref",
 "",
 "cci-found"
+],
+[
+"sources",
+"quote",
+"第X部分",
+null,
+"noref",
+"",
+"term"
+],
+[
+"sources",
+"quote",
+"📌 必背",
+null,
+"noref",
+"",
+"term"
 ],
 [
 "sources",
