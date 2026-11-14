@@ -255,12 +255,13 @@ def mapfig(mid, title, bbox, markers, W=1000, res='50m', rivers=(), water=(), re
          _lazy_scene(_scene_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes, deco, valleys, land)),
          '<div class="story"><div class="st-ctl"><button class="st-b" data-a="prev" aria-label="上一站">◀</button><button class="st-b st-play" data-a="play" aria-label="播放讲解">▶ 播放讲解</button><button class="st-b" data-a="next" aria-label="下一站">▶</button><span class="st-n">0 / ' + str(len(st)) + '</span></div>',
          '<ol class="st-steps">' + ''.join(f'<li data-i="{kidx[k]}"><b>{markers[kidx[k]-1]["n"]}</b><span>{t}</span></li>' for k, t in st) + '</ol></div></div>']
+    _st_txt = {t for _, t in st}
     if base:
         _d = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'docs', 'assets', 'maps'); os.makedirs(_d, exist_ok=True)
         open(os.path.join(_d, f'{mid}.svg'), 'w').write(_base_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes))
         s.append(f'<div class="mview v-base"><div class="map-wrap" data-svg="assets/maps/{mid}.svg"><div class="lph">🗺️ 正在载入地形图…</div></div></div>')
-    s.append('<div class="mview v-live"><div class="lsrc" role="group" aria-label="底图来源"></div><div class="lmap" aria-label="实时地图"><div class="lph">🌐 正在载入实时地图…<br><small>若网络不稳定，本图会自动换用其他底图来源；离线时请看“情景讲解图”或“地形图”。</small></div></div><p class="lstat" aria-live="polite"></p></div>')
+    s.append('<div class="mview v-live"><div class="lsrc" role="group" aria-label="底图来源"></div><div class="lmap" aria-label="实时地图"><div class="lph">🌐 正在载入实时地图…</div></div><p class="lstat" aria-live="polite"></p></div>')
     s.append('<ol class="map-legend">' + ''.join(
-        f'<li data-i="{i}" style="--c:{COL[m.get("c","gold")]}"><b>{_icon(m)} {m["n"]}</b>{"<em>（位置不确定）</em>" if m.get("unc") else ""}<span>{m["t"]}</span></li>' for i, m in enumerate(markers, 1)) + '</ol>')
-    s.append(f'<figcaption>🗺️ {title}。情景图与地形图为本地离线 SVG（Natural Earth 公有领域数据，地点按真实经纬度标注）；实时地图可切换多个全球底图来源，失败时自动换源{"；" + cap if cap else ""}。{note}</figcaption></figure>')
+        f'<li data-i="{i}" style="--c:{COL[m.get("c","gold")]}"><b>{_icon(m)} {m["n"]}</b>{"<em>（位置不确定）</em>" if m.get("unc") else ""}{"" if m["t"] in _st_txt else "<span>" + m["t"] + "</span>"}</li>' for i, m in enumerate(markers, 1)) + '</ol>')
+    s.append(f'<figcaption>🗺️ {title}{"；" + cap if cap else ""}。{note}</figcaption></figure>')
     return ''.join(s)

@@ -1,20 +1,28 @@
-# 诗歌智慧书深度学习 · Poetry & Wisdom Books — 2026-11-14 · v2.0.0 · GROKstudy
+# 诗歌智慧书深度学习 · Poetry & Wisdom Books — 2026-11-14 · v2.1.0 · GROKstudy
 
 **主题**：约伯记 · 诗篇 · 箴言 · 传道书 · 雅歌 —— 从整本圣经（圣经神学、圣约神学、救赎历史、基督中心）出发，按欧陆改革宗正统立场（三项联合信条 + 三大信经）深度学习。
-**日期**：2026-11-14（台北时间；首版 2026-10-23） · **版本**：v2.0.0 · **标签**：poetry-wisdom-20261114-v2.0.0-GROKstudy
+**日期**：2026-11-14（台北时间；首版 2026-10-23） · **版本**：v2.1.0 · **标签**：poetry-wisdom-20261114-v2.1.0-GROKstudy
 
 ## 🔗 在线链接
 | 平台 | 链接 | 版本 |
 |---|---|---|
-| GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/Poetry-Wisdom-Books-20261023-GROKstudy/ | v2.0.0 |
-| Surge（v2.0.0 新域名） | https://poetry-wisdom-20261114-v2-0-grokstudy.surge.sh/ | v2.0.0 |
-| Surge（原域名，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.surge.sh/ | v2.0.0 |
-| Netlify（v2.0.0 新站点） | https://poetry-wisdom-20261114-v2-grokstudy.netlify.app/ | v2.0.0 |
-| Netlify（原站点，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.netlify.app/ | v2.0.0 |
+| Surge（v2.1.0 新域名） | https://poetry-wisdom-20261114-v2-1-grokstudy.surge.sh/ | v2.1.0 |
+| Netlify（v2.1.0 新站点） | https://poetry-wisdom-20261114-v2-1-grokstudy.netlify.app/ | v2.1.0 |
+| GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/Poetry-Wisdom-Books-20261023-GROKstudy/ | v2.1.0 |
+| Surge（v2.0.0 域名，已更新） | https://poetry-wisdom-20261114-v2-0-grokstudy.surge.sh/ | v2.1.0 |
+| Surge（原域名，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.surge.sh/ | v2.1.0 |
+| Netlify（v2.0.0 站点，已更新） | https://poetry-wisdom-20261114-v2-grokstudy.netlify.app/ | v2.1.0 |
+| Netlify（原站点，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.netlify.app/ | v2.1.0 |
 | Surge（v1.1.0 存档别名） | https://poetry-wisdom-20261024-v1-1-grokstudy.surge.sh/ | v1.1.0 |
 | 仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy | |
+| 发布 v2.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v2.1.0 | |
 | 发布 v2.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v2.0.0 | |
 | 还原点 v1.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v1.1.0 | |
+
+## ✨ v2.1.0 更新说明（2026-11-14）
+- **实时地图**：DARE、Esri 自然地貌、NASA 这几个来源的最高缩放级较低（8–11 级）。在锡安等放得很大的地图上，现在会把原有瓦片放大显示，不再是空白；按钮上用“⁺”标示。自动选择时，优先用能清晰显示当前缩放级的来源。只要有瓦片载入成功，就算作加载成功（以前要求至少 2 张瓦片）。
+- **精简内容**：删去与“💎 本质核心”重复的“一句话抓住……”提示框，以及一览表中的“核心”“基督”“核心神学”行；删去每幅地图说明中重复的套话；地图图例中与讲解步骤完全相同的说明不再重复显示；约伯记删去重复的视角卡片和重复引用的经文。本站讲解文字约减少 4%（经文、信条原文不变，`tools/vcheck.py` 0 处不符）。
+- **检查**：8 种宽度 × 13 页 × 3 轮全部通过；诗篇、箴言、传道书、雅歌的每幅地图在 390 与 1280 px 下逐一切换 14 个来源，在已部署的网站上测试。
 
 ## ✨ v2.0.0 更新说明（2026-11-14）
 - **本质核心**：每卷书和整本圣经页开头新增“💎 本质核心”：一句话论点、关键词、为什么／是什么／怎么用／指向基督、动画故事线、钥节（和合本逐字）与速记口诀。
@@ -53,6 +61,7 @@
 ## 📝 版本记录
 | 版本 | 日期 | 说明 |
 |---|---|---|
+| v2.1.0 | 2026-11-14 | 实时地图低缩放级来源改为放大显示、不再空白，自动选择时优先清晰的来源；精简与“本质核心”重复的内容和地图套话（讲解文字约 −4%）；8 种宽度全部通过；新增 Surge 与 Netlify v2-1 域名 |
 | v2.0.0 | 2026-11-14 | 全面优化：本质核心；三视图地图（情景讲解图、离线地形图、14 个来源并自动切换的实时地图），新增 4 幅地图；统一标注系统与图例；新配色；性能优化；新增 5 段 CCI 摘录；8 种宽度多轮检查；新增 Surge 与 Netlify v2 域名 |
 | v1.1.0 | 2026-10-24 | 经文逐字核对：全站 241 处带出处的短引语与和合本核对一致（另有 92 处无出处引语在五卷全书中检索到），修正约 76 处用字或标点差异，转述改为「」或标注意译／概括；新增 26 段威斯敏斯特标准逐字引文（RTF-USA 译本，注明 PDF 页码），信条页新增逐字的威斯敏斯特经文脚注索引；在 390/768/1440 px 下重新检查版面；新增 Surge 版本别名 |
 | v1.0.0 | 2026-10-23 | 首次发布：12 页完整内容，三平台部署 |

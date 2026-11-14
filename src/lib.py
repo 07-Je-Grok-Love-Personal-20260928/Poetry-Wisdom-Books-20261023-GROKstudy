@@ -2,7 +2,7 @@
 import json, re, html, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 import cuv
-VERSION = "v2.0.0"; DATE = "2026-11-14"; TAG = "poetry-wisdom-20261114-v2.0.0-GROKstudy"
+VERSION = "v2.1.0"; DATE = "2026-11-14"; TAG = "poetry-wisdom-20261114-v2.1.0-GROKstudy"
 CCI = '/workspace/cci/'
 HC = json.load(open(CCI + 'heidelberg.json')); BC = json.load(open(CCI + 'belgic.json')); CD = json.load(open(CCI + 'dort.json'))
 CR = json.load(open(CCI + 'creeds.json'))
