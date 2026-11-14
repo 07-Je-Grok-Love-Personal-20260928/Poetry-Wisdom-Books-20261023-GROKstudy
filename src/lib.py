@@ -2,7 +2,7 @@
 import json, re, html, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 import cuv
-VERSION = "v1.1.0"; DATE = "2026-10-24"; TAG = "poetry-wisdom-20261023-v1-GROKstudy"
+VERSION = "v2.0.0"; DATE = "2026-11-14"; TAG = "poetry-wisdom-20261114-v2.0.0-GROKstudy"
 CCI = '/workspace/cci/'
 HC = json.load(open(CCI + 'heidelberg.json')); BC = json.load(open(CCI + 'belgic.json')); CD = json.load(open(CCI + 'dort.json'))
 CR = json.load(open(CCI + 'creeds.json'))
@@ -109,3 +109,89 @@ def stat(items):
     return '<div class="stats">' + ''.join(f'<div class="st" style="--c:{c}"><b data-count="{n}">{n}</b><span>{l}</span></div>' for n, l, c in items) + '</div>'
 def facts(rows):
     return '<dl class="facts">' + ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows) + '</dl>'
+
+# ================= v2.0.0：本质核心、动态故事线、笔记标记 =================
+def story_dg(nodes, title='故事线'):
+    """nodes: [(emoji, 短标签≤4字, 小字≤9字, 颜色)] → 动画 SVG 故事线（移动光点 + 依次脉动的节点）"""
+    n = len(nodes); W = 600; H = 236; xs = [50 + i * (W - 100) / (n - 1) for i in range(n)]
+    ys = [92 + (26 if i % 2 else -10) for i in range(n)]
+    d = f'M{xs[0]:.0f},{ys[0]}' + ''.join(f' C{(xs[i-1]+xs[i])/2:.0f},{ys[i-1]} {(xs[i-1]+xs[i])/2:.0f},{ys[i]} {xs[i]:.0f},{ys[i]}' for i in range(1, n))
+    pid = 'sp' + str(abs(hash(title)) % 10**8)
+    s = [f'<div class="dg anim"><svg viewBox="0 0 {W} {H}" role="img" aria-label="{esc(title)}">',
+         f'<defs><linearGradient id="{pid}g" x1="0" x2="1">' + ''.join(f'<stop offset="{i/(n-1):.2f}" stop-color="{c}"/>' for i, (_, _, _, c) in enumerate(nodes)) + '</linearGradient></defs>',
+         f'<path id="{pid}" d="{d}" fill="none" stroke="url(#{pid}g)" stroke-width="6" stroke-linecap="round" opacity=".55"/>',
+         f'<path d="{d}" fill="none" stroke="#fff" stroke-width="2" class="flowd" opacity=".5"/>',
+         f'<circle r="8" fill="#fff"><animateMotion dur="{2.2*n:.1f}s" repeatCount="indefinite"><mpath href="#{pid}"/></animateMotion></circle>']
+    for i, (e, t, sub, c) in enumerate(nodes):
+        x, y = xs[i], ys[i]
+        s.append(f'<g><circle cx="{x:.0f}" cy="{y}" r="30" fill="{c}" opacity=".22" class="pulse" style="animation-delay:{i*.45:.2f}s"/>'
+                 f'<circle cx="{x:.0f}" cy="{y}" r="22" fill="{c}"/><text x="{x:.0f}" y="{y+9}" text-anchor="middle" font-size="24">{e}</text>'
+                 f'<text x="{x:.0f}" y="{y+58}" text-anchor="middle" font-size="21" font-weight="800" style="fill:{c}">{esc(t)}</text>'
+                 f'<text x="{x:.0f}" y="{y+82}" text-anchor="middle" class="t2" font-size="15">{esc(sub)}</text>'
+                 f'<text x="{x:.0f}" y="{y-38}" text-anchor="middle" font-size="15" font-weight="800" opacity=".7">{i+1}</text></g>')
+    s.append('</svg></div>')
+    return ''.join(s)
+def kws(items):   # [(icon, 词, 小字, 颜色)]
+    return '<div class="kws">' + ''.join(f'<span class="kw" style="--c:{c}"><i>{i}</i>{t}<small>{s}</small></span>' for i, t, s, c in items) + '</div>'
+def www(why, what, how, who=None):
+    cols = [('❓ 为什么写', why, 'var(--blue)'), ('📖 写了什么', what, 'var(--gold)'), ('🌱 怎么活出来', how, 'var(--green)')]
+    if who: cols.append(('✝️ 怎样指向基督', who, 'var(--purple)'))
+    return '<div class="www">' + ''.join(f'<div style="--c:{c}"><h4>{h}</h4>{b}</div>' for h, b, c in cols) + '</div>'
+def CORE(thesis, kw, why, what, how, christ, story, verse, mnemonic, extra=''):
+    return (f'<p class="thesis">💎 {thesis}</p>' + kws(kw) + story + www(why, what, how, christ) + verse +
+            C('mem', '一句口诀记全书', f'<span class="mk-mem">{mnemonic}</span>') + extra)
+def media(src, title, note):
+    """外部视频：点击后才载入（facade），不影响首屏性能"""
+    return f'<figure class="mediafig"><div class="media"><button type="button" data-src="{src}" data-title="{esc(title)}">▶ 点击播放：{esc(title)}</button></div><figcaption>🎬 {note}</figcaption></figure>'
+
+# ---------- 自动笔记标记（构建时；不进入逐字引文、标题、SVG） ----------
+MK_TERMS = [
+    ('mk-key', ['敬畏耶和华', '敬畏神', '智慧的开端', '无故的敬畏', '日光之下', '唯一的安慰', '盟约之爱', '虚空的虚空']),
+    ('mk-cov', ['恩典之约', '行为之约', '大卫之约', '亚伯拉罕之约', '西奈之约', '救赎历史', '圣约神学', '圣约家庭', '圣约']),
+    ('mk-god', ['主权', '护理', '创造主', '神的智慧', '耶和华作王', '独一的神']),
+    ('mk-christ', ['基督', '弥赛亚', '救赎主', '中保', '受膏者', '比所罗门更大', '道成肉身', '新郎']),
+    ('mk-sin', ['机械报应论', '报应论', '撒但', '愚昧人', '禁欲主义', '成功神学', '享乐主义', '虚无主义', '偶像', '异端']),
+    ('mk-hard', ['咒诅诗', '寓意解经', '难点']),
+    ('mk-dash', ['位置不确定', '不确定', '有争议', '说法一', '说法二', '说法三', '说法之一']),
+]
+MK_CONF = re.compile(r'(?:HC|BC|WCF|WSC|WLC|CD)\s?\d+(?:[.．:：]\d+)?(?:[–-]\d+)?|多特信经|比利时信条|海德堡要理问答|威斯敏斯特信仰告白')
+SKIP_CLS = ('conf', 'cci', 'creed', 'creed-box', 'chip', 'tag', 'ref', 'vref', 'kw', 'lg', 'lgc', 'map-legend', 'st-steps', 'thesis', 'mk-', 'tl-d', 'ctools', 'mtabs', 'lsrc', 'pn', 'q', 'src', 'conf-h', 'call-h')
+SKIP_TAG = {'svg', 'script', 'style', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'th', 'mark', 'b', 'strong', 'q', 'blockquote', 'summary', 'figcaption', 'nav', 'dt', 'code', 'cite', 'title', 'textarea', 'select', 'option', 'sup', 'em'}
+VOID = {'br', 'img', 'input', 'meta', 'link', 'hr', 'wbr', 'source', 'col', 'area', 'base', 'embed', 'param', 'track'}
+BLOCK = {'p', 'li', 'td', 'div', 'dd', 'section', 'ul', 'ol', 'figure', 'details', 'table', 'tr'}
+def automark(main, extra=(), per_sec=12):
+    terms = [(c, t) for c, ts in list(MK_TERMS) + list(extra) for t in ts]
+    terms.sort(key=lambda x: -len(x[1]))
+    alt = re.compile('|'.join(re.escape(t) for _, t in terms) + '|' + MK_CONF.pattern)
+    cls_of = {t: c for c, t in terms}
+    toks = re.split(r'(<[^>]+>)', main); stack = []; out = []; used = set(); cnt = 0; depth = 0; nmark = 0
+    for tk in toks:
+        if tk.startswith('<'):
+            m = re.match(r'<\s*(/)?\s*([a-zA-Z0-9]+)([^>]*)>', tk)
+            if m:
+                close, tag, rest = m.group(1), m.group(2).lower(), m.group(3)
+                if tag == 'section' and not close: used = set(); cnt = 0
+                if tag in BLOCK: depth = 0
+                if close:
+                    for i in range(len(stack) - 1, -1, -1):
+                        if stack[i][0] == tag: del stack[i:]; break
+                elif tag not in VOID and not rest.rstrip().endswith('/'):
+                    cm = re.search(r'class="([^"]*)"', rest)
+                    stack.append((tag, cm.group(1) if cm else ''))
+            out.append(tk); continue
+        if not tk or not stack or tk.isspace(): out.append(tk); continue
+        skip = any(t in SKIP_TAG or any(c == k or c.startswith(k) for c in cl.split() for k in SKIP_CLS) for t, cl in stack)
+        if skip:
+            depth += tk.count('“') - tk.count('”'); out.append(tk); continue
+        res = []; pos = 0
+        for mm in alt.finditer(tk):
+            seg = tk[pos:mm.start()]; depth += seg.count('“') - seg.count('”'); res.append(seg); pos = mm.end()
+            w = mm.group(0); c = cls_of.get(w, 'mk-conf')
+            key = w if c != 'mk-conf' else 'conf:' + w
+            if depth <= 0 and cnt < per_sec and key not in used:
+                res.append(f'<span class="{c}">{w}</span>'); used.add(key); cnt += 1; nmark += 1
+            else: res.append(w)
+        seg = tk[pos:]; depth += seg.count('“') - seg.count('”'); res.append(seg)
+        out.append(''.join(res))
+    automark.count = getattr(automark, 'count', 0) + nmark
+    return ''.join(out)

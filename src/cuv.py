@@ -6,14 +6,14 @@ cache = json.load(open(C)) if os.path.exists(C) else {}
 def _get(bk, ch, sec):
     key = f"{bk}{ch}:{sec}"
     if key in cache: return cache[key]
-    u = "https://bible.fhl.net/json/qb.php?" + urllib.parse.urlencode({"chineses": bk, "chap": ch, "sec": sec, "gb": 1})
+    u = "https://bible.fhl.net/json/qb.php?" + urllib.parse.urlencode({"chineses": bk, "chap": ch, "sec": sec, "gb": 1, "version": "unv"})
     for i in range(4):
         try:
             d = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent':'Mozilla/5.0'}), timeout=30).read().decode('utf8')); break
         except Exception as e:
             print('retry',key,e); time.sleep(2)
     else: raise RuntimeError(key)
-    recs = [(r['sec'], r['bible_text'].strip()) for r in d['record']]
+    recs = [(r['sec'], r['bible_text'].strip().replace('\u3000神', '神')) for r in d['record']]  # “　神”为神版抬头空格，非经文文字
     assert recs, key
     cache[key] = recs
     json.dump(cache, open(C, 'w'), ensure_ascii=False, indent=0)

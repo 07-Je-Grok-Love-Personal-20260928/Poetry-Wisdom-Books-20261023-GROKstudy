@@ -21,7 +21,19 @@ def build():
                                 ['多特信经', L(CD['url'])], ['讲章：约伯记19:25–27', L(INDEX['sermons_text_1.txt'][1])], ['讲章：约伯记2:13–3:1', L(INDEX['sermons_text_24.txt'][1])],
                                 ['讲章：诗篇130', L(INDEX['sermons_text_25.txt'][1])], ['讲章：传道书7:15–19', L(INDEX['sermons_text_91.txt'][1])], ['讲章：创世记第3章（雅歌7:10）', L(INDEX['sermons_text_44.txt'][1])],
                                 ['讲章：主日45-II（雅歌1:1–8）', L(INDEX['sermons_heidelberg-catechism_lord-day-45-2.txt'][1])], ['《我属于主》主日三十九、五十等', L(INDEX['books_i-belong_39.txt'][1]) + '；' + L(INDEX['books_i-belong_50.txt'][1])],
-                                ['《圣经故事》第70章 荣辱兴衰', L(INDEX['books_bible-story_2_70.txt'][1])], ['《我属于主》主日四十九（约伯记）', L(INDEX['books_i-belong_49.txt'][1])]])))
+                                ['《圣经故事》第70章 荣辱兴衰', L(INDEX['books_bible-story_2_70.txt'][1])], ['《我属于主》主日四十九（约伯记）', L(INDEX['books_i-belong_49.txt'][1])],
+                                ['v2.0.0 新增：教会规章第55条 诗篇和赞美诗', L(INDEX['books_book-of-praise_church-order_iv-worship-sacraments-and-ceremonies_55.txt'][1])], ['v2.0.0 新增：讲章《神将聆听的耳受教的心赐给所罗门王》', L(INDEX['sermons_text_103.txt'][1])],
+                                ['v2.0.0 新增：讲章《论八福（二）》（传道书7章）', L(INDEX['sermons_text_31.txt'][1])], ['v2.0.0 新增：讲章《生命的河》', L(INDEX['sermons_text_54.txt'][1])], ['v2.0.0 新增：《我属于主》主日三十五', L(INDEX['books_i-belong_35.txt'][1])]])))
+    m.append(S('o-map', '🗺️', '地图与底图来源（v2.0.0）',
+        '<p>'+('每幅地图有三种视图：🎨 情景讲解图（本站自绘的 SVG，离线可用，带讲解步骤）、🗺️ 地形图（Natural Earth 公有领域数据，离线）和 🌐 实时地图（Leaflet 1.9.4，已打包在本站 <code>assets/vendor/leaflet/</code>，BSD-2 许可）。实时地图提供 14 个瓦片来源，加载出错或超时会自动切换到下一个，并记住上次可用的来源。地点位置凡有争议者用虚线圈标示。')+'</p>' +
+        table(['瓦片来源', '链接', '说明'], [
+            ['Esri（World Topo / Imagery / NatGeo / Shaded Relief / Physical）', L('https://www.esri.com/'), '© Esri 及其数据提供方'], ['OpenStreetMap / Humanitarian (HOT)', L('https://www.openstreetmap.org/copyright'), '© OpenStreetMap 贡献者（ODbL）'],
+            ['CARTO（Voyager / Dark Matter）', L('https://carto.com/attributions'), '© CARTO，数据 © OSM'], ['OpenTopoMap', L('https://opentopomap.org/'), 'CC BY-SA'],
+            ['高德地图（道路 / 卫星）', L('https://www.amap.com/'), '中国大陆网络下可用'], ['DARE 罗马帝国数字地图集', L('https://dh.gu.se/dare/'), '哥德堡大学 Johan Åhlfeldt，CC BY 4.0；古代地名'],
+            ['EOX Sentinel-2 cloudless', L('https://s2maps.eu/'), 'Sentinel-2 cloudless © EOX（含修改过的 Copernicus Sentinel 数据），CC BY-NC-SA 4.0'], ['NASA GIBS（Blue Marble）', L('https://earthdata.nasa.gov/gibs'), 'NASA EOSDIS GIBS，公有领域'],
+            ['Leaflet', L('https://leafletjs.com/'), '开源地图库，BSD-2-Clause，本地打包'], ['Natural Earth', L('https://www.naturalearthdata.com/'), '离线地形图与情景图的海岸线、河流（公有领域）']])))
+    m.append(S('o-mark', '🖍️', '标注系统（v2.0.0）',
+        '<p>'+('全站正文使用统一的标注：粗体、颜色、底色、实线／虚线／波浪下划线与提示框，各有固定含义；点页面右上角的 🖍️ 或按 L 键可随时打开图例。标注只加在本站的讲解文字上，不加在经文、信条和 CCI 原文中，以免改变原文。首页“怎样使用”一节有完整图例和示例。')+'</p>'))
     m.append(S('o-ref', '📚', '其他参考',
         table(['机构', '链接', '用途'], [
             ['中国改革宗教会（ccreformed.org）', L('https://www.ccreformed.org/'), '信仰立场；讲章（如诗篇130）'], ['改革宗初学者（reformedbeginner.net）', L('https://www.reformedbeginner.net/'), '约伯记导论、大公信经介绍'],
@@ -31,6 +43,6 @@ def build():
             ['威斯敏斯特神学院（wts.edu）', L('https://www.wts.edu/'), '圣经神学传统'], ['加拿大归正神学院（crts.edu）', L('https://crts.edu/'), '欧陆改革宗神学'],
             ['信望爱站（bible.fhl.net）', L('https://bible.fhl.net/'), '和合本经文 API'], ['Natural Earth', L('https://www.naturalearthdata.com/'), '地图底图（公有领域）']])))
     m.append(S('o-ver', '🏷️', '版本记录',
-        table(['版本', '日期（台北）', '说明'], [['v1.1.0', '2026-10-24', '经文核对与威斯敏斯特标准：用脚本把全站带出处的短引语与和合本逐字核对，修正用字差异（如“不致缺乏”“息灭”“甚么”），并把转述改为「」或标注意译／概括；在约伯记、诗篇、箴言、传道书、雅歌和整本圣经页新增威斯敏斯特标准逐字引文（RTF-USA 译本，注明 PDF 页码）；信条页新增逐字的威斯敏斯特经文脚注索引；三种宽度（390/768/1440）重新做版面检查。'], ['v1.0.0', '2026-10-23', '首次发布：首页、整本圣经、五卷书各一页、信条对照、三大信经背诵版、信经对比、速记中心、来源页；12 幅以上 SVG 地图、时间线、思维导图、测验与翻卡。']]) +
+        table(['版本', '日期（台北）', '说明'], [['v2.0.0', '2026-11-14', '全面优化：每卷新增“本质核心”一页总结（论点、关键词、为什么/是什么/怎么用、指向基督、故事线、钥节、口诀）；地图改为三种视图（情景讲解图带讲解步骤与动画、离线地形图、实时地图带 14 个瓦片来源并自动切换），新增乌斯/以东/阿拉伯商路、锡安与大卫王国、所罗门贸易、古代近东智慧（埃及至两河）等地图；统一的标注系统与图例；新配色；性能优化（减少毛玻璃、只用 GPU 动画、支持减少动态效果、脚本延迟加载、页面切换动画）；新增 5 段 CCI 原文摘录；8 种宽度（360–1920）多轮版面检查。'], ['v1.1.0', '2026-10-24', '经文核对与威斯敏斯特标准：用脚本把全站带出处的短引语与和合本逐字核对，修正用字差异（如“不致缺乏”“息灭”“甚么”），并把转述改为「」或标注意译／概括；在约伯记、诗篇、箴言、传道书、雅歌和整本圣经页新增威斯敏斯特标准逐字引文（RTF-USA 译本，注明 PDF 页码）；信条页新增逐字的威斯敏斯特经文脚注索引；三种宽度（390/768/1440）重新做版面检查。'], ['v1.0.0', '2026-10-23', '首次发布：首页、整本圣经、五卷书各一页、信条对照、三大信经背诵版、信经对比、速记中心、来源页；12 幅以上 SVG 地图、时间线、思维导图、测验与翻卡。']]) +
         C('note', '纠错', '如发现引文与 CCI 原文或和合本不符，请以原文为准，并欢迎在 GitHub 仓库提出 issue。')))
     return hr, ''.join(m)

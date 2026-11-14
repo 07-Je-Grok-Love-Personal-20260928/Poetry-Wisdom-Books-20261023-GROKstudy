@@ -3,6 +3,7 @@ from lib import *
 from wm import W
 from shell import S, H3, hero
 from maps import mapfig
+import v2content as v2
 def M(k, n, lon, lat, t, c='gold', **kw): d = dict(k=k, n=n, ll=(lon, lat), t=t, c=c); d.update(kw); return d
 RIV = ('Euphrates', 'Tigris', 'Jordan', 'Firat', 'Dicle', 'Al Furat', 'Nile', 'Damietta Branch', 'Rosetta Branch')
 def build():
@@ -10,6 +11,7 @@ def build():
         '诗歌智慧书不是圣经中的“格言集锦”，而是圣约子民在救赎历史中的心声：在创造与堕落之间受苦（约伯），在受膏君王之下祷告（诗篇），在神所造的秩序中生活（箴言），在咒诅的虚空中敬畏神（传道书），在婚约之爱中盼望新郎（雅歌）——五卷都指向那位“成为我们的智慧”的基督（林前1:30；HC 18）。',
         [('BC 4：约伯记、诗篇、箴言、传道书、雅歌', '#f5b83d'), ('路24:44 摩西·先知·诗篇', '#b48cff'), ('恩典之约的一条线', '#3ddc97'), ('敬畏耶和华：五卷的共同主题', '#5ab0ff')])
     m = []
+    m.append(S('b-core', '💎', '本质核心：一页抓住诗歌智慧书', v2.core_bible(), 'key'))
     m.append(S('b-canon', '📚', '正典中的位置',
         '<p class="lead">比利时信条第 4 条在列出旧约正典时，把这五卷放在一起：</p>' + BCA(4, ('旧约圣经包括', '撒迦利亚书和玛拉基书。'), refs=False) +
         table(['传统', '分组', '这五卷的位置'], [
