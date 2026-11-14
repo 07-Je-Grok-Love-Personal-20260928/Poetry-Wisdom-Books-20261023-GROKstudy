@@ -10,7 +10,7 @@ $$('#toc a').forEach(function(a){a.addEventListener('click',function(){if(!wide(
 // 目录宽度：拖动右边缘（鼠标、触控、笔），记住宽度
 var grip=$('#tocgrip'),TW0=300;
 function maxW(){return wide()?Math.max(260,Math.min(820,innerWidth-520)):innerWidth}
-function setW(w,save){w=Math.round(Math.max(220,Math.min(maxW(),w)));h.style.setProperty('--tocw',w+'px');if(save)store('pw-tocw',w);return w}
+function setW(w,save){w=Math.round(Math.max(220,Math.min(maxW(),w)));h.style.setProperty('--tocw',w+'px');if(grip){grip.setAttribute('aria-valuenow',w);grip.setAttribute('aria-valuemax',Math.round(maxW()))}if(save)store('pw-tocw',w);return w}
 if(grip){var drag=false,sx=0,sw=0;
  grip.addEventListener('pointerdown',function(e){drag=true;sx=e.clientX;sw=$('#toc').getBoundingClientRect().width;h.classList.add('toc-drag');h.classList.remove('toc-full');try{grip.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
  var raf=0,lastX=0;grip.addEventListener('pointermove',function(e){if(!drag)return;lastX=e.clientX;if(!raf)raf=requestAnimationFrame(function(){raf=0;setW(sw+lastX-sx,false)})});

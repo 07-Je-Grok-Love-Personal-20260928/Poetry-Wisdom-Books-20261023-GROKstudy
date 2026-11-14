@@ -386,3 +386,5 @@ html.scrolling svg *,html.scrolling .anim *,html.scrolling .dg *{animation-play-
 /* v3 阅读进度条：支持滚动时间线的浏览器由合成线程驱动，不需要 JS */
 @supports (animation-timeline:scroll()){#prog{animation:progx linear both;animation-timeline:scroll(root block)}@keyframes progx{to{transform:scaleX(1)}}}
 .sec h2,.sec h3,.call-h,.part-t{overflow-wrap:anywhere}
+.foot a,footer a,p a:not(.btn),li a:not(.btn),td a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+#toc a,.toc-pages a,nav a{text-decoration:none}

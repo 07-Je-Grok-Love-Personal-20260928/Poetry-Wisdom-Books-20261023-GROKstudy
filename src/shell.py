@@ -145,11 +145,11 @@ def page(pid, hero, main, accent='#f5b83d'):
 <header class="top"><button id="tocbtn" class="ib" aria-label="显示/隐藏目录" title="目录（T）">☰</button>
 <a class="brand" href="index.html"><b>诗歌智慧书</b><small>GROKstudy · {VERSION}</small></a>
 <nav class="pages" aria-label="页面">{nav}</nav>
-<div class="tools"><button class="ib" id="legbtn" aria-label="标记图例" title="标记图例（L）">🖍️</button><button class="ib" id="fsm" aria-label="缩小字号">A-</button><button class="ib" id="fsp" aria-label="放大字号">A+</button><button class="ib" id="themebtn" aria-label="切换主题">🌓</button></div></header>
+<div class="tools"><button class="ib" id="legbtn" aria-label="标记图例" title="标记图例（L）">🖍️</button><button class="ib" id="fsm" aria-label="A- 缩小字号">A-</button><button class="ib" id="fsp" aria-label="A+ 放大字号">A+</button><button class="ib" id="themebtn" aria-label="切换主题">🌓</button></div></header>
 <aside id="toc" aria-label="目录"><div class="toc-bar"><b>📑 目录</b><span><button class="mini" id="tocfull" title="全宽／还原">⤢</button><button class="mini" id="tocx" title="隐藏目录">✕</button></span></div><div class="toc-in">
 <input id="q" type="search" placeholder="🔍 搜索全站标题…" aria-label="搜索"><ol id="qres"></ol>
 <div class="toc-h">本页目录<span class="toc-lv" role="group" aria-label="展开层级"><button class="mini" data-lv="1" title="只看一级">一级</button><button class="mini" data-lv="2" title="展开到二级">二级</button><button class="mini" data-lv="3" title="全部展开">三级</button></span></div><ol class="toc-list" data-pid="{pid}">{toc}</ol>
-<div class="toc-h">全站页面</div><ol class="toc-pages">{pnav}</ol></div><div id="tocgrip" role="separator" aria-orientation="vertical" aria-label="拖动调整目录宽度" tabindex="0" title="拖动调整宽度（双击还原）"></div></aside>
+<div class="toc-h">全站页面</div><ol class="toc-pages">{pnav}</ol></div><div id="tocgrip" role="separator" aria-orientation="vertical" aria-label="拖动调整目录宽度" aria-valuenow="300" aria-valuemin="220" aria-valuemax="820" tabindex="0" title="拖动调整宽度（双击还原）"></div></aside>
 <div id="scrim"></div>
 <div id="legpop" role="dialog" aria-label="笔记标记图例"><h4>🖍️ 笔记标记图例 <button class="mini" id="legx" aria-label="关闭图例">关闭</button></h4>{LEGEND}</div>
 <main id="main"><div class="hero">{hero}</div>{main}{pn}

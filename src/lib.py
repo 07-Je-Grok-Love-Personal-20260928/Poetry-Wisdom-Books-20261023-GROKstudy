@@ -98,7 +98,7 @@ def mm(root, branches):
     return s + '</div></div>'
 def cards_flip(items):
     """items: (正面, 背面)"""
-    return '<div class="flips">' + ''.join(f'<button class="flip" aria-label="翻转卡片"><span class="ff">{a}</span><span class="fb">{b}</span></button>' for a, b in items) + '</div>'
+    return '<div class="flips">' + ''.join(f'<button class="flip" title="翻转卡片"><span class="ff">{a}</span><span class="fb">{b}</span></button>' for a, b in items) + '</div>'
 def quiz(qid, items):
     """items: (题, [选项], 正确索引, 解析)"""
     s = f'<div class="quiz" id="quiz-{qid}">'
