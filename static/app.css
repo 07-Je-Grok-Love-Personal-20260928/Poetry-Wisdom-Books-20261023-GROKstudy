@@ -195,7 +195,7 @@ figcaption{font-size:12px;color:var(--mute);margin-top:8px}
 .done-mark{display:table;margin-top:6px;padding:1px 8px;border-radius:99px;font-size:12px;color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:16px}
 ul.tight{margin:.3em 0;padding-left:1.2em}ul.tight li{margin:.15em 0}
-.big5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}@media(max-width:900px){.big5{grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))}}
+.big5{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px}
 .b5{padding:14px;border-radius:16px;text-align:center;background:color-mix(in srgb,var(--c) 14%,transparent);border:1px solid color-mix(in srgb,var(--c) 50%,transparent)}
 .b5 .e{font-size:34px}.b5 b{display:block;color:var(--c);font-size:1.1em}.b5 small{display:block;color:var(--ink2)}
 
@@ -349,8 +349,8 @@ html.scrolling svg *,html.scrolling .anim *,html.scrolling .dg *{animation-play-
 #toc .tl2>.tr>a{font-size:13.6px}#toc .tl3>.tr>a{font-size:12.8px;grid-template-columns:auto 1fr}
 #toc li.path>.tr>a{color:var(--ink)}#toc li.path>ol{display:block}
 #toc a.act{border-left-color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--ink)}
-#tocgrip{position:absolute;top:0;right:-6px;width:12px;height:100%;cursor:ew-resize;touch-action:none;z-index:2}
-#tocgrip:after{content:"";position:absolute;left:5px;top:50%;width:3px;height:44px;margin-top:-22px;border-radius:3px;background:var(--line);transition:background .2s,height .2s}
+#tocgrip{position:absolute;top:0;right:0;width:12px;height:100%;cursor:ew-resize;touch-action:none;z-index:2}
+#tocgrip:after{content:"";position:absolute;left:6px;top:50%;width:3px;height:44px;margin-top:-22px;border-radius:3px;background:var(--line);transition:background .2s,height .2s}
 #tocgrip:hover:after,#tocgrip:focus-visible:after,.toc-drag #tocgrip:after{background:var(--accent);height:72px;margin-top:-36px}
 .toc-drag,.toc-drag *{user-select:none!important;cursor:ew-resize!important}.toc-drag #toc,.toc-drag main{transition:none!important}
 .toc-full #toc{width:100vw!important}

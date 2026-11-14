@@ -9,7 +9,7 @@ $('#scrim').onclick=function(){h.classList.remove('toc-open')};
 $$('#toc a').forEach(function(a){a.addEventListener('click',function(){if(!wide())h.classList.remove('toc-open')})});
 // 目录宽度：拖动右边缘（鼠标、触控、笔），记住宽度
 var grip=$('#tocgrip'),TW0=300;
-function maxW(){return wide()?Math.max(260,Math.min(820,innerWidth-420)):innerWidth}
+function maxW(){return wide()?Math.max(260,Math.min(820,innerWidth-520)):innerWidth}
 function setW(w,save){w=Math.round(Math.max(220,Math.min(maxW(),w)));h.style.setProperty('--tocw',w+'px');if(save)store('pw-tocw',w);return w}
 if(grip){var drag=false,sx=0,sw=0;
  grip.addEventListener('pointerdown',function(e){drag=true;sx=e.clientX;sw=$('#toc').getBoundingClientRect().width;h.classList.add('toc-drag');h.classList.remove('toc-full');try{grip.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});

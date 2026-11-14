@@ -35,6 +35,14 @@ CHECK = r'''() => {
    const w = Math.min(r1.right, r2.right) - Math.max(r1.left, r2.left), h = Math.min(r1.bottom, r2.bottom) - Math.max(r1.top, r2.top);
    if (w > 3 && h > 3 && w * h > 0.25 * Math.min(r1.width * r1.height, r2.width * r2.height)) { res.ov.push((e1.tagName + '.' + e1.className).slice(0, 40) + ' × ' + (e2.tagName + '.' + e2.className).slice(0, 40) + ' «' + e1.textContent.trim().slice(0, 10) + '»'); if (res.ov.length > 8) return res; } }
  return res; }'''
+TOCCHK = r'''() => { const t = document.getElementById('toc'); if (!t) return {bad: [], w: 0}; const tr = t.getBoundingClientRect(), bad = [];
+ const vw = document.documentElement.clientWidth; if (tr.right > vw + 1 && getComputedStyle(t).transform === 'none') bad.push('toc beyond viewport ' + Math.round(tr.right));
+ const tin = t.querySelector('.toc-in'); if (tin.scrollWidth > tin.clientWidth + 1) bad.push('toc-in hscroll ' + tin.scrollWidth + '/' + tin.clientWidth);
+ const as = [...t.querySelectorAll('.toc-list a')].filter(a => a.offsetParent); let prev = null;
+ for (const a of as) { if (a.scrollWidth > a.clientWidth + 1) bad.push('clipped: ' + a.textContent.slice(0, 20));
+   const r = a.getBoundingClientRect(); if (r.right > tr.right + 1) bad.push('beyond toc: ' + a.textContent.slice(0, 20));
+   if (prev && r.top < prev.bottom - 2 && r.left < prev.right && r.right > prev.left) bad.push('overlap: ' + a.textContent.slice(0, 16)); prev = r; if (bad.length > 6) break; }
+ return {bad, w: Math.round(tr.width), links: as.length}; }'''
 def interact(pg):
     n = {}
     pg.evaluate('document.querySelectorAll(".sec").forEach(s=>s.style.contentVisibility="visible");document.querySelectorAll(".reveal").forEach(s=>s.classList.add("inview"))')
@@ -89,19 +97,38 @@ with sync_playwright() as p:
             if w in (390, 1280) or ALLSRC: live_sources(pg, n, ALLSRC and w == 1280)
             pg.wait_for_timeout(300)
             r['pass2'] = pg.evaluate(CHECK)
-            pg.evaluate('document.documentElement.classList.add(innerWidth>1100?"x":"toc-open");var T=document.getElementById("toc");if(T)T.classList.add("all");document.documentElement.classList.add("leg-on")')
-            pg.wait_for_timeout(350); r['pass3'] = pg.evaluate(CHECK)
+            # 第三轮：打开目录（真实按钮）→ 全部三级展开 → 拖到最窄 / 最宽 → 只看一级；另开图例
+            pg.evaluate('localStorage.removeItem("pw-tocw");document.documentElement.classList.remove("toc-off","toc-full")')
+            if pg.locator('#tocbtn').count() and w <= 1100: pg.click('#tocbtn')
+            toc_res = {}
+            if pg.locator('#toc .toc-lv').count():
+                pg.click('#toc .toc-lv button[data-lv="3"]'); pg.wait_for_timeout(250)
+                toc_res['open3'] = pg.evaluate(TOCCHK)
+                g = pg.locator('#tocgrip').bounding_box()
+                for tag, dx in (('min', -2000), ('max', 2000)):
+                    g = pg.locator('#tocgrip').bounding_box()
+                    pg.mouse.move(g['x'] + g['width'] / 2, g['y'] + 300); pg.mouse.down(); pg.mouse.move(g['x'] + dx, g['y'] + 300, steps=6); pg.mouse.up(); pg.wait_for_timeout(250)
+                    toc_res[tag] = pg.evaluate(TOCCHK); toc_res[tag]['main'] = pg.evaluate(CHECK)
+                    if not NOSHOT and tag == 'max' and w in (390, 1280, 1920): pg.screenshot(path=f'{OUT}/{pid}_{w}_tocmax.jpg', type='jpeg', quality=60)
+                pg.dispatch_event('#tocgrip', 'dblclick'); pg.wait_for_timeout(200)
+                pg.click('#toc .toc-lv button[data-lv="1"]'); pg.wait_for_timeout(200); toc_res['lv1'] = pg.evaluate(TOCCHK)
+                pg.click('#toc .toc-lv button[data-lv="3"]'); pg.wait_for_timeout(200)
+            pg.evaluate('document.documentElement.classList.add("leg-on")')
+            pg.wait_for_timeout(300); r['pass3'] = pg.evaluate(CHECK); r['toc'] = toc_res
             if not NOSHOT: pg.screenshot(path=f'{OUT}/{pid}_{w}_tocleg.jpg', type='jpeg', quality=65)
-            pg.evaluate('document.documentElement.classList.remove("toc-open","leg-on")'); pg.wait_for_timeout(300)
+            pg.evaluate('document.documentElement.classList.remove("toc-open","leg-on");localStorage.clear()'); pg.wait_for_timeout(300)
             if not NOSHOT:
                 h = pg.evaluate('document.documentElement.scrollHeight')
                 try: pg.screenshot(path=f'{OUT}/{pid}_{w}_full.jpg', type='jpeg', quality=50, full_page=h <= 24000, clip=None if h <= 24000 else {'x': 0, 'y': 0, 'width': w, 'height': 24000}, timeout=120000, animations='disabled', scale='css')
                 except Exception as e: print('shot-fail', pid, w, str(e)[:80], flush=True)
             r['n'] = n; r['errs'] = list(errs)
             bad = [k for k in ('pass1', 'pass2', 'pass3') if r[k]['sw'] > r[k]['vw'] or r[k]['over'] or r[k]['ov'] or r[k]['clip']] + (['errs'] if errs else [])
+            for tk, tv in r.get('toc', {}).items():
+                if tv['bad'] or ('main' in tv and (tv['main']['sw'] > tv['main']['vw'] or tv['main']['over'] or tv['main']['ov'] or tv['main']['clip'])): bad.append('toc-' + tk)
+            r['tocw'] = {k: v.get('w') for k, v in r.get('toc', {}).items()}
             r['ok'] = not bad; tot['ok' if not bad else 'bad'] += 1
             print(('OK ' if not bad else 'BAD'), pid, w, 'sw/vw', r['pass2']['sw'], r['pass2']['vw'], {k: n[k] for k in n if n[k]},
-                  '' if not bad else {k: (r[k]['over'][:3], r[k]['ov'][:3], r[k]['clip'][:3]) for k in bad if k != 'errs'}, errs[:3], flush=True)
+                  'tocw', r.get('tocw'), '' if not bad else {k: ((r[k]['over'][:3], r[k]['ov'][:3], r[k]['clip'][:3]) if k in r else (r['toc'][k[4:]]['bad'][:4], r['toc'][k[4:]].get('main', {}).get('ov', [])[:3], r['toc'][k[4:]].get('main', {}).get('over', [])[:3])) for k in bad if k != 'errs'}, errs[:3], flush=True)
             rep[f'{pid}@{w}'] = r
         ctx.close()
     b.close()
