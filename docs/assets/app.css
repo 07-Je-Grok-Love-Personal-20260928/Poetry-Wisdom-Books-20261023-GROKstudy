@@ -331,3 +331,6 @@ svg.scene{display:block;width:100%;height:auto}
 .media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.draw{stroke-dashoffset:0}.aurora{display:none}::view-transition-group(*){animation:none!important}}
 @media (max-width:560px){.sc-lab{font-size:19px}.st-ctl .st-n{margin-left:0}}
+html.scrolling svg *,html.scrolling .anim *,html.scrolling .dg *{animation-play-state:paused!important}
+.dg-dot{offset-rotate:0deg;animation:dgdot 8s linear infinite}@keyframes dgdot{from{offset-distance:0%}to{offset-distance:100%}}@media (prefers-reduced-motion:reduce){.dg-dot{animation:none}}
+.sc-mv{offset-rotate:0deg;animation:dgdot 7s linear infinite}@media (prefers-reduced-motion:reduce){.sc-mv{animation:none;offset-distance:50%}}

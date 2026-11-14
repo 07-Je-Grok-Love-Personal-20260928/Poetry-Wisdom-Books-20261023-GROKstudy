@@ -204,7 +204,7 @@ def _scene_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes
         mx, my = (x1 + x2) / 2 - (y2 - y1) * bend, (y1 + y2) / 2 + (x2 - x1) * bend
         pid = f'rt-{mid}-{j}'
         s.append(f'<path id="{pid}" class="sc-route" d="M{x1:.0f},{y1:.0f} Q{mx:.0f},{my:.0f} {x2:.0f},{y2:.0f}" style="stroke:{COL[c]}" marker-end="url(#sar-{mid})"/>'
-                 f'<text class="sc-mover" font-size="22" text-anchor="middle" dy="7">{r[4] if len(r) > 4 else "➤"}<animateMotion dur="{6 + j}s" repeatCount="indefinite" rotate="0"><mpath href="#{pid}"/></animateMotion></text>')
+                 f'<g class="sc-mv" style="offset-path:path(\'M{x1:.0f},{y1:.0f} Q{mx:.0f},{my:.0f} {x2:.0f},{y2:.0f}\');animation-duration:{6 + j}s"><text class="sc-mover" font-size="22" text-anchor="middle" dy="7">{r[4] if len(r) > 4 else "➤"}</text></g>')
     for i, m in enumerate(markers, 1):
         x, y = P.xy(*m['ll']); c = COL[m.get('c', 'gold')]
         s.append(f'<g class="sc-pt{" unc" if m.get("unc") else ""}" data-i="{i}" tabindex="0" style="--c:{c}"><title>{m["n"]}：{m["t"]}</title>'

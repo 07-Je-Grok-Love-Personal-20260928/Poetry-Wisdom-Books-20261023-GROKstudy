@@ -59,3 +59,7 @@ var pid=(location.pathname.split('/').pop()||'index.html');var vis=JSON.parse(st
 $$('.path a.card').forEach(function(a){if(vis[a.getAttribute('href')])a.insertAdjacentHTML('beforeend','<span class="done-mark">✔ 已读</span>')});
 var pc=$('#pcount');if(pc)pc.textContent=Object.keys(vis).length;
 })();
+// 滚动时暂停 SVG 内的动画（SVG 子元素动画无法由 GPU 合成，滚动中暂停可避免每帧重绘），停止滚动 180ms 后恢复
+(function(){var de=document.documentElement,t=null,on=false;
+function svgs(f){document.querySelectorAll('svg.scene.live,svg.map.live,.anim.live svg,.dg.live svg,svg.anim.live,svg.dg.live').forEach(function(s){if(s.pauseAnimations){try{f?s.pauseAnimations():s.unpauseAnimations()}catch(_){}}})}
+addEventListener('scroll',function(){if(!on){on=true;de.classList.add('scrolling');svgs(true)}clearTimeout(t);t=setTimeout(function(){on=false;de.classList.remove('scrolling');svgs(false)},180)},{passive:true})})();

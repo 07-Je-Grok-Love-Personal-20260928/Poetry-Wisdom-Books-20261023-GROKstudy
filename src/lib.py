@@ -121,7 +121,7 @@ def story_dg(nodes, title='故事线'):
          f'<defs><linearGradient id="{pid}g" x1="0" x2="1">' + ''.join(f'<stop offset="{i/(n-1):.2f}" stop-color="{c}"/>' for i, (_, _, _, c) in enumerate(nodes)) + '</linearGradient></defs>',
          f'<path id="{pid}" d="{d}" fill="none" stroke="url(#{pid}g)" stroke-width="6" stroke-linecap="round" opacity=".55"/>',
          f'<path d="{d}" fill="none" stroke="#fff" stroke-width="2" class="flowd" opacity=".5"/>',
-         f'<circle r="8" fill="#fff"><animateMotion dur="{2.2*n:.1f}s" repeatCount="indefinite"><mpath href="#{pid}"/></animateMotion></circle>']
+         f'<circle r="8" fill="#fff" class="dg-dot" style="offset-path:path(\'{d}\');animation-duration:{2.2*n:.1f}s"/>']
     for i, (e, t, sub, c) in enumerate(nodes):
         x, y = xs[i], ys[i]
         s.append(f'<g><circle cx="{x:.0f}" cy="{y}" r="30" fill="{c}" opacity=".22" class="pulse" style="animation-delay:{i*.45:.2f}s"/>'
