@@ -33,6 +33,8 @@ LEGEND = ('<div class="lg">'
   '<div><span><span class="mk-dash">橙色虚线</span></span><small>有争议、位置或年代不确定</small></div>'
   '<div><span><span class="mk-sin">红色字</span></span><small>罪、错误观点、警告</small></div>'
   '<div><span><span class="mk-app">绿色底纹</span></span><small>生活应用</small></div>'
+  '<div><span><span class="mk-num">前 586 年</span></span><small>年代、数字（青色等宽标签）</small></div>'
+  '<div><span><span class="must-demo">📌 必背</span></span><small>金色边框区块：必须背下来的经文和口诀</small></div>'
   '<div><span>“……”＋出处</span><small>逐字引文（和合本／CCI／RTF）；「……」＝转述、概括</small></div>'
   '</div><div class="lgc">'
   '<span style="--cc:var(--gold)">🔑 要点</span><span style="--cc:var(--red)">⚠️ 难点</span><span style="--cc:var(--pink)">🧠 记忆</span><span style="--cc:var(--purple)">📜 信条</span>'
@@ -45,7 +47,7 @@ def cnum(n):
     return CN[n//10-1] + '十' + (CN[n%10-1] if n % 10 else '')
 # 书卷页：把各节分成五个部分（一级目录）
 BOOK_PARTS = [('核心与总览', '💎', ('core', 'glance', 'bible', 'cov')),
-              ('历史 · 地理 · 文化', '🧭', ('time', 'geo', 'trade', 'zion', 'kingdom', 'anemap', 'ctx')),
+              ('历史 · 地理 · 文化', '🧭', ('time', 'geo', 'trade', 'zion', 'kingdom', 'pilgrim', 'anemap', 'auth', 'ctx')),
               ('结构与神学', '🧱', ('why', 'struct', 'theo', 'hard')),
               ('信条与多角度', '📜', ('conf', 'wm', 'views')),
               ('应用与记忆', '🌱', ('app', 'cci2', 'mem'))]

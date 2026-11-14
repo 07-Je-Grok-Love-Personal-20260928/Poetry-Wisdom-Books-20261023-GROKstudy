@@ -39,7 +39,7 @@ html.hidden-tab .aurora i{animation-play-state:paused}
 #q{width:100%;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--glass2);color:var(--ink);font-size:14px;outline:none}#q:focus{border-color:var(--accent)}
 #qres li a{font-size:13px}#qres small{color:var(--mute);margin-right:6px}
 #scrim{position:fixed;inset:0;z-index:44;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .3s}
-main{margin-left:var(--tocw);padding:18px clamp(12px,2.4vw,40px) 60px;transition:margin-left .32s cubic-bezier(.2,.8,.2,1);min-width:0}
+main{margin-left:var(--tocw);padding:18px clamp(12px,2.4vw,40px) 60px;min-width:0}
 .toc-off #toc{transform:translateX(-102%)}.toc-off main{margin-left:0}
 @media (max-width:1100px){main{margin-left:0}#toc{transform:translateX(-102%);box-shadow:var(--sh)}.toc-open #toc{transform:none}.toc-open #scrim{opacity:1;pointer-events:auto}}
 /* 英雄区 */
@@ -366,3 +366,22 @@ html.scrolling svg *,html.scrolling .anim *,html.scrolling .dg *{animation-play-
 .part-t{font-size:clamp(20px,2.6vw,28px);font-weight:800;color:var(--ink)}
 [id]{scroll-margin-top:calc(var(--toph) + 14px)}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+/* v3 动画条形图（只动 transform） */
+.bars{margin:16px 0;padding:14px 16px;border-radius:16px;background:var(--glass2);border:1px solid var(--line)}
+.bars figcaption{font-weight:700;margin-bottom:10px}
+.bar{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr) auto;gap:4px 10px;align-items:center;margin:8px 0}
+.bar .bl{font-size:14px;color:var(--ink)}.bar b{color:var(--c);font-variant-numeric:tabular-nums;font-size:14px}
+.bar .bt{height:14px;border-radius:99px;background:color-mix(in srgb,var(--c) 14%,transparent);overflow:hidden}
+.bar .bt i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 70%,#fff),var(--c));transform-origin:left;transform:scaleX(var(--v));transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.bars.reveal:not(.inview) .bar .bt i{transform:scaleX(0)}
+.bar small{grid-column:1/-1;color:var(--ink2);font-size:12.5px;margin-top:-2px}
+.bnote{margin:10px 0 0;font-size:13.5px;color:var(--ink2)}
+@media (max-width:520px){.bar{grid-template-columns:minmax(0,1fr) auto}.bar .bt{grid-column:1/-1;grid-row:2}.bar small{grid-row:3}}
+@media (prefers-reduced-motion:reduce){.bar .bt i{transition:none}}
+/* v3 标注：年代数字、必背区块 */
+.mk-num{font-variant-numeric:tabular-nums;color:var(--teal);background:color-mix(in srgb,var(--teal) 13%,transparent);border-radius:5px;padding:0 .25em;white-space:nowrap}
+.must{position:relative;margin:18px 0;padding:22px 14px 6px;border-radius:16px;border:2px solid color-mix(in srgb,var(--gold) 70%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--gold) 10%,transparent),transparent 60%)}
+.must-tag,.must-demo{display:inline-block;font:800 12.5px/1 system-ui,sans-serif;letter-spacing:.08em;color:#1b1400;background:var(--gold);border-radius:99px;padding:5px 10px}
+.must-tag{position:absolute;top:-12px;left:14px}
+/* v3 阅读进度条：支持滚动时间线的浏览器由合成线程驱动，不需要 JS */
+@supports (animation-timeline:scroll()){#prog{transform:scaleX(0)!important;animation:progx linear both;animation-timeline:scroll(root block)}@keyframes progx{to{transform:scaleX(1)}}}

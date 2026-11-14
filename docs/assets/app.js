@@ -39,7 +39,8 @@ function fs(dl){var c=parseFloat(getComputedStyle(h).getPropertyValue('--fs'))||
 $('#fsm').onclick=function(){fs(-1)};$('#fsp').onclick=function(){fs(1)};
 // 进度条 & 回顶部
 var prog=$('#prog'),tt=$('#totop'),tick=false;
-function onS(){var m=h.scrollHeight-innerHeight;prog.style.transform='scaleX('+(m>0?scrollY/m:0)+')';tt.classList.toggle('on',scrollY>600);tick=false}
+var cssProg=window.CSS&&CSS.supports&&CSS.supports('animation-timeline','scroll()'),ttOn=false;
+function onS(){var y=scrollY;if(!cssProg){var m=h.scrollHeight-innerHeight;prog.style.transform='scaleX('+(m>0?y/m:0)+')'}var o=y>600;if(o!==ttOn){ttOn=o;tt.classList.toggle('on',o)}tick=false}
 addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(onS)}},{passive:true});onS();
 tt.onclick=function(){scrollTo({top:0,behavior:'smooth'})};
 // 滚动高亮：当前位置及其上级都高亮，上级自动展开（不改变保存的状态），目录自动滚到当前项

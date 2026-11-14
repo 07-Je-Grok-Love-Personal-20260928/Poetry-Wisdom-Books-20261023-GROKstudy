@@ -138,8 +138,8 @@ def www(why, what, how, who=None):
     if who: cols.append(('✝️ 怎样指向基督', who, 'var(--purple)'))
     return '<div class="www">' + ''.join(f'<div style="--c:{c}"><h4>{h}</h4>{b}</div>' for h, b, c in cols) + '</div>'
 def CORE(thesis, kw, why, what, how, christ, story, verse, mnemonic, extra=''):
-    return (f'<p class="thesis">💎 {thesis}</p>' + kws(kw) + story + www(why, what, how, christ) + verse +
-            C('mem', '一句口诀记全书', f'<span class="mk-mem">{mnemonic}</span>') + extra)
+    return (f'<p class="thesis">💎 {thesis}</p>' + kws(kw) + story + www(why, what, how, christ) +
+            f'<div class="must"><span class="must-tag">📌 必背</span>{verse}' + C('mem', '一句口诀记全书', f'<span class="mk-mem">{mnemonic}</span>') + '</div>' + extra)
 def media(src, title, note):
     """外部视频：点击后才载入（facade），不影响首屏性能"""
     return f'<figure class="mediafig"><div class="media"><button type="button" data-src="{src}" data-title="{esc(title)}">▶ 点击播放：{esc(title)}</button></div><figcaption>🎬 {note}</figcaption></figure>'
@@ -155,6 +155,7 @@ MK_TERMS = [
     ('mk-dash', ['位置不确定', '不确定', '有争议', '说法一', '说法二', '说法三', '说法之一']),
 ]
 MK_CONF = re.compile(r'(?:HC|BC|WCF|WSC|WLC|CD)\s?\d+(?:[.．:：]\d+)?(?:[–-]\d+)?|多特信经|比利时信条|海德堡要理问答|威斯敏斯特信仰告白')
+MK_NUM = re.compile(r'约?(?:主)?前\s?\d{3,4}(?:[–-]\d{3,4})?(?:\s?年)?')
 SKIP_CLS = ('conf', 'cci', 'creed', 'creed-box', 'chip', 'tag', 'ref', 'vref', 'kw', 'lg', 'lgc', 'map-legend', 'st-steps', 'thesis', 'mk-', 'tl-d', 'ctools', 'mtabs', 'lsrc', 'pn', 'q', 'src', 'conf-h', 'call-h')
 SKIP_TAG = {'svg', 'script', 'style', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'th', 'mark', 'b', 'strong', 'q', 'blockquote', 'summary', 'figcaption', 'nav', 'dt', 'code', 'cite', 'title', 'textarea', 'select', 'option', 'sup', 'em'}
 VOID = {'br', 'img', 'input', 'meta', 'link', 'hr', 'wbr', 'source', 'col', 'area', 'base', 'embed', 'param', 'track'}
@@ -162,7 +163,7 @@ BLOCK = {'p', 'li', 'td', 'div', 'dd', 'section', 'ul', 'ol', 'figure', 'details
 def automark(main, extra=(), per_sec=12):
     terms = [(c, t) for c, ts in list(MK_TERMS) + list(extra) for t in ts]
     terms.sort(key=lambda x: -len(x[1]))
-    alt = re.compile('|'.join(re.escape(t) for _, t in terms) + '|' + MK_CONF.pattern)
+    alt = re.compile('|'.join(re.escape(t) for _, t in terms) + '|' + MK_CONF.pattern + '|' + MK_NUM.pattern)
     cls_of = {t: c for c, t in terms}
     toks = re.split(r'(<[^>]+>)', main); stack = []; out = []; used = set(); cnt = 0; depth = 0; nmark = 0
     for tk in toks:
@@ -186,8 +187,8 @@ def automark(main, extra=(), per_sec=12):
         res = []; pos = 0
         for mm in alt.finditer(tk):
             seg = tk[pos:mm.start()]; depth += seg.count('“') - seg.count('”'); res.append(seg); pos = mm.end()
-            w = mm.group(0); c = cls_of.get(w, 'mk-conf')
-            key = w if c != 'mk-conf' else 'conf:' + w
+            w = mm.group(0); c = cls_of.get(w) or ('mk-num' if MK_NUM.fullmatch(w) else 'mk-conf')
+            key = w if c not in ('mk-conf', 'mk-num') else c + ':' + w
             if depth <= 0 and cnt < per_sec and key not in used:
                 res.append(f'<span class="{c}">{w}</span>'); used.add(key); cnt += 1; nmark += 1
             else: res.append(w)
