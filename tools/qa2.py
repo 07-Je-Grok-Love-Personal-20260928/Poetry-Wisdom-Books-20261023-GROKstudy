@@ -38,6 +38,7 @@ CHECK = r'''() => {
 def interact(pg):
     n = {}
     pg.evaluate('document.querySelectorAll(".sec").forEach(s=>s.style.contentVisibility="visible");document.querySelectorAll(".reveal").forEach(s=>s.classList.add("inview"))')
+    pg.evaluate('document.querySelectorAll(".mapfig").forEach(f=>window.PW_mountScene&&PW_mountScene(f))')
     n['details'] = pg.evaluate('(()=>{const d=[...document.querySelectorAll("main details")];d.forEach(x=>x.open=true);return d.length})()')
     n['flip'] = pg.evaluate('(()=>{const f=[...document.querySelectorAll(".flip")];f.forEach(x=>x.click());return f.length})()')
     n['quiz'] = pg.evaluate('(()=>{let k=0;document.querySelectorAll(".qz").forEach(q=>{const b=q.querySelector(".qo button");if(b){b.click();k++}});return k})()')

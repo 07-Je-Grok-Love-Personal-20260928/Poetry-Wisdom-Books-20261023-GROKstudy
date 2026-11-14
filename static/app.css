@@ -154,7 +154,7 @@ details.refs{font:13px system-ui;color:var(--ink2);margin-top:4px}details.refs s
 .qx{display:none;margin:8px 0 0;font-size:.9em;color:var(--ink2)}.qz.done .qx{display:block}
 .qscore{font-weight:700;text-align:right}
 /* 地图 */
-.mapfig{margin:16px 0}.map-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--sea)}
+.mapfig{margin:16px 0}.sc-lazy{background:linear-gradient(135deg,var(--sea),color-mix(in srgb,var(--sea) 70%,#d9c08a))}.map-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--sea)}
 svg.map{display:block;width:100%;height:auto}
 .m-sea{fill:var(--sea)}.m-land{fill:var(--land);stroke:var(--landl);stroke-width:1}.m-lake{fill:var(--sea);stroke:var(--river);stroke-width:.8}.m-river{fill:none;stroke:var(--river);stroke-width:1.8;opacity:.9}
 .m-grat{stroke:var(--ink);stroke-opacity:.07}.m-gt{font:11px system-ui;fill:var(--mute)}

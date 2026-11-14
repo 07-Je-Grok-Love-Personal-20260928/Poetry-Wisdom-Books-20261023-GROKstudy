@@ -1,3 +1,4 @@
+import os
 # -*- coding: utf-8 -*-
 """真实底图：Natural Earth（公有领域）陆地/湖泊/河流，构建时投影为内联 SVG（无 CDN、无瓦片）。
 标记 = 真实经纬度；不确定地点以虚线圈＋“约/说法之一”标明。"""
@@ -220,6 +221,11 @@ def _scene_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes
     return ''.join(s)
 
 EXTRA = {}
+def _lazy_scene(svg):
+    import re as _re
+    vb = _re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg)
+    ar = f'{float(vb.group(1)):.0f}/{float(vb.group(2)):.0f}' if vb else '16/10'
+    return f'<div class="mview v-scene on"><div class="map-wrap sc-lazy" style="aspect-ratio:{ar}"><template class="lazys">{svg}</template></div>'
 def mapfig(mid, title, bbox, markers, W=1000, res='50m', rivers=(), water=(), regions=(), routes=(), cap='', note='',
            deco=(), story=None, valleys=(), base=True, land=True, zoom=None):
     """三视图地图：🎨 情景讲解图（默认，离线 SVG 动画）｜🗺️ 地形图（Natural Earth 离线 SVG）｜🌐 实时地图（Leaflet，多图源自动切换）。
@@ -246,11 +252,13 @@ def mapfig(mid, title, bbox, markers, W=1000, res='50m', rivers=(), water=(), re
     s = [f'<figure class="mapfig" id="map-{mid}" data-live="{_h.escape(_j.dumps(live, ensure_ascii=False))}">',
          f'<div class="mtabs" role="tablist" aria-label="地图视图">' + ''.join(
              f'<button role="tab" class="mt{" on" if k == "scene" else ""}" data-v="{k}" aria-selected="{"true" if k == "scene" else "false"}">{t}</button>' for k, t in tabs) + '</div>',
-         f'<div class="mview v-scene on"><div class="map-wrap">{_scene_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes, deco, valleys, land)}</div>',
+         _lazy_scene(_scene_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes, deco, valleys, land)),
          '<div class="story"><div class="st-ctl"><button class="st-b" data-a="prev" aria-label="上一站">◀</button><button class="st-b st-play" data-a="play" aria-label="播放讲解">▶ 播放讲解</button><button class="st-b" data-a="next" aria-label="下一站">▶</button><span class="st-n">0 / ' + str(len(st)) + '</span></div>',
          '<ol class="st-steps">' + ''.join(f'<li data-i="{kidx[k]}"><b>{markers[kidx[k]-1]["n"]}</b><span>{t}</span></li>' for k, t in st) + '</ol></div></div>']
     if base:
-        s.append(f'<div class="mview v-base"><template class="lazyv"><div class="map-wrap">{_base_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes)}</div></template></div>')
+        _d = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'docs', 'assets', 'maps'); os.makedirs(_d, exist_ok=True)
+        open(os.path.join(_d, f'{mid}.svg'), 'w').write(_base_svg(mid, title, P, bbox, markers, res, rivers, water, regions, routes))
+        s.append(f'<div class="mview v-base"><div class="map-wrap" data-svg="assets/maps/{mid}.svg"><div class="lph">🗺️ 正在载入地形图…</div></div></div>')
     s.append('<div class="mview v-live"><div class="lsrc" role="group" aria-label="底图来源"></div><div class="lmap" aria-label="实时地图"><div class="lph">🌐 正在载入实时地图…<br><small>若网络不稳定，本图会自动换用其他底图来源；离线时请看“情景讲解图”或“地形图”。</small></div></div><p class="lstat" aria-live="polite"></p></div>')
     s.append('<ol class="map-legend">' + ''.join(
         f'<li data-i="{i}" style="--c:{COL[m.get("c","gold")]}"><b>{_icon(m)} {m["n"]}</b>{"<em>（位置不确定）</em>" if m.get("unc") else ""}<span>{m["t"]}</span></li>' for i, m in enumerate(markers, 1)) + '</ol>')

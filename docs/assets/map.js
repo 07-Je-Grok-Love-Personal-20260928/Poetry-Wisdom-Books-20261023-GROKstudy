@@ -54,11 +54,16 @@ function initLive(f){if(f._lm)return;var data=JSON.parse(f.dataset.live),box=$('
   f._invalidate=function(){m.invalidateSize();};
  }).catch(function(){box.innerHTML='<div class="lph">⚠️ 地图组件载入失败，请改看情景讲解图或地形图。</div>'})}
 window.PW_initLive=initLive;
+// 情景图延迟挂载：接近视口才把 SVG 放进页面，减少首屏样式与布局计算
+function mountScene(f){var tp=$('template.lazys',f);if(!tp)return;var w=tp.parentNode;w.appendChild(tp.content.cloneNode(true));tp.remove();w.classList.remove('sc-lazy');w.style.aspectRatio='';bindPts(f);watchAnim(w)}
+var vio=null;function watchAnim(root){if(!vio)return;$$('svg',root).forEach(function(x){vio.observe(x)})}
+window.PW_mountScene=mountScene;
 // 视图切换
 $$('.mapfig').forEach(function(f){
  $$('.mt',f).forEach(function(b){b.onclick=function(){var v=b.dataset.v;$$('.mt',f).forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
   $$('.mview',f).forEach(function(x){x.classList.toggle('on',x.classList.contains('v-'+v))});store('pw-mapview',v);
-  var tp=$('.v-'+v+' template.lazyv',f);if(tp){tp.parentNode.appendChild(tp.content.cloneNode(true));tp.remove();bindPts(f)}
+  if(v==='scene')mountScene(f);
+  var bw=$('.v-'+v+' .map-wrap[data-svg]',f);if(bw&&!bw._ld){bw._ld=1;fetch(bw.dataset.svg).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){bw.innerHTML=t;bindPts(f);watchAnim(bw)}).catch(function(){bw._ld=0;bw.innerHTML='<div class="lph">⚠️ 地形图载入失败，请看情景讲解图。</div>'})}
   if(v==='live'){initLive(f);if(f._invalidate)setTimeout(f._invalidate,30)}}});
  // 图例联动（情景图 + 地形图）
  bindPts(f)});
@@ -77,12 +82,14 @@ $$('.mapfig').forEach(function(f){var on=function(i){f._on(i)};
 });
 // 滚动到附近才预载 Leaflet；用户上次选“实时地图”则进入视口时自动初始化
 if('IntersectionObserver' in window){var pref=store('pw-mapview');
+ var mio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){mio.unobserve(e.target);mountScene(e.target)}})},{rootMargin:'900px 0px'});
+ $$('.mapfig').forEach(function(f){mio.observe(f)});
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var f=e.target;io.unobserve(f);
   var idle=window.requestIdleCallback||function(cb){setTimeout(cb,400)};idle(function(){loadLeaflet().catch(function(){})});
   if(pref==='live'){var b=$('.mt[data-v="live"]',f);if(b)b.click()}})},{rootMargin:'300px 0px'});
  $$('.mapfig').forEach(function(f){io.observe(f)});
  // 动画只在可见时运行
- var vio=new IntersectionObserver(function(es){es.forEach(function(e){var t=e.target;t.classList.toggle('live',e.isIntersecting);if(t.pauseAnimations){try{e.isIntersecting?t.unpauseAnimations():t.pauseAnimations()}catch(_){}}})},{rootMargin:'100px 0px'});
+ vio=new IntersectionObserver(function(es){es.forEach(function(e){var t=e.target;t.classList.toggle('live',e.isIntersecting);if(t.pauseAnimations){try{e.isIntersecting?t.unpauseAnimations():t.pauseAnimations()}catch(_){}}})},{rootMargin:'100px 0px'});
  $$('.mapfig svg,.anim,.dg').forEach(function(x){vio.observe(x)});
-}
+}else{$$('.mapfig').forEach(mountScene)}
 })();
