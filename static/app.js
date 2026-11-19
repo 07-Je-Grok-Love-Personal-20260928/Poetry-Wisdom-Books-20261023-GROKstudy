@@ -109,3 +109,7 @@ var pc=$('#pcount');if(pc)pc.textContent=Object.keys(vis).length;
 (function(){var de=document.documentElement,t=null,on=false;
 function svgs(f){document.querySelectorAll('svg.scene.live,svg.map.live,.anim.live svg,.dg.live svg,svg.anim.live,svg.dg.live').forEach(function(s){if(s.pauseAnimations){try{f?s.pauseAnimations():s.unpauseAnimations()}catch(_){}}})}
 addEventListener('scroll',function(){if(!on){on=true;de.classList.add('scrolling');svgs(true)}clearTimeout(t);t=setTimeout(function(){on=false;de.classList.remove('scrolling');svgs(false)},180)},{passive:true})})();
+// v4 灵修进度：勾选已读（本机保存）
+(function(){var bx=document.querySelectorAll('.dchk input');if(!bx.length)return;var K='pw-dev',st={};try{st=JSON.parse(localStorage.getItem(K)||'{}')}catch(_){}
+function up(){var n=0;bx.forEach(function(b){if(b.checked)n++});var c=document.getElementById('dcount'),br=document.getElementById('dbar');if(c)c.textContent=n;if(br)br.style.setProperty('--p',(n/bx.length).toFixed(4))}
+bx.forEach(function(b){b.checked=!!st[b.dataset.k];b.addEventListener('change',function(){if(b.checked)st[b.dataset.k]=1;else delete st[b.dataset.k];try{localStorage.setItem(K,JSON.stringify(st))}catch(_){}up()})});up()})();
