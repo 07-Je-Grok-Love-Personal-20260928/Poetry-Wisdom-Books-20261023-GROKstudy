@@ -7,6 +7,8 @@ PAGES = [
  ('bible', '🌍', '整本圣经', '圣经神学 · 圣约神学'),
  ('job', '🌪️', '约伯记', '苦难中的信靠'),
  ('psalms', '🎼', '诗篇', '圣约子民的祷告与敬拜'),
+ ('psalms-love', '💗', '爱上诗篇', '戈弗雷导读 · 49 章'),
+ ('psalms-devotional', '🏡', '家庭灵修', '诗篇 366 天'),
  ('proverbs', '🦉', '箴言', '敬畏耶和华的日常智慧'),
  ('eccl', '🌫️', '传道书', '日光之下的虚空与敬畏'),
  ('song', '🌹', '雅歌', '盟约之爱的歌'),
@@ -50,8 +52,10 @@ BOOK_PARTS = [('核心与总览', '💎', ('core', 'glance', 'bible', 'cov')),
               ('历史 · 地理 · 文化', '🧭', ('time', 'geo', 'trade', 'zion', 'kingdom', 'pilgrim', 'anemap', 'auth', 'ctx')),
               ('结构与神学', '🧱', ('why', 'struct', 'theo', 'hard')),
               ('信条与多角度', '📜', ('conf', 'wm', 'views')),
-              ('应用与记忆', '🌱', ('app', 'cci2', 'mem'))]
+              ('应用与记忆', '🌱', ('app', 'pdf', 'cci2', 'mem', 'pmem'))]
 PAGE_PARTS = {
+  'psalms-love': [('导读与总览', '💎', ('core', 'intro')), ('五卷书逐章', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('结论 · 对照 · 记忆', '🎆', ('final', 'notes', 'mem'))],
+  'psalms-devotional': [('总览', '💎', ('core',)), ('五卷 · 310 天', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('附录 · 56 天', '✝️', ('a1', 'a2', 'a3')), ('对照与记忆', '🧠', ('notes', 'mem'))],
   'bible': [('核心与正典', '💎', ('core', 'canon')), ('圣经神学与圣约', '🤝', ('bt', 'cov')), ('历史与地理', '🧭', ('time', 'geo')),
             ('智慧、诗歌与信条', '🦉', ('wm', 'wis', 'poetry')), ('学习路径', '🧭', ('path',))],
   'compare': [('总览与对照', '⚖️', ('over', 'side', 'same', 'diff')), ('历史：异端与会议', '🏛️', ('here', 'map')), ('为什么三份 · 记忆', '🧠', ('why', 'wis', 'mem'))],
@@ -126,7 +130,7 @@ def page(pid, hero, main, accent='#f5b83d'):
     main = re.sub(r'<section id="([^"]+)" class="([^"]*)"><h2>', lambda m: f'<section id="{m.group(1)}" class="{m.group(2)}"><h2 id="{m.group(1)}-h">', main)
     main, toc, _tree = structure(pid, main)
     S_IDX.extend({'p': pid + '.html', 'pt': me[2], 'id': id, 't': re.sub(r'<span class="hn">.*?</span>|<[^>]+>', '', t)} for lv, id, t in re.findall(r'<(h2|h3) id="([^"]+)">(.*?)</\1>', main))
-    nav = ''.join(f'<a class="pg{" on" if p[0]==pid else ""}" href="{p[0]}.html"><i>{p[1]}</i><span>{p[2]}</span></a>' for p in PAGES)
+    nav = ''.join(f'<a class="pg{" on" if p[0]==pid else ""}" href="{p[0]}.html"><i>{p[1]}</i><span>{p[2]}</span></a>' for p in PAGES if '-' not in p[0] or p[0] == pid)
     pnav = ''.join(f'<li><a class="{"on" if p[0]==pid else ""}" href="{p[0]}.html"><i>{p[1]}</i>{p[2]}<small>{p[3]}</small></a></li>' for p in PAGES)
     i = [p[0] for p in PAGES].index(pid)
     prev = PAGES[i-1] if i > 0 else None; nxt = PAGES[i+1] if i < len(PAGES)-1 else None
@@ -154,7 +158,7 @@ def page(pid, hero, main, accent='#f5b83d'):
 <div id="legpop" role="dialog" aria-label="笔记标记图例"><h4>🖍️ 笔记标记图例 <button class="mini" id="legx" aria-label="关闭图例">关闭</button></h4>{LEGEND}</div>
 <main id="main"><div class="hero">{hero}</div>{main}{pn}
 <footer class="foot"><p>📚 {TAG} · 版本 {VERSION} · {DATE}（台北时间） · <a href="sources.html#o-ver">版本记录</a></p><p>信经与三项联合信条原文逐字取自 <a href="https://ccifellowship.org" target="_blank" rel="noopener">ccifellowship.org</a>；威斯敏斯特标准逐字取自 <a href="https://rtf-usa.com/wp-content/uploads/2024/08/RTF-Westminster-Standards-FINAL-DIGITAL.pdf" target="_blank" rel="noopener">RTF-USA 简体中文新版</a>；经文取自和合本（新标点，信望爱站 FHL 接口）。本站讲解文字为学习用概述。</p></footer></main>
-<button id="totop" aria-label="回到顶部">↑</button>
+<nav id="fab" aria-label="快速导航"><div class="fab-m" id="fabm"><button type="button" data-go="back" aria-label="返回上一页" title="返回（Alt+←）"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" data-go="fwd" aria-label="前进到下一页" title="前进（Alt+→）"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button type="button" data-go="top" aria-label="回到顶部" title="顶部（Home）"><svg viewBox="0 0 24 24"><path d="M6 5h12M12 19V9m-5 5l5-5 5 5"/></svg></button><button type="button" data-go="bot" aria-label="到页面底部" title="底部（End）"><svg viewBox="0 0 24 24"><path d="M6 19h12M12 5v10m-5-5l5 5 5-5"/></svg></button><button type="button" data-go="toc" aria-label="显示或隐藏目录" title="目录（T）"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h10M5 17h12"/></svg></button><a href="index.html" data-go="home" aria-label="回到首页" title="首页"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7M6 10v9h4v-5h4v5h4v-9"/></svg></a></div><button type="button" id="fabt" aria-expanded="false" aria-controls="fabm" aria-label="快速导航" title="快速导航"><svg viewBox="0 0 24 24" class="fab-i"><circle cx="12" cy="12" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg><svg class="fab-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" pathLength="100"/></svg></button></nav>
 </body></html>'''
 def hero(icon, title, sub, core, chips=(), extra=''):
     ch = ''.join(f'<span class="chip" style="--c:{c}">{t}</span>' for t, c in chips)

@@ -1,26 +1,41 @@
-# 诗歌智慧书深度学习 · Poetry & Wisdom Books — 2026-11-14 · v3.0.0 · GROKstudy
+# 诗歌智慧书深度学习 · Poetry & Wisdom Books — 2026-11-19 · v4.0.0 · GROKstudy
 
 **主题**：约伯记 · 诗篇 · 箴言 · 传道书 · 雅歌 —— 从整本圣经（圣经神学、圣约神学、救赎历史、基督中心）出发，按欧陆改革宗正统立场（三项联合信条 + 三大信经）深度学习。
-**日期**：2026-11-14（台北时间；首版 2026-10-23） · **版本**：v3.0.0 · **标签**：poetry-wisdom-20261114-v3.0.0-GROKstudy
+**日期**：2026-11-19（台北时间；首版 2026-10-23） · **版本**：v4.0.0 · **标签**：poetry-wisdom-20261119-v4.0.0-GROKstudy
 
 ## 🔗 在线链接
 | 平台 | 链接 | 版本 |
 |---|---|---|
-| Surge（v3.0.0 新域名） | https://poetry-wisdom-20261114-v3-0-grokstudy.surge.sh/ | v3.0.0 |
-| Netlify（v3.0.0 新站点） | https://poetry-wisdom-20261114-v3-grokstudy.netlify.app/ | v3.0.0 |
-| GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/Poetry-Wisdom-Books-20261023-GROKstudy/ | v3.0.0 |
-| Surge（v2.1.0 域名，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.surge.sh/ | v3.0.0 |
-| Surge（v2.0.0 域名，已更新） | https://poetry-wisdom-20261114-v2-0-grokstudy.surge.sh/ | v3.0.0 |
-| Surge（原域名，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.surge.sh/ | v3.0.0 |
-| Netlify（v2.1.0 站点，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.netlify.app/ | v3.0.0 |
-| Netlify（v2.0.0 站点，已更新） | https://poetry-wisdom-20261114-v2-grokstudy.netlify.app/ | v3.0.0 |
-| Netlify（原站点，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.netlify.app/ | v3.0.0 |
+| Surge（v4.0.0 新域名） | https://poetry-wisdom-20261119-v4-0-grokstudy.surge.sh/ | v4.0.0 |
+| Netlify（v4.0.0 新站点） | https://poetry-wisdom-20261119-v4-grokstudy.netlify.app/ | v4.0.0 |
+| GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/Poetry-Wisdom-Books-20261023-GROKstudy/ | v4.0.0 |
+| Surge（v3.0.0 域名，已更新） | https://poetry-wisdom-20261114-v3-0-grokstudy.surge.sh/ | v4.0.0 |
+| Surge（v2.1.0 域名，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.surge.sh/ | v4.0.0 |
+| Surge（v2.0.0 域名，已更新） | https://poetry-wisdom-20261114-v2-0-grokstudy.surge.sh/ | v4.0.0 |
+| Surge（原域名，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.surge.sh/ | v4.0.0 |
+| Netlify（v3.0.0 站点，已更新） | https://poetry-wisdom-20261114-v3-grokstudy.netlify.app/ | v4.0.0 |
+| Netlify（v2.1.0 站点，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.netlify.app/ | v4.0.0 |
+| Netlify（v2.0.0 站点，已更新） | https://poetry-wisdom-20261114-v2-grokstudy.netlify.app/ | v4.0.0 |
+| Netlify（原站点，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.netlify.app/ | v4.0.0 |
 | Surge（v1.1.0 存档别名） | https://poetry-wisdom-20261024-v1-1-grokstudy.surge.sh/ | v1.1.0 |
 | 仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy | |
+| 发布 v4.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v4.0.0 | |
 | 发布 v3.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v3.0.0 | |
 | 发布 v2.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v2.1.0 | |
 | 发布 v2.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v2.0.0 | |
 | 还原点 v1.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v1.1.0 | |
+
+## ✨ v4.0.0 更新说明（2026-11-19）
+- **新分页「💗 爱上诗篇」**（`psalms-love.html`）：W. 罗伯特·戈弗雷《爱上诗篇》（乔兰山以妲 译）全书 49 章逐章导读——
+  - 导论八章：诗篇的四种魅力、诗114 示范、五个难点、循环主题、说话者（大卫 → 基督 → 我们）、诗歌形式（平行、中心句、交叉、离合诗）、五卷大结构、读诗十问；
+  - 五卷书各有总论和原书大纲，以及 30 章重点诗篇默想（共 32 篇：3、8、18、21、22、30、46、48、51、68、69、72、73、74、78、81、86–89、90、92、95、103、104、106、109、110、118、121、135、138）的要点、指向基督与应用；
+  - 结论：诗146–150 逐一对应五卷；后记；
+  - 每章附原书「默想与讨论」题目（共 144 题，可折叠）；五卷「阶梯」动画图、五卷篇数柱状图、主题思维导图、读诗三步流程图；口诀「信 · 委 · 危 · 慰 · 庆」；翻卡与测验。
+- **新分页「🏡 家庭灵修」**（`psalms-devotional.html`）：Peter H. Holtvlüwer《家庭灵修·诗篇》（2018）366 天全部篇目——诗篇 1–150 共 310 天（每篇一句本站概括的核心），附录一 基督传道生涯 37 天（时间线视图）、附录二 节令 15 天、附录三 圣餐 4 天；每天列出题目、经文、对读经文和和合本钥节；可勾选「已读」，进度保存在本机。
+- **信条对照**：两页都有「改革宗信条对照与评注」，标出与三项联合信条一致之处，以及解释性观点（五卷主题编排）、唱诗篇、咒诅诗、守护天使、节令等需要说明之处。
+- **出处**：两书只整理学习要点并注明出处；仓库中不包含原书 PDF 或全文。诗篇主页、速记中心和来源页都加了入口与说明。
+- **右下角快速导航**：半透明毛玻璃「⋯」按钮（外圈显示阅读进度），点开有 返回 · 前进 · 顶部 · 底部 · 目录 · 首页；触屏 44 px，点别处自动收起。
+- **目录**：默认只显示一级，当前所在部分自动展开到二级并随滚动切换；每个分支有 ⊕／⊖ 一键展开或收起全部下级；一级／二级／三级按钮仍可用。
 
 ## ✨ v3.0.0 更新说明（2026-11-14）
 - **目录全面改版**：
@@ -52,10 +67,10 @@
 - **内容**：新增 5 段 CCI 原文摘录（教会规章第 55 条、讲章 103、讲章 31、讲章 54、《我属于主》主日三十五）；`tools/vcheck.py` 重新核对全部经文引语。
 - **检查**：在 360/390/414/768/1024/1280/1440/1920 px 下各做三轮检查（初始状态；展开全部内容并操作翻卡、测验、讲解步骤、地图视图和瓦片来源之后；打开目录和图例之后），检查横向溢出、元素重叠、文字被裁切和控制台错误。
 
-## 📚 内容（12 页）
+## 📚 内容（14 页）
 1. **首页**：五卷一览、学习路径（本机记录进度）、标注图例
 2. **整本圣经视角**：本质核心、正典（BC 4–6）、圣经神学五幕、圣约表、时间线、总地图、智慧与敬畏、希伯来诗歌
-3–7. **约伯记 / 诗篇 / 箴言 / 传道书 / 雅歌**：每卷包括本质核心、一览、威斯敏斯特标准逐字引文、整本圣经中的位置、圣约、时间线、地理（三视图地图）、历史与古代近东文化、写作目的、结构（图表/思维导图）、神学主题、难点、信条对照、多种观点、应用、速记与测验
+3–7. **约伯记 / 诗篇（另有两个分页：💗 爱上诗篇导读、🏡 家庭灵修 366 天） / 箴言 / 传道书 / 雅歌**：每卷包括本质核心、一览、威斯敏斯特标准逐字引文、整本圣经中的位置、圣约、时间线、地理（三视图地图）、历史与古代近东文化、写作目的、结构（图表/思维导图）、神学主题、难点、信条对照、多种观点、应用、速记与测验
 8. **信条对照**：三项联合信条中引用五卷书的全部 111 处脚注（逐字原文）；威斯敏斯特标准经文脚注索引
 9. **三大信经背诵版**：使徒信经、尼西亚信经、亚他那修信经（逐字 CCI），有遮盖、提示和朗读工具
 10. **信经对比**：异同、并列对照、所针对的异端、大公会议地图、为什么需要三份信经
@@ -76,6 +91,7 @@
 ## 📝 版本记录
 | 版本 | 日期 | 说明 |
 |---|---|---|
+| v4.0.0 | 2026-11-19 | 新增《爱上诗篇》49 章导读与《家庭灵修·诗篇》366 天两个分页（含信条对照评注）；右下角快速导航；目录默认层级与分支展开；新增 Surge v4-0 与 Netlify v4 域名 |
 | v3.0.0 | 2026-11-14 | 三级可折叠、可拖宽的编号目录；滚动性能优化；新增朝圣之路与箴言作者地图、动画柱状图、必背区块；8 种宽度 × 13 页 × 3 轮全部通过；新增 Surge v3-0 与 Netlify v3 域名 |
 | v2.1.0 | 2026-11-14 | 实时地图低缩放级来源改为放大显示、不再空白，自动选择时优先清晰的来源；精简与“本质核心”重复的内容和地图套话（讲解文字约 −4%）；8 种宽度全部通过；新增 Surge 与 Netlify v2-1 域名 |
 | v2.0.0 | 2026-11-14 | 全面优化：本质核心；三视图地图（情景讲解图、离线地形图、14 个来源并自动切换的实时地图），新增 4 幅地图；统一标注系统与图例；新配色；性能优化；新增 5 段 CCI 摘录；8 种宽度多轮检查；新增 Surge 与 Netlify v2 域名 |
