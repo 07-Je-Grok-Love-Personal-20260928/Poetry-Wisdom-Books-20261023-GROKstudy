@@ -56,7 +56,7 @@ function go(y,bot){var c=scrollY,v=innerHeight;if(Math.abs(y-c)>v*2)scrollTo({to
  var n=0,t=setInterval(function(){n++;var dy=bot?h.scrollHeight-v-scrollY:scrollY;if(Math.abs(dy)<3||n>20){clearInterval(t);return}if(n%4===0)scrollTo({top:bot?h.scrollHeight:0,behavior:'instant'})},120)}
 var sm=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
 $$('#fab [data-go]').forEach(function(b){b.addEventListener('click',function(e){var g=b.dataset.go;
- if(g==='back'){e.preventDefault();if(history.length>1&&d.referrer)history.back();else location.href='index.html'}
+ if(g==='back'){e.preventDefault();if(history.length>1)history.back();else location.href='index.html'}
  else if(g==='fwd'){e.preventDefault();history.forward()}
  else if(g==='top')go(0,0);
  else if(g==='bot')go(h.scrollHeight,1);

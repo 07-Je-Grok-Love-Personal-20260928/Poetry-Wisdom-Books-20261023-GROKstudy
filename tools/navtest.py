@@ -1,13 +1,14 @@
 import sys,json
 from playwright.sync_api import sync_playwright
 BASE=sys.argv[1] if len(sys.argv)>1 else 'http://localhost:8820'
+PG=sys.argv[2] if len(sys.argv)>2 else 'psalms-devotional.html'
 out=[]
 with sync_playwright() as p:
   b=p.chromium.launch()
   for w,hgt,mob in [(360,740,True),(1280,800,False)]:
     pg=b.new_page(viewport={'width':w,'height':hgt},is_mobile=mob,has_touch=mob);errs=[]
     pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:m.type=='error' and errs.append(m.text))
-    pg.goto(BASE+'/index.html');pg.click('a.card[href="psalms.html"]') if pg.locator('a.card[href="psalms.html"]').count() else pg.goto(BASE+'/psalms.html')
+    pg.goto(BASE+'/psalms.html');pg.goto(BASE+'/'+PG)
     pg.wait_for_load_state('load');pg.wait_for_timeout(400)
     r={}
     r['toc_vis_l1']=pg.evaluate("[...document.querySelectorAll('#toc .toc-list>li')].length")
