@@ -23,9 +23,15 @@ $('#tocfull').onclick=function(){h.classList.toggle('toc-full')};
 // 目录多级折叠：记住每页每项的展开状态
 var tl=$('#toc .toc-list'),TK='pw-tocx:'+(tl?tl.dataset.pid:''),ost={};try{ost=JSON.parse(store(TK)||'{}')}catch(_){ost={}}
 function setOpen(li,on,save){li.classList.toggle('open',on);var b=$('.tx',li);if(b)b.setAttribute('aria-expanded',on?'true':'false');if(save){ost[li.dataset.k]=on?1:0;store(TK,JSON.stringify(ost))}}
-$$('#toc .toc-list li').forEach(function(li){if(!$('ol',li))return;var k=li.dataset.k,def=li.classList.contains('tl1');setOpen(li,k in ost?!!ost[k]:def,false)});
-$$('#toc .toc-list .tx').forEach(function(b){b.onclick=function(e){e.preventDefault();var li=b.closest('li');setOpen(li,!li.classList.contains('open'),true)}});
-$$('#toc .toc-lv button').forEach(function(b){b.onclick=function(){var lv=+b.dataset.lv;$$('#toc .toc-list li').forEach(function(li){if(!$('ol',li))return;var l=+li.className.match(/tl(\d)/)[1];setOpen(li,l<lv,true)});$$('#toc .toc-lv button').forEach(function(x){x.classList.toggle('on',x===b)})}});
+// 默认：各部分只显示一级；当前所在部分自动展开到二级（滚动时跟随）。用户手动展开／折叠的会记住
+$$('#toc .toc-list li').forEach(function(li){if(!$('ol',li))return;var k=li.dataset.k;setOpen(li,k in ost?!!ost[k]:false,false)});
+// 每个分支的“全部展开／收起”按钮（⊕／⊖）：只作用于该分支的所有下级
+$$('#toc .toc-list li').forEach(function(li){if(!$('ol li ol',li))return;var tr=$('.tr',li),b=d.createElement('button');b.className='txa';b.type='button';b.title='展开／收起此项的全部下级';b.setAttribute('aria-label','展开或收起此项的全部下级');tr.appendChild(b);
+ b.onclick=function(e){e.preventDefault();var sub=[li].concat($$('li',li).filter(function(x){return $('ol',x)}));var all=sub.every(function(x){return x.classList.contains('open')});sub.forEach(function(x){setOpen(x,!all,true)});upd()}});
+var auto=[];(function(){var f=$('#toc .toc-list>li');if(f&&$('ol',f)&&!(f.dataset.k in ost)){setOpen(f,true,false);auto.push(f)}})();
+function upd(){$$('#toc .txa').forEach(function(b){var li=b.closest('li');var all=[li].concat($$('li',li).filter(function(x){return $('ol',x)})).every(function(x){return x.classList.contains('open')});b.classList.toggle('on',all)})}upd();
+$$('#toc .toc-list .tx').forEach(function(b){b.onclick=function(e){e.preventDefault();var li=b.closest('li');setOpen(li,!li.classList.contains('open'),true);upd()}});
+$$('#toc .toc-lv button').forEach(function(b){b.onclick=function(){var lv=+b.dataset.lv;$$('#toc .toc-list li').forEach(function(li){if(!$('ol',li))return;var l=+li.className.match(/tl(\d)/)[1];setOpen(li,l<lv,true)});$$('#toc .toc-lv button').forEach(function(x){x.classList.toggle('on',x===b)});upd()}});
 d.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.key==='t'||e.key==='T')$('#tocbtn').click();if(e.key==='l'||e.key==='L')h.classList.toggle('leg-on');if(e.key==='Escape'){h.classList.remove('toc-open');h.classList.remove('leg-on')}});
 // 图例
 $('#legbtn').onclick=function(e){e.stopPropagation();h.classList.toggle('leg-on')};$('#legx').onclick=function(){h.classList.remove('leg-on')};
@@ -38,15 +44,28 @@ $('#themebtn').onclick=function(){var t=h.dataset.theme==='day'?'night':'day';h.
 function fs(dl){var c=parseFloat(getComputedStyle(h).getPropertyValue('--fs'))||17;c=Math.min(22,Math.max(14,c+dl));h.style.setProperty('--fs',c+'px');store('pw-fs',c)}
 $('#fsm').onclick=function(){fs(-1)};$('#fsp').onclick=function(){fs(1)};
 // 进度条 & 回顶部
-var prog=$('#prog'),tt=$('#totop'),tick=false;
+var prog=$('#prog'),tt=$('#fab'),tick=false,ring=$('#fab .fab-ring circle');
 var cssProg=window.CSS&&CSS.supports&&CSS.supports('animation-timeline','scroll()'),ttOn=false;
-function onS(){var y=scrollY;if(!cssProg){var m=h.scrollHeight-innerHeight;prog.style.transform='scaleX('+(m>0?y/m:0)+')'}var o=y>600;if(o!==ttOn){ttOn=o;tt.classList.toggle('on',o)}tick=false}
+function onS(){var y=scrollY;if(!cssProg){var m=h.scrollHeight-innerHeight;prog.style.transform='scaleX('+(m>0?y/m:0)+')'}var o=y>240;if(o!==ttOn){ttOn=o;tt.classList.toggle('on',o)}if(ring&&h.classList.contains('fab-open')===false){var m2=h.scrollHeight-innerHeight;ring.style.strokeDashoffset=100-(m2>0?Math.round(y/m2*100):0)}tick=false}
 addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(onS)}},{passive:true});onS();
-tt.onclick=function(){scrollTo({top:0,behavior:'smooth'})};
+// 右下角快速导航：返回／前进／顶部／底部／目录／首页；点 ⋯ 展开，点别处或滚动后自动收起
+var fb=$('#fabt');function fab(on){h.classList.toggle('fab-open',on);fb.setAttribute('aria-expanded',on?'true':'false')}
+fb.onclick=function(e){e.stopPropagation();fab(!h.classList.contains('fab-open'))};
+d.addEventListener('click',function(e){if(h.classList.contains('fab-open')&&!e.target.closest('#fab'))fab(false)});
+function go(y,bot){var c=scrollY,v=innerHeight;if(Math.abs(y-c)>v*2)scrollTo({top:bot?y-v*1.5:v*1.5,behavior:'instant'});scrollTo({top:bot?h.scrollHeight:0,behavior:sm});
+ var n=0,t=setInterval(function(){n++;var dy=bot?h.scrollHeight-v-scrollY:scrollY;if(Math.abs(dy)<3||n>20){clearInterval(t);return}if(n%4===0)scrollTo({top:bot?h.scrollHeight:0,behavior:'instant'})},120)}
+var sm=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+$$('#fab [data-go]').forEach(function(b){b.addEventListener('click',function(e){var g=b.dataset.go;
+ if(g==='back'){e.preventDefault();if(history.length>1&&d.referrer)history.back();else location.href='index.html'}
+ else if(g==='fwd'){e.preventDefault();history.forward()}
+ else if(g==='top')go(0,0);
+ else if(g==='bot')go(h.scrollHeight,1);
+ else if(g==='toc'){e.stopPropagation();tocToggle()}
+ if(g!=='home')fab(false)})});
 // 滚动高亮：当前位置及其上级都高亮，上级自动展开（不改变保存的状态），目录自动滚到当前项
 var links={},tin=$('#toc .toc-in');$$('#toc .toc-list a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
 var curA=null;function act(a){if(a===curA)return;curA=a;$$('#toc a.act').forEach(function(x){x.classList.remove('act')});$$('#toc li.path').forEach(function(x){x.classList.remove('path')});
- a.classList.add('act');for(var li=a.closest('li');li;li=li.parentNode.closest('li'))li.classList.add('path');
+ a.classList.add('act');for(var li=a.closest('li');li;li=li.parentNode.closest('li')){li.classList.add('path');var pl=li.parentNode.closest('li');if(pl&&!(pl.dataset.k in ost)&&!pl.classList.contains('open')){setOpen(pl,true,false);auto.push(pl)}}auto=auto.filter(function(x){if(!x.classList.contains('path')&&!(x.dataset.k in ost)){setOpen(x,false,false);return false}return true});if(typeof upd==='function')upd();
  if(tin&&(h.classList.contains('toc-open')||wide()&&!h.classList.contains('toc-off'))){var r=a.getBoundingClientRect(),b=tin.getBoundingClientRect();if(r.top<b.top+40||r.bottom>b.bottom-40)tin.scrollTo({top:tin.scrollTop+r.top-b.top-b.height/3,behavior:'smooth'})}}
 if('IntersectionObserver' in window){
  var vis2={};var io=new IntersectionObserver(function(es){es.forEach(function(e){vis2[e.target.id]=e.isIntersecting?e.target:null});var best=null,bt=1e9;for(var k in vis2){var el=vis2[k];if(!el)continue;var t=Math.abs(el.getBoundingClientRect().top);if(t<bt){bt=t;best=k}}if(best&&links[best])act(links[best])},{rootMargin:'-12% 0px -70% 0px'});
