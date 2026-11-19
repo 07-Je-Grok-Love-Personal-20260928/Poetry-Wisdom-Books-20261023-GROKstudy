@@ -22,10 +22,10 @@ def stairs():
     for k in range(5):
         h = 50 + k * 38; x = 20 + k * 114
         s += (f'<g class="st" style="--d:{k * 0.12:.2f}s"><rect x="{x}" y="{230 - h}" width="104" height="{h}" rx="10" fill="{cols[k]}" opacity=".85"/>'
-              f'<text x="{x + 52}" y="{222 - h + 30}" text-anchor="middle" font-size="22">{ic[k]}</text>'
-              f'<text x="{x + 52}" y="{250}" text-anchor="middle" font-size="13" fill="currentColor">第{"一二三四五"[k]}卷 {G.BOOKS[k][1]}</text></g>')
+              f'<text x="{x + 52}" y="{222 - h + 30}" text-anchor="middle" font-size="26">{ic[k]}</text>'
+              f'<text x="{x + 52}" y="{250}" text-anchor="middle" font-size="17" font-weight="700" fill="currentColor">卷{"一二三四五"[k]} · {G.BOOKS[k][1]}</text></g>')
     s += '<path d="M20 200 C200 190 380 120 580 30" fill="none" stroke="url(#stg)" stroke-width="3" stroke-dasharray="6 6" class="st-line"/>'
-    s += '<text x="22" y="20" font-size="13" fill="currentColor">😢 哀歌多</text><text x="578" y="20" text-anchor="end" font-size="13" fill="currentColor">🎉 赞美满</text></svg>'
+    s += '<text x="22" y="20" font-size="16" fill="currentColor">😢 哀歌多</text><text x="578" y="20" text-anchor="end" font-size="16" fill="currentColor">🎉 赞美满</text></svg>'
     s += '<figcaption>🪜 五卷书像五级台阶：前面哀歌多，越往后赞美越多，最后以诗150 的纯赞美结束（颜色＝各卷主题色）。</figcaption></figure>'
     return s
 def build():
