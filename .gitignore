@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 docs/CNAME
 data/rtf_live.pdf
+__pycache__/

@@ -1,29 +1,39 @@
-# 诗歌智慧书深度学习 · Poetry & Wisdom Books — 2026-11-19 · v4.0.0 · GROKstudy
+# 诗歌智慧书深度学习 · Poetry & Wisdom Books — 2026-11-21 · v4.1.0 · GROKstudy
 
 **主题**：约伯记 · 诗篇 · 箴言 · 传道书 · 雅歌 —— 从整本圣经（圣经神学、圣约神学、救赎历史、基督中心）出发，按欧陆改革宗正统立场（三项联合信条 + 三大信经）深度学习。
-**日期**：2026-11-19（台北时间；首版 2026-10-23） · **版本**：v4.0.0 · **标签**：poetry-wisdom-20261119-v4.0.0-GROKstudy
+**日期**：2026-11-21（台北时间；首版 2026-10-23） · **版本**：v4.1.0 · **标签**：poetry-wisdom-20261121-v4.1.0-GROKstudy
 
 ## 🔗 在线链接
 | 平台 | 链接 | 版本 |
 |---|---|---|
-| Surge（v4.0.0 新域名） | https://poetry-wisdom-20261119-v4-0-grokstudy.surge.sh/ | v4.0.0 |
-| Netlify（v4.0.0 新站点） | https://poetry-wisdom-20261119-v4-grokstudy.netlify.app/ | v4.0.0 |
-| GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/Poetry-Wisdom-Books-20261023-GROKstudy/ | v4.0.0 |
-| Surge（v3.0.0 域名，已更新） | https://poetry-wisdom-20261114-v3-0-grokstudy.surge.sh/ | v4.0.0 |
-| Surge（v2.1.0 域名，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.surge.sh/ | v4.0.0 |
-| Surge（v2.0.0 域名，已更新） | https://poetry-wisdom-20261114-v2-0-grokstudy.surge.sh/ | v4.0.0 |
-| Surge（原域名，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.surge.sh/ | v4.0.0 |
-| Netlify（v3.0.0 站点，已更新） | https://poetry-wisdom-20261114-v3-grokstudy.netlify.app/ | v4.0.0 |
-| Netlify（v2.1.0 站点，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.netlify.app/ | v4.0.0 |
-| Netlify（v2.0.0 站点，已更新） | https://poetry-wisdom-20261114-v2-grokstudy.netlify.app/ | v4.0.0 |
-| Netlify（原站点，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.netlify.app/ | v4.0.0 |
+| Surge（v4.1.0 新域名） | https://poetry-wisdom-20261121-v4-1-grokstudy.surge.sh/ | v4.1.0 |
+| Netlify（v4.1.0 新站点） | https://poetry-wisdom-20261121-v4-1-grokstudy.netlify.app/ | v4.1.0 |
+| Surge（v4.0.0 域名，已更新） | https://poetry-wisdom-20261119-v4-0-grokstudy.surge.sh/ | v4.1.0 |
+| Netlify（v4.0.0 站点，已更新） | https://poetry-wisdom-20261119-v4-grokstudy.netlify.app/ | v4.1.0 |
+| GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/Poetry-Wisdom-Books-20261023-GROKstudy/ | v4.1.0 |
+| Surge（v3.0.0 域名，已更新） | https://poetry-wisdom-20261114-v3-0-grokstudy.surge.sh/ | v4.1.0 |
+| Surge（v2.1.0 域名，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.surge.sh/ | v4.1.0 |
+| Surge（v2.0.0 域名，已更新） | https://poetry-wisdom-20261114-v2-0-grokstudy.surge.sh/ | v4.1.0 |
+| Surge（原域名，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.surge.sh/ | v4.1.0 |
+| Netlify（v3.0.0 站点，已更新） | https://poetry-wisdom-20261114-v3-grokstudy.netlify.app/ | v4.1.0 |
+| Netlify（v2.1.0 站点，已更新） | https://poetry-wisdom-20261114-v2-1-grokstudy.netlify.app/ | v4.1.0 |
+| Netlify（v2.0.0 站点，已更新） | https://poetry-wisdom-20261114-v2-grokstudy.netlify.app/ | v4.1.0 |
+| Netlify（原站点，已更新） | https://poetry-wisdom-20261023-v1-grokstudy.netlify.app/ | v4.1.0 |
 | Surge（v1.1.0 存档别名） | https://poetry-wisdom-20261024-v1-1-grokstudy.surge.sh/ | v1.1.0 |
 | 仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy | |
+| 发布 v4.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v4.1.0 | |
 | 发布 v4.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v4.0.0 | |
 | 发布 v3.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v3.0.0 | |
 | 发布 v2.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v2.1.0 | |
 | 发布 v2.0.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v2.0.0 | |
 | 还原点 v1.1.0 | https://github.com/07-Je-Grok-Love-Personal-20260928/Poetry-Wisdom-Books-20261023-GROKstudy/releases/tag/v1.1.0 | |
+
+## ✨ v4.1.0 更新说明（2026-11-21）
+- **新分页「📗 爱上诗篇 · 阅读版」**（`psalms-love-read.html`）：按原书目录逐单元概述，**52 / 52 个单元全覆盖**（推荐语、导论八章、五卷总论、30 章重点诗篇、结论五篇、后记、作者简介）。每个单元注明原书页码，附要点、相关经文、指向基督、应用和原书讨论题。
+- **新分页「📘 家庭灵修 · 阅读版」**（`psalms-devotional-read.html`）：**366 / 366 天**每天一段概述（约 100–150 字），附题目、经文和和合本钥节；勾选进度与「家庭灵修」篇目页共用。
+- **版权**：所有概述都是本站用自己的话写的，不是原文。`tools/overlap.py` 用 n-gram 把概述与原书文本对照，较长的雷同片段已改写；16 字以上仍重合的只有和合本经文、书名、原书讨论题和作者简介中的事实。仓库中不包含原书 PDF 或全文。
+- **深链接修正**：带 `#` 的链接现在能精确跳到长页面中的目标位置（之前 `content-visibility` 的估算高度会让跳转偏移）。
+- 诗篇主页、两个导读页、速记中心和来源页都加了阅读版入口；来源页加了 v4.1.0 版本记录。
 
 ## ✨ v4.0.0 更新说明（2026-11-19）
 - **新分页「💗 爱上诗篇」**（`psalms-love.html`）：W. 罗伯特·戈弗雷《爱上诗篇》（乔兰山以妲 译）全书 49 章逐章导读——
@@ -67,10 +77,10 @@
 - **内容**：新增 5 段 CCI 原文摘录（教会规章第 55 条、讲章 103、讲章 31、讲章 54、《我属于主》主日三十五）；`tools/vcheck.py` 重新核对全部经文引语。
 - **检查**：在 360/390/414/768/1024/1280/1440/1920 px 下各做三轮检查（初始状态；展开全部内容并操作翻卡、测验、讲解步骤、地图视图和瓦片来源之后；打开目录和图例之后），检查横向溢出、元素重叠、文字被裁切和控制台错误。
 
-## 📚 内容（14 页）
+## 📚 内容（16 页）
 1. **首页**：五卷一览、学习路径（本机记录进度）、标注图例
 2. **整本圣经视角**：本质核心、正典（BC 4–6）、圣经神学五幕、圣约表、时间线、总地图、智慧与敬畏、希伯来诗歌
-3–7. **约伯记 / 诗篇（另有两个分页：💗 爱上诗篇导读、🏡 家庭灵修 366 天） / 箴言 / 传道书 / 雅歌**：每卷包括本质核心、一览、威斯敏斯特标准逐字引文、整本圣经中的位置、圣约、时间线、地理（三视图地图）、历史与古代近东文化、写作目的、结构（图表/思维导图）、神学主题、难点、信条对照、多种观点、应用、速记与测验
+3–7. **约伯记 / 诗篇（另有四个分页：💗 爱上诗篇导读、🏡 家庭灵修 366 天，以及 📗📘 两本书的阅读版） / 箴言 / 传道书 / 雅歌**：每卷包括本质核心、一览、威斯敏斯特标准逐字引文、整本圣经中的位置、圣约、时间线、地理（三视图地图）、历史与古代近东文化、写作目的、结构（图表/思维导图）、神学主题、难点、信条对照、多种观点、应用、速记与测验
 8. **信条对照**：三项联合信条中引用五卷书的全部 111 处脚注（逐字原文）；威斯敏斯特标准经文脚注索引
 9. **三大信经背诵版**：使徒信经、尼西亚信经、亚他那修信经（逐字 CCI），有遮盖、提示和朗读工具
 10. **信经对比**：异同、并列对照、所针对的异端、大公会议地图、为什么需要三份信经
@@ -86,11 +96,12 @@
 
 ## 🛠 技术
 纯静态网站，由 Python 生成器（`src/build.py`）输出到 `docs/`。除了实时地图的瓦片图片，所有资源都在本地，没有外部 CDN；Leaflet 1.9.4（BSD-2）打包在 `docs/assets/vendor/leaflet/`。采用玻璃拟态设计，支持响应式与全宽布局，有三级可折叠、可拖宽的目录、全站搜索、明暗主题。
-检查工具：`tools/vcheck.py`（经文逐字核对）、`tools/qa2.py`（多宽度版面检查，截图保存在 `qa/`）、`tools/scrollperf.py`（移动端滚动性能）。
+检查工具：`tools/overlap.py`（与原书文本的 n-gram 重合检查，版权审核用）、`tools/vcheck.py`（经文逐字核对）、`tools/qa2.py`（多宽度版面检查，截图保存在 `qa/`）、`tools/scrollperf.py`（移动端滚动性能）。
 
 ## 📝 版本记录
 | 版本 | 日期 | 说明 |
 |---|---|---|
+| v4.1.0 | 2026-11-21 | 新增《爱上诗篇》阅读版（52 单元）与《家庭灵修》阅读版（366 天概述），均为原创转述并经 n-gram 版权检查；修正深链接跳转；新增 Surge 与 Netlify v4-1 域名 |
 | v4.0.0 | 2026-11-19 | 新增《爱上诗篇》49 章导读与《家庭灵修·诗篇》366 天两个分页（含信条对照评注）；右下角快速导航；目录默认层级与分支展开；新增 Surge v4-0 与 Netlify v4 域名 |
 | v3.0.0 | 2026-11-14 | 三级可折叠、可拖宽的编号目录；滚动性能优化；新增朝圣之路与箴言作者地图、动画柱状图、必背区块；8 种宽度 × 13 页 × 3 轮全部通过；新增 Surge v3-0 与 Netlify v3 域名 |
 | v2.1.0 | 2026-11-14 | 实时地图低缩放级来源改为放大显示、不再空白，自动选择时优先清晰的来源；精简与“本质核心”重复的内容和地图套话（讲解文字约 −4%）；8 种宽度全部通过；新增 Surge 与 Netlify v2-1 域名 |
