@@ -4,7 +4,7 @@ BASE=sys.argv[1] if len(sys.argv)>1 else 'http://localhost:8820'
 PG=sys.argv[2] if len(sys.argv)>2 else 'psalms-devotional.html'
 out=[]
 with sync_playwright() as p:
-  b=p.chromium.launch()
+  b=p.chromium.launch(executable_path='/usr/bin/google-chrome')
   for w,hgt,mob in [(360,740,True),(1280,800,False)]:
     pg=b.new_page(viewport={'width':w,'height':hgt},is_mobile=mob,has_touch=mob);errs=[]
     pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:m.type=='error' and errs.append(m.text))

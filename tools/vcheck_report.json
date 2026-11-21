@@ -1,7 +1,7 @@
 {
 "summary": {
 "ok": 250,
-"term": 208,
+"term": 212,
 "bible-found": 101,
 "cci-found": 74
 },
@@ -3805,6 +3805,33 @@ null,
 "term"
 ],
 [
+"psalms-devotional-read",
+"quote",
+"……",
+null,
+"noref",
+"",
+"term"
+],
+[
+"psalms-devotional-read",
+"quote",
+"我们",
+null,
+"noref",
+"",
+"term"
+],
+[
+"psalms-devotional-read",
+"quote",
+"大教堂",
+null,
+"noref",
+"",
+"term"
+],
+[
 "psalms-devotional",
 "card",
 "1–150 篇各两天（诗119 十一天、诗139 三天）＋ 基督 37 ＋ 节令 15 ＋ 圣餐 4 ＝ 366",
@@ -3871,6 +3898,15 @@ null,
 "psalms-devotional",
 "quote",
 "大教堂",
+null,
+"noref",
+"",
+"term"
+],
+[
+"psalms-love-read",
+"quote",
+"……",
 null,
 "noref",
 "",

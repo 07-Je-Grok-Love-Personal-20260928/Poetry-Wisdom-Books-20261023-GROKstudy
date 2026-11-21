@@ -465,3 +465,6 @@ h4.sub{margin:12px 0 6px}
 .dprog i b{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--green),var(--gold));transition:transform .4s}
 .back-l{margin-top:12px;font-weight:600}
 .pdfl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin:10px 0}
+/* v4.1 阅读版 */
+.dv-s{margin:.35em 0 .2em;font-size:14.5px;line-height:1.75;color:var(--ink)}
+.pref{display:inline-block;font-size:12.5px;color:var(--mute);border:1px solid var(--line,rgba(127,127,127,.3));border-radius:999px;padding:1px 10px;margin:.2em 0 .5em}

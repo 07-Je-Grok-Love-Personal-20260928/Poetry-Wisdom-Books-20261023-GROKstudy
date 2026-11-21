@@ -3,8 +3,8 @@ import os, sys, json, shutil, importlib
 sys.path.insert(0, os.path.dirname(__file__))
 import lib, shell
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs')
-ACC = dict(index='#f5b83d', bible='#5ab0ff', job='#ff9f43', psalms='#3ddc97', **{'psalms-love': '#ff7eb6', 'psalms-devotional': '#3ddc97'}, proverbs='#f5b83d', eccl='#2fd3d3', song='#ff7eb6', confessions='#5ab0ff', creeds='#b48cff', compare='#ff6b6b', memory='#ff7eb6', sources='#a9b4c6')
-MOD = dict(index='p_index', bible='p_bible', job='p_job', psalms='p_psalms', **{'psalms-love': 'p_psalms_love', 'psalms-devotional': 'p_psalms_dev'}, proverbs='p_proverbs', eccl='p_eccl', song='p_song', confessions='p_conf', creeds='p_creeds', compare='p_compare', memory='p_memory', sources='p_sources')
+ACC = dict(index='#f5b83d', bible='#5ab0ff', job='#ff9f43', psalms='#3ddc97', **{'psalms-love': '#ff7eb6', 'psalms-devotional': '#3ddc97', 'psalms-love-read': '#ff7eb6', 'psalms-devotional-read': '#3ddc97'}, proverbs='#f5b83d', eccl='#2fd3d3', song='#ff7eb6', confessions='#5ab0ff', creeds='#b48cff', compare='#ff6b6b', memory='#ff7eb6', sources='#a9b4c6')
+MOD = dict(index='p_index', bible='p_bible', job='p_job', psalms='p_psalms', **{'psalms-love': 'p_psalms_love', 'psalms-devotional': 'p_psalms_dev', 'psalms-love-read': 'p_psalms_love_read', 'psalms-devotional-read': 'p_psalms_dev_read'}, proverbs='p_proverbs', eccl='p_eccl', song='p_song', confessions='p_conf', creeds='p_creeds', compare='p_compare', memory='p_memory', sources='p_sources')
 only = sys.argv[1:]
 os.makedirs(OUT + '/assets', exist_ok=True)
 shutil.copytree(os.path.join(os.path.dirname(__file__), '..', 'static'), OUT + '/assets', dirs_exist_ok=True)

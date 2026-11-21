@@ -34,7 +34,7 @@ def build():
     m.append(S('m-psalms2', '💗', '诗篇读本速记（爱上诗篇 · 家庭灵修）',
         '<div class="must"><span class="must-tag">📌 必背</span>' + C('mem', '五卷主题：信 · 委 · 危 · 慰 · 庆', '<span class="mk-mem">王<b>信</b>护理（1–41）→ 王<b>委</b>身国度（42–72）→ 王遇<b>危</b>机（73–89）→ 王得安<b>慰</b>（90–106）→ 王<b>庆</b>祝拯救（107–150）</span>') + '</div>' +
         cards_flip([('读诗三问', '大卫 → 基督 → 我们'), ('读诗十问（前五）', '细节 · 主题 · 回应 · 个人/集体 · 形式'), ('读诗十问（后五）', '中心句 · 书卷结构 · 前后诗 · 基督 · 今日'), ('诗146–150', '逐一对应五卷'), ('家庭灵修四步', '读 · 想 · 问 · 祷'), ('366 天', '310（1–150 篇）＋37 基督＋15 节令＋4 圣餐')]) +
-        '<p>👉 <a href="psalms-love.html">爱上诗篇导读</a> · <a href="psalms-devotional.html">家庭灵修 366 天</a></p>'))
+        '<p>👉 <a href="psalms-love.html">爱上诗篇导读</a> · <a href="psalms-devotional.html">家庭灵修 366 天</a> · <a href="psalms-love-read.html">爱上诗篇阅读版</a> · <a href="psalms-devotional-read.html">家庭灵修阅读版</a></p>'))
     m.append(S('m-quiz', '✅', '综合测验',
         quiz('all', [
             ('BC 第几条列出五卷诗歌智慧书为正典？', ['2', '4', '6', '9'], 1, 'BC 4。'),

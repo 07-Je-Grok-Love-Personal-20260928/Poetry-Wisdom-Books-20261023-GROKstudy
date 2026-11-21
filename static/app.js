@@ -113,3 +113,8 @@ addEventListener('scroll',function(){if(!on){on=true;de.classList.add('scrolling
 (function(){var bx=document.querySelectorAll('.dchk input');if(!bx.length)return;var K='pw-dev',st={};try{st=JSON.parse(localStorage.getItem(K)||'{}')}catch(_){}
 function up(){var n=0;bx.forEach(function(b){if(b.checked)n++});var c=document.getElementById('dcount'),br=document.getElementById('dbar');if(c)c.textContent=n;if(br)br.style.setProperty('--p',(n/bx.length).toFixed(4))}
 bx.forEach(function(b){b.checked=!!st[b.dataset.k];b.addEventListener('change',function(){if(b.checked)st[b.dataset.k]=1;else delete st[b.dataset.k];try{localStorage.setItem(K,JSON.stringify(st))}catch(_){}up()})});up()})();
+/* v4.1：带 # 的深链接——先让目标之前的 .sec 正常渲染（取消 content-visibility 估算高度），再精确跳到目标 */
+(function(){function go(){var h=location.hash.slice(1);if(!h)return;var t;try{t=document.getElementById(decodeURIComponent(h))}catch(_){return}if(!t)return;
+var ss=document.querySelectorAll('.sec');for(var i=0;i<ss.length;i++){ss[i].style.contentVisibility='visible';if(ss[i].contains(t)||(ss[i].compareDocumentPosition(t)&2))break}
+t.scrollIntoView({behavior:'instant',block:'start'});requestAnimationFrame(function(){t.scrollIntoView({behavior:'instant',block:'start'})})}
+if(document.readyState==='complete')go();else addEventListener('load',go);addEventListener('hashchange',go)})();
