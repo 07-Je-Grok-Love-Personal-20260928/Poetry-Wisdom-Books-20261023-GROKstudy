@@ -136,8 +136,11 @@ x.textContent='…';load().then(function(a){x.innerHTML=a[+x.dataset.i]||'';x.da
 var hov=function(){load();removeEventListener('pointerover',hov)};addEventListener('pointerover',hov,{passive:true,once:true})})();
 /* v4.3.0 图表：靠近视口才把 <template> 里的 SVG/HTML 放进来（IntersectionObserver）；无 IO 的浏览器直接渲染 */
 (function(){var fs=document.querySelectorAll('figure.vz');if(!fs.length)return;
-function r(f){var t=f.querySelector(':scope>template');if(!t)return;var c=f.querySelector('.vz-c');c.innerHTML='';c.appendChild(t.content.cloneNode(true));t.parentNode.removeChild(t);f.classList.add('on');
- var n=f.querySelector('.vz-net');if(n)net(n);if(f.querySelector('.vz-cal'))cal(f);f.querySelectorAll('figure.vz').forEach(function(g){if(io)io.observe(g);else r(g)})}
+var J={};function ld(u){return J[u]||(J[u]=fetch(u).then(function(x){return x.json()}))}
+function r(f){var t=f.querySelector(':scope>template');if(!t)return;var c=f.querySelector('.vz-c'),lz=t.getAttribute('data-lz'),u=t.getAttribute('data-src');t.parentNode.removeChild(t);f.classList.add('on');
+ if(lz!==null){ld(u).then(function(a){c.innerHTML=a[+lz];fin(f)}).catch(function(){c.innerHTML='<p class="vz-n">图表载入失败，请看下方数据表。</p>'});return}
+ c.innerHTML='';c.appendChild(t.content.cloneNode(true));fin(f)}
+function fin(f){var n=f.querySelector('.vz-net');if(n)net(n);if(f.querySelector('.vz-cal'))cal(f);f.querySelectorAll('figure.vz').forEach(function(g){if(io)io.observe(g);else r(g)})}
 function net(svg){function hl(k,v){svg.classList.add('hl');svg.querySelectorAll('path').forEach(function(p){p.classList.toggle('on',p.getAttribute(k)===v)})}
  svg.querySelectorAll('.nd').forEach(function(g){var k=g.hasAttribute('data-l')?'data-l':'data-r',v=g.getAttribute(k);g.addEventListener('mouseenter',function(){hl(k,v)});g.addEventListener('focusin',function(){hl(k,v)});g.addEventListener('mouseleave',function(){svg.classList.remove('hl')})})}
 function cal(f){var st={};try{st=JSON.parse(localStorage.getItem('pw-dev')||'{}')}catch(_){}var n=0,cs=f.querySelectorAll('.vz-cal a');cs.forEach(function(a){var on=!!st[a.dataset.k];a.classList.toggle('done',on);if(on)n++});var o=f.querySelector('.cal-done');if(o)o.textContent=n}

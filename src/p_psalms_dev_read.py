@@ -26,7 +26,7 @@ def build():
     VIZ = [('stat', '🔢', '数字一览：366 天怎样分配'), ('cal', '📅', '366 天日历热图'), ('book', '📊', '每卷天数与节数'), ('len', '🔵', '诗篇长度与天数'),
            ('month', '🗓️', '主题随月份变化'), ('flow', '🧭', '三个附录：流程与选篇'), ('week', '🗂️', '53 周一览'), ('xref', '📚', '延伸经文统计')]
     parts = [('导览与图解', '📊', ('note',) + tuple('v' + k for k, _, _ in VIZ), '#2fd3d3',
-              '<div class="part-x"><span class="px-ic" aria-hidden="true">📊</span><p class="px-core">先用 8 组图看清一年的路线、节奏与主题，再按天读卡片。</p><div class="px-tags"><span>12 张图表</span><span>数字均由本站数据计算</span><span>日历与勾选同步</span></div></div>')]
+              '<div class="part-x"><span class="px-ic" aria-hidden="true">📊</span><p class="px-core">先用 8 组图看清一年的路线、节奏与主题，再按天读卡片。</p><div class="px-tags"><span>10 张图表 + 统计卡</span><span>数字均由本站数据计算</span><span>日历与勾选同步</span></div></div>')]
     hr = hero('📘', '家庭灵修 · 阅读版', '366 天，一天一张卡片',
         '每张卡片：题目、经文和一句核心（不超过 60 字）；点开看和合本钥节与较长的概述。勾选进度与「家庭灵修」篇目页共用。',
         [('366 天', '#3ddc97'), ('一句核心', '#5ab0ff'), ('点开看钥节', '#f5b83d'), ('← 篇目页', '#ff7eb6')])
@@ -66,4 +66,4 @@ def build():
     shell.PAGE_PARTS['psalms-devotional-read'] = parts
     out = os.path.join(os.path.dirname(__file__), '..', 'docs', 'assets'); os.makedirs(out, exist_ok=True)
     json.dump([extra(i, D[i]) for i in idx], open(os.path.join(out, 'devread.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
-    return hr, ''.join(m)
+    return hr, VDZ.V.externalize(''.join(m), 'vz-dev-read.json')

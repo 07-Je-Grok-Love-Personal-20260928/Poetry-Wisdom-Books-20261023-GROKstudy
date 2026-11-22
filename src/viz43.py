@@ -155,3 +155,13 @@ def scatter(vid, title, pts, xlab, ylab, note='', table=None):
         s += f'<circle cx="{X(x):.1f}" cy="{Y(y) + rnd.uniform(-band / 2 + 12, band / 2 - 12):.1f}" r="4.2" style="fill:{c}" class="pt"><title>{t}</title></circle>'
     s += f'<text x="{W / 2}" y="{H - 2}" text-anchor="middle" class="ax">{xlab}</text></svg>'
     return fig(vid, title, s, table if table is not None else tbl([xlab, ylab, '诗篇'], [(x, y, t) for x, y, _, t in pts]), note)
+def externalize(html, name):
+    """把图表 <template> 的内容搬到 docs/assets/{name}（JSON 数组），页面只留空 template + data-lz 序号；数据表仍留在页面里。"""
+    arr = []
+    out = []; pos = 0
+    for m in re.finditer(r'<template>(.*?)</template>', html, re.S):
+        out.append(html[pos:m.start()]); out.append(f'<template data-lz="{len(arr)}" data-src="assets/{name}"></template>'); arr.append(m.group(1)); pos = m.end()
+    out.append(html[pos:])
+    d = os.path.join(ROOT, 'docs', 'assets'); os.makedirs(d, exist_ok=True)
+    json.dump(arr, open(os.path.join(d, name), 'w'), ensure_ascii=False, separators=(',', ':'))
+    return ''.join(out)

@@ -53,7 +53,7 @@ def build():
     VIZ = [('stat', '🔢', '数字与结构：一眼看全书'), ('mind', '🧠', '思维导图：六把钥匙'), ('psalter', '🗺️', '诗篇地图与类型'),
            ('arc', '📈', '从哀歌到赞美'), ('heat', '🔥', '主题热图'), ('net', '✝️', '基督与新约'), ('cloud', '☁️', '关键词云')]
     shell.PAGE_PARTS['psalms-love-read'] = ([('导览与图解', '📊', ('note',) + tuple(k for k, _, _ in VIZ), '#2fd3d3',
-        '<div class="part-x"><span class="px-ic" aria-hidden="true">📊</span><p class="px-core">先用 7 组图看懂全书的骨架、主题与基督中心，再逐章细读。</p><div class="px-tags"><span>14 张图表</span><span>数字均由本站数据计算</span><span>每图附数据表</span></div></div>')] +
+        '<div class="part-x"><span class="px-ic" aria-hidden="true">📊</span><p class="px-core">先用 7 组图看懂全书的骨架、主题与基督中心，再逐章细读。</p><div class="px-tags"><span>11 张图表 + 统计卡</span><span>数字均由本站数据计算</span><span>每图附数据表</span></div></div>')] +
         [(t, ic, tuple(k for k in seq if po[k] == pid) + (('cheat', 'end',) if pid == 'back' else ()), c, VL.part_header(pid, U, T, D, po, st)) for pid, ic, t, c in PARTS])
     strip = ''.join(f'<span style="--c:{BKC[i]}"><b>{BKN[i]}</b>第{"一二三四五"[i]}卷</span>' for i in range(5))
     hr = hero('📗', '爱上诗篇 · 阅读版', f'按原书目录：{len(U)} 个单元，一章一页卡片',
@@ -75,4 +75,5 @@ def build():
         m.append(unit(x, pid, col, ic))
     m.append(S('r-cheat', '📝', f'一页速记：{len(U)} 个单元各一句', '<p class="vz-n">每格＝一个单元的核心句（本站概述）。点任一格回到该单元；打印本页时这一节可单独当复习卡。</p>' + VL.cheat(U, T, po), 'rd-viz'))
     m.append(S('r-end', '➡️', '读完了', '<p class="back-l">➡️ <a href="psalms-love.html">爱上诗篇导读</a> · <a href="psalms-devotional-read.html">家庭灵修阅读版</a> · <a href="psalms.html">返回诗篇主页</a></p>'))
-    return hr, ''.join(m)
+    import viz43
+    return hr, viz43.externalize(''.join(m), 'vz-love-read.json')
