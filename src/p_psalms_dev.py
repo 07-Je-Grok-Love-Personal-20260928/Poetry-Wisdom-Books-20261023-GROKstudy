@@ -67,5 +67,5 @@ def build():
     m.append(S('d-mem', '🧠', '速记：家庭灵修的一年',
         cards_flip([('一年怎么排', '1–150 篇各两天（诗119 十一天、诗139 三天）＋ 基督 37 ＋ 节令 15 ＋ 圣餐 4 ＝ 366'), ('每天四步', '读 · 想 · 问 · 祷'), ('第一天', '诗1：有福的人'), ('最后一篇', '诗150：凡有气息的都要赞美耶和华'),
                     ('附录一主线', '诗篇中的基督：降生 → 受难 → 复活 → 升天 → 五旬节 → 再来')]) +
-        '<p class="back-l">➡️ 继续：<a href="psalms-devotional-read.html">📘 阅读版（每日概述）</a> · <a href="psalms-love.html">爱上诗篇 · 戈弗雷导读</a> · <a href="psalms.html">返回诗篇主页</a></p>'))
+        '<p class="back-l">➡️ 继续：<a href="psalms-devotional-read.html">📘 阅读版（366 天卡片）</a> · <a href="psalms-love.html">爱上诗篇 · 戈弗雷导读</a> · <a href="psalms.html">返回诗篇主页</a></p>'))
     return hr, ''.join(m)

@@ -118,3 +118,13 @@ bx.forEach(function(b){b.checked=!!st[b.dataset.k];b.addEventListener('change',f
 var ss=document.querySelectorAll('.sec');for(var i=0;i<ss.length;i++){ss[i].style.contentVisibility='visible';if(ss[i].contains(t)||(ss[i].compareDocumentPosition(t)&2))break}
 t.scrollIntoView({behavior:'instant',block:'start'});requestAnimationFrame(function(){t.scrollIntoView({behavior:'instant',block:'start'})})}
 if(document.readyState==='complete')go();else addEventListener('load',go);addEventListener('hashchange',go)})();
+/* v4.2 阅读条：在阅读版页面显示当前部分与阅读进度 */
+(function(){var ps=document.querySelectorAll('main>.part');if(!ps.length||!document.querySelector('.rd-u,.rd-g'))return;
+var b=document.createElement('div');b.id='rbar';b.setAttribute('aria-hidden','true');b.innerHTML='<span class="rb-dot"></span><span class="rb-t"></span><span class="rb-p"></span><i class="rb-l"></i>';document.body.appendChild(b);
+var t=b.querySelector('.rb-t'),pp=b.querySelector('.rb-p'),cur=null,tk=false,lastP=-1;
+function up(){tk=false;var y=window.scrollY,h=document.documentElement.scrollHeight-innerHeight,hdr=110,c=null;
+for(var i=0;i<ps.length;i++){if(ps[i].getBoundingClientRect().top<hdr)c=ps[i];else break}
+var on=!!c&&y>200;b.classList.toggle('on',on);
+if(c&&c!==cur){cur=c;t.textContent=(c.querySelector('.part-n')||{}).textContent+' · '+(c.querySelector('.part-t')||{}).textContent;b.style.setProperty('--rbc',getComputedStyle(c).getPropertyValue('--accent'))}
+var p=h>0?Math.min(1,y/h):0,pc=Math.round(p*100);if(pc!==lastP){lastP=pc;pp.textContent=pc+'%';b.style.setProperty('--rp',p.toFixed(3))}}
+addEventListener('scroll',function(){if(!tk){tk=true;requestAnimationFrame(up)}},{passive:true});up()})();
