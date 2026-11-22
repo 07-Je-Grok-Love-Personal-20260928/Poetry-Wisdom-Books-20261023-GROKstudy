@@ -1,0 +1,64 @@
+# v4.3.0 版权自查（2026-11-22 09:59 台北时间）：与原书 PDF 文本连续重合 ≥14 个汉字的片段（已排除 data/cuv.json 与和合本诗篇全文）
+# 人工复核：余下片段全部属于 ① 和合本经文引用（与本站经文库字词略异，如「的/地」，或新约经文），② 原书讨论题（允许，注明出处），③ 原书目录的章节标题。本站转述文字的重合已全部改写（v4.3 改写 30 处）。
+p_psalms_dev.py 956 runs 1 chars 15 max 15
+    15 附录一基督传道生涯中的重大事件
+p_psalms_dev_read.py 522 runs 1 chars 15 max 15
+    15 附录一基督传道生涯中的重大事件
+p_psalms_love.py 1228 runs 1 chars 19 max 19
+    19 王对神国度的委身第三卷王对神应许的危机
+p_psalms_love_read.py 686 runs 0 chars 0 max 0
+__init__.py 0 runs 0 chars 0 max 0
+dev_core2.py 7276 runs 3 chars 45 max 17
+    17 看哪弟兄和睦同居是何等的善何等的美
+    14 神啊你是我的神我要切切寻求你
+    14 出之地到日落之处耶和华的名都
+dev_s1.py 3049 runs 0 chars 0 max 0
+dev_s2.py 2381 runs 0 chars 0 max 0
+dev_s3.py 2396 runs 1 chars 15 max 15
+    15 你的财宝在哪里你的心也在哪里太
+dev_s4.py 2356 runs 1 chars 14 max 14
+    14 来听我要述说他为我所行的事你
+dev_s5.py 2525 runs 2 chars 31 max 16
+    16 神的一切应许在基督里都是是的林后
+    15 你会发现他永久的膀臂在你以下申
+dev_s6.py 2514 runs 1 chars 17 max 17
+    17 耶和华在高处大有能力胜过大水的响声
+dev_s7.py 2661 runs 1 chars 14 max 14
+    14 他会垂听你的祷告也会看顾你诗
+dev_s8.py 2867 runs 1 chars 14 max 14
+    14 亡羊走迷了路求你寻找你的仆人
+dev_s9.py 8047 runs 1 chars 17 max 17
+    17 说从日出之地到日落之处耶和华的名都
+god_a.py 1949 runs 1 chars 15 max 15
+    15 像一座宝矿默想在学习诗篇中扮演
+god_b.py 2428 runs 3 chars 43 max 15
+    15 为什么以色列和她君王的诗篇也是
+    14 诗篇整体与大卫相关是从君王的
+    14 第一卷君王对神护理的信心诗篇
+god_c.py 2921 runs 2 chars 30 max 16
+    16 呼求开始我的神我的神为什么离弃我
+    14 基督徒使用诗篇有哪些顾虑我们
+god_d.py 3203 runs 4 chars 58 max 15
+    15 解释诗篇和整本圣经很重要地上的
+    15 清洁的心使我里面重新有正直的灵
+    14 第二卷君王对神国度的委身诗篇
+    14 同在雅各的神是我们的避难所节
+god_deep.py 5994 runs 0 chars 0 max 0
+god_e.py 3267 runs 3 chars 49 max 20
+    20 结束耶和华是应当称颂的直到永远阿们阿们诗
+    15 第三卷君王有关神应许的危机诗篇
+    14 提醒我们即使在危机中神的百姓
+god_f.py 3515 runs 2 chars 30 max 16
+    16 第四卷君王因神的信实得着安慰诗篇
+    14 的日子好叫我们得着智慧的心节
+god_g.py 3358 runs 2 chars 32 max 16
+    16 的祭司主题基督的新祭司职分比旧约
+    16 有力的安慰耶和华必成全关乎我的事
+god_h.py 3346 runs 2 chars 29 max 15
+    15 误解和误用以色列跳舞的妇女代表
+    14 最有能力他的智慧无法测度节神
+god_tight.py 3909 runs 0 chars 0 max 0
+viz43.py 461 runs 0 chars 0 max 0
+viz_dev.py 1249 runs 0 chars 0 max 0
+viz_love.py 1344 runs 0 chars 0 max 0
+TOTAL overlap chars 502

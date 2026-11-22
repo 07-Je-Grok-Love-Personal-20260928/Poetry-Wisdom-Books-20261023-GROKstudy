@@ -46,6 +46,16 @@ def build():
     for n, t, ic, summ, pts in G.INTRO:
         key = '第' + '一二三四五六七八'[n-1] + '章'
         body += H3(f'l-i{n}', f'{ic} 第 {n} 章 · {t}', f'<p>{summ}</p><ul class="pts">' + ''.join(f'<li>{p}</li>' for p in pts) + '</ul>' + qbox(key))
+    import readdata.god_a as _GA
+    for _n in 'bcdefgh': __import__('readdata.god_' + _n)
+    from readdata.god_tight import T as _T
+    from readdata.god_deep import D as _D
+    import viz_love as _VL, p_psalms_love_read as _LR
+    _po = _LR.part_of_key([x['key'] for x in _GA.U]); _st = _VL.compute(_GA.U, _T, _D, _po); _vz = _VL.sections(_GA.U, _T, _D, _po, _st)
+    _ps = _vz['psalter'].replace('href="#r-', 'href="psalms-love-read.html#r-')
+    m.append(S('l-viz', '📊', '图解速览：数字 · 诗篇地图 · 走势',
+        '<p>下面的数字与图表都由本站整理的数据计算（类型与哀歌/赞美为本站近似分类）。更多图解——思维导图、主题热图、基督与新约网络、关键词云——见 <a href="psalms-love-read.html#r-stat">阅读版 · 导览与图解</a>。</p>' +
+        _vz['stat'].split('<figure class="vz " id="vz-struct"')[0] + _ps + _vz['arc']))
     m.append(S('l-intro', '📖', '导论八章：怎样读诗篇',
         flow([('📜', '大卫', '先问：这首诗对大卫和以色列意味着什么？', '#f5b83d'), ('👑', '基督', '再问：它怎样在大卫之子基督身上成全？', '#b48cff'), ('🙋', '我们', '最后问：对在基督里的我和教会意味着什么？', '#3ddc97')]) +
         mm('诗篇的主题网', [('大主题', '#f5b83d', ['神的良善与慈爱', '回应：信靠、赞美、感恩']), ('从属主题', '#ff6b6b', ['义人的罪性', '恶人亨通', '义人受苦', '苦难中仍有信心']),

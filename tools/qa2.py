@@ -47,6 +47,7 @@ def interact(pg):
     n = {}
     pg.evaluate('document.querySelectorAll(".sec").forEach(s=>s.style.contentVisibility="visible");document.querySelectorAll(".reveal").forEach(s=>s.classList.add("inview"))')
     pg.evaluate('document.querySelectorAll(".mapfig").forEach(f=>window.PW_mountScene&&PW_mountScene(f))')
+    n['viz'] = pg.evaluate('window.__vzAll?__vzAll():0')
     n['details'] = pg.evaluate('(()=>{const d=[...document.querySelectorAll("main details")];d.forEach(x=>x.open=true);return d.length})()')
     n['flip'] = pg.evaluate('(()=>{const f=[...document.querySelectorAll(".flip")];f.forEach(x=>x.click());return f.length})()')
     n['quiz'] = pg.evaluate('(()=>{let k=0;document.querySelectorAll(".qz").forEach(q=>{const b=q.querySelector(".qo button");if(b){b.click();k++}});return k})()')
@@ -90,7 +91,7 @@ with sync_playwright() as p:
             errs.clear(); r = {}
             pg.goto(f'{BASE}/{pid}.html', wait_until='load'); pg.wait_for_timeout(300)
             pg.add_style_tag(content='*,*:before,*:after{transition:none!important}.sec{content-visibility:visible!important}')
-            pg.evaluate('document.querySelectorAll(".reveal").forEach(s=>s.classList.add("inview"))'); pg.wait_for_timeout(150)
+            pg.evaluate('document.querySelectorAll(".reveal").forEach(s=>s.classList.add("inview"));window.__vzAll&&__vzAll()'); pg.wait_for_timeout(150)
             r['pass1'] = pg.evaluate(CHECK)
             if not NOSHOT: pg.screenshot(path=f'{OUT}/{pid}_{w}_top.jpg', type='jpeg', quality=70)
             n = interact(pg)

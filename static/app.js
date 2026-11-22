@@ -144,4 +144,4 @@ function cal(f){var st={};try{st=JSON.parse(localStorage.getItem('pw-dev')||'{}'
 var io=null;if('IntersectionObserver' in window){io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);r(e.target)}})},{rootMargin:'600px 0px'});fs.forEach(function(f){if(!f.parentNode.closest('figure.vz,template'))io.observe(f)})}else fs.forEach(r);
 function recal(){document.querySelectorAll('figure.vz.on').forEach(function(f){if(f.querySelector('.vz-cal'))cal(f)})}
 document.addEventListener('change',function(e){if(e.target.closest&&e.target.closest('.dchk'))setTimeout(recal,0)});window.addEventListener('storage',function(e){if(e.key==='pw-dev')recal()});
-window.addEventListener('beforeprint',function(){fs.forEach(r)})})();
+window.__vzAll=function(){document.querySelectorAll('figure.vz').forEach(r);return document.querySelectorAll('figure.vz.on').length};window.addEventListener('beforeprint',window.__vzAll)})();

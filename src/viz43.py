@@ -139,17 +139,19 @@ def lines(vid, title, xlabels, series, note='', unit='%'):
     s += '</svg><ul class="vz-leg row">' + ''.join(f'<li><i style="--c:{c}"></i>{nm}</li>' for nm, c, _ in series) + '</ul>'
     return fig(vid, title, s, tbl(['卷'] + [nm for nm, _, _ in series], [[xl] + [f'{v[i]}{unit}' for _, _, v in series] for i, xl in enumerate(xlabels)]), note)
 # ---------- 散点 ----------
-def scatter(vid, title, pts, xlab, ylab, note=''):
-    """pts: (x, y, 颜色, 提示)；x 用平方根刻度"""
-    W, H, P = 560, 280, 46; mxx = max(p[0] for p in pts); mxy = max(p[1] for p in pts)
-    X = lambda v: P + math.sqrt(v / mxx) * (W - 2 * P); Y = lambda v: H - P - v / mxy * (H - 2 * P)
+def scatter(vid, title, pts, xlab, ylab, note='', table=None):
+    """条带散点：x＝经节数（平方根刻度），y＝天数（按类别等距分带）。pts: (x, y, 颜色, 提示)"""
+    ys = sorted({p[1] for p in pts}); W, P = 560, 46; band = 54; H = P + len(ys) * band + 34; mxx = max(p[0] for p in pts)
+    X = lambda v: P + 10 + math.sqrt(v / mxx) * (W - 2 * P - 10); Y = lambda v: P - 14 + (len(ys) - 1 - ys.index(v)) * band + band / 2
     s = f'<svg class="vz-sc" viewBox="0 0 {W} {H}" role="img" aria-label="{esc(title)}">'
     for t in (1, 10, 25, 50, 100, 176):
-        if t <= mxx: s += f'<line x1="{X(t):.1f}" x2="{X(t):.1f}" y1="{P - 10}" y2="{H - P}" class="gl"/><text x="{X(t):.1f}" y="{H - P + 18}" text-anchor="middle" class="ax">{t}</text>'
-    for t in sorted({1, 2, 3, mxy}):
-        s += f'<line x1="{P}" x2="{W - P}" y1="{Y(t):.1f}" y2="{Y(t):.1f}" class="gl"/><text x="{P - 8}" y="{Y(t) + 4:.1f}" text-anchor="end" class="ax">{t}</text>'
+        if t <= mxx: s += f'<line x1="{X(t):.1f}" x2="{X(t):.1f}" y1="{P - 14}" y2="{H - 34}" class="gl"/><text x="{X(t):.1f}" y="{H - 18}" text-anchor="middle" class="ax">{t}</text>'
+    cnt = collections.Counter(p[1] for p in pts)
+    for v in ys:
+        s += f'<rect x="{P + 4}" y="{Y(v) - band / 2 + 4:.1f}" width="{W - 2 * P}" height="{band - 8}" rx="10" class="sc-band"/><text x="{P - 2}" y="{Y(v) + 4:.1f}" text-anchor="end" class="ax">{v} 天</text>'
+        s += f'<text x="{W - P + 6}" y="{Y(v) + 4:.1f}" class="ax">{cnt[v]} 篇</text>'
     import random; rnd = random.Random(7)
     for x, y, c, t in pts:
-        s += f'<circle cx="{X(x):.1f}" cy="{Y(y) + rnd.uniform(-7, 7):.1f}" r="4" style="fill:{c}" class="pt"><title>{t}</title></circle>'
-    s += f'<text x="{W / 2}" y="{H - 6}" text-anchor="middle" class="ax">{xlab}</text><text x="14" y="{H / 2}" transform="rotate(-90 14 {H / 2})" text-anchor="middle" class="ax">{ylab}</text></svg>'
-    return fig(vid, title, s, tbl([xlab, ylab, '诗篇'], [(x, y, t) for x, y, _, t in pts]), note)
+        s += f'<circle cx="{X(x):.1f}" cy="{Y(y) + rnd.uniform(-band / 2 + 12, band / 2 - 12):.1f}" r="4.2" style="fill:{c}" class="pt"><title>{t}</title></circle>'
+    s += f'<text x="{W / 2}" y="{H - 2}" text-anchor="middle" class="ax">{xlab}</text></svg>'
+    return fig(vid, title, s, table if table is not None else tbl([xlab, ylab, '诗篇'], [(x, y, t) for x, y, _, t in pts]), note)

@@ -629,7 +629,7 @@ a.ps.on:hover,a.ps.on:focus-visible{transform:scale(1.18);z-index:1;position:rel
 .vz-cal{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);grid-auto-columns:minmax(11px,1fr);gap:3px;overflow-x:auto;padding-bottom:4px}
 .vz-cal a{aspect-ratio:1;border-radius:3px;background:color-mix(in srgb,var(--c) 38%,var(--cell));display:block;min-width:11px}
 .vz-cal a.done{background:var(--c);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.65)}.vz-cal a:hover,.vz-cal a:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
-@media (max-width:720px){.vz-cal{grid-template-rows:repeat(14,1fr)}}
+@media (max-width:720px){.vz-cal{grid-template-rows:repeat(21,1fr);grid-auto-columns:minmax(10px,1fr)}}
 .cal-sum{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.86em;margin-top:8px}.cal-sum b{font-variant-numeric:tabular-nums}
 /* 流程 / 周览 */
 .vz-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.vz-flow>a{flex:1 1 120px;padding:10px 12px;border-radius:12px;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--c) 16%,transparent);border:1px solid color-mix(in srgb,var(--c) 45%,transparent);position:relative}
@@ -641,3 +641,7 @@ a.ps.on:hover,a.ps.on:focus-visible{transform:scale(1.18);z-index:1;position:rel
 .rd-x{margin-top:8px;font-size:.88em;color:var(--ink2)}.rd-x b{color:var(--mute)}.rd-x span{display:inline-block;margin:2px 4px 0 0;padding:1px 8px;border-radius:999px;background:var(--cell);font-size:.92em}
 @media print{.vz-ph{display:none}.vz template{display:none}}
 .vz svg .dn-n{font-size:34px;font-weight:800}.vz svg .dn-l{font-size:13px}
+.vz-cal a.k1{--c:var(--b1)}.vz-cal a.k2{--c:var(--b2)}.vz-cal a.k3{--c:var(--b3)}.vz-cal a.k4{--c:var(--b4)}.vz-cal a.k5{--c:var(--b5)}.vz-cal a.a1{--c:#ff7eb6}.vz-cal a.a2{--c:#2fd3d3}.vz-cal a.a3{--c:#9be564}
+.vz-h4{margin:12px 0 8px;font-size:.95em}.vz-flow.sm>a{flex-basis:150px}
+.vz-sc .sc-band{fill:var(--cell)}
+@media (max-width:560px){.vz-sc text,.vz-ln text{font-size:17px!important}.vz-ln text.ax,.vz-sc text.ax{font-size:16px!important}.vz{padding:12px 10px 10px}}

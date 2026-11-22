@@ -4,7 +4,7 @@ N = int(sys.argv[1]) if len(sys.argv) > 1 else 14
 def norm(s): return re.sub(r'[^\u4e00-\u9fff]', '', s)
 src = norm(''.join(open(f).read() for f in glob.glob('/workspace/pdfin/*.txt')))
 grams = set(src[i:i+N] for i in range(len(src)-N+1))
-cuv = norm(json.dumps(json.load(open('/workspace/pw/data/cuv.json')), ensure_ascii=False))
+cuv = norm(json.dumps(json.load(open('/workspace/pw/data/cuv.json')), ensure_ascii=False) + json.dumps(json.load(open('/workspace/pw/data/psalms_cuv.json')), ensure_ascii=False))  # v4.3：加和合本诗篇全文
 cuvg = set(cuv[i:i+N] for i in range(len(cuv)-N+1))
 tot = 0
 for f in sorted(sys.argv[2:] or glob.glob('/workspace/pw/src/readdata/*.py')):
