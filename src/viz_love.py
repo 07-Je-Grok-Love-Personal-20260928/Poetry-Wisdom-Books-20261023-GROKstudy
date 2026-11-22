@@ -68,7 +68,7 @@ def sections(U, T, D, po, st):
     nfeat = len(FEAT)
     out['stat'] = (stats([(st['units'], '单元', '按原书目录', '#ff7eb6'), (8, '导论章', '怎样读诗篇', '#2fd3d3'), (5, '卷首总论', '信委危慰庆', '#5ab0ff'),
                           (30, '精读章', f'{nfeat} 首诗篇', '#3ddc97'), (nfeat + len(EXTRA), '首有专门讨论', '另含诗114 与 146–150', '#f5b83d'),
-                          (st['qs'], '道讨论题', '原书题目', '#b48cff'), (st['deep'], '条深入要点', '本站整理', '#ff9f43'), (st['nt_total'], '处新约引用', '本页概述中出现（去重）', '#ff6b81')]) +
+                          (st['qs'], '道讨论题', '原书题目', '#b48cff'), (st['deep'], '条深入要点', '本站整理', '#ff9f43'), (st['nt_total'], '处新约引用', '阅读版概述中出现（去重）', '#ff6b81')]) +
                    donut('vz-parts', '📊 52 个单元在全书中的分布', [(PNAME[p], st['parts'][p], PCOL[p]) for p in PCOL], (st['units'], '个单元'),
                          '按原书目录计数：导论 9（含推荐语）、五卷各 7（1 章总论 + 6 章精读）、结论 6、后记 2。') +
                    structure(U, po))

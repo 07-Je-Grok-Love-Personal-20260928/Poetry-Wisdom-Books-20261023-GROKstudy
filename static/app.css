@@ -650,3 +650,6 @@ a.ps.on:hover,a.ps.on:focus-visible{transform:scale(1.18);z-index:1;position:rel
 .hb-l{white-space:normal;overflow:visible;text-overflow:clip;max-width:12em;line-height:1.35;font-size:.9em}.hb-r b{font-size:.84em;white-space:nowrap}
 @keyframes vzin{from{opacity:0}to{opacity:1}}
 .vz-more:not([open])>figure{display:none}
+.p-psalms-devotional .dv-k .vref,.p-psalms-devotional .dchk span{color:var(--ink2)}
+.sec h2 .hn{white-space:nowrap;flex:none}
+.vz-stats{grid-template-columns:repeat(4,minmax(0,1fr))}@media (max-width:720px){.vz-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}

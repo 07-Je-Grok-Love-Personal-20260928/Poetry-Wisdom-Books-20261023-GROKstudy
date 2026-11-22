@@ -54,7 +54,7 @@ def build():
     tl = timeline([(f'第 {st + i + 1} 天', esc(x['t']), '📖 ' + esc(x['read']), '#b48cff', '') for i, x in enumerate(a1)])
     import viz_dev as _VD, p_psalms_dev_read as _DR
     _st = _VD.compute(_DR.D, _DR.K, _DR.SUM); _vz = _VD.sections(_DR.D, _DR.K, _DR.SUM, _st)
-    m.append(S('d-viz', '📊', '图解速览：数字 · 366 天日历 · 每卷天数',
+    m.insert(1, S('d-viz', '📊', '图解速览：数字 · 366 天日历 · 每卷天数',
         '<p>日历与下方「已读」勾选同步（存在本机浏览器）；点任一格打开阅读版的那一天。更多图解——长度散点、主题月历、附录流程、53 周一览——见 <a href="psalms-devotional-read.html#dr-vstat">阅读版 · 导览与图解</a>。</p>' +
         _vz['stat'] + _VD.calendar(_DR.D, _st, 'psalms-devotional-read.html#day-{n}') + _vz['book'].split('<figure class="vz " id="vz-dvd"')[0]))
     m.append(S('d-a1', '✝️', '附录一 · 基督传道生涯中的重大事件（诗篇里的基督）',

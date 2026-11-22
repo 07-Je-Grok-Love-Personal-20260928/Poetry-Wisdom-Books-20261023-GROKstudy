@@ -2,11 +2,11 @@
 # 人工复核：余下片段全部属于 ① 和合本经文引用（与本站经文库字词略异，如「的/地」，或新约经文），② 原书讨论题（允许，注明出处），③ 原书目录的章节标题。本站转述文字的重合已全部改写（v4.3 改写 30 处）。
 p_psalms_dev.py 956 runs 1 chars 15 max 15
     15 附录一基督传道生涯中的重大事件
-p_psalms_dev_read.py 522 runs 1 chars 15 max 15
+p_psalms_dev_read.py 525 runs 1 chars 15 max 15
     15 附录一基督传道生涯中的重大事件
 p_psalms_love.py 1228 runs 1 chars 19 max 19
     19 王对神国度的委身第三卷王对神应许的危机
-p_psalms_love_read.py 686 runs 0 chars 0 max 0
+p_psalms_love_read.py 689 runs 0 chars 0 max 0
 __init__.py 0 runs 0 chars 0 max 0
 dev_core2.py 7276 runs 3 chars 45 max 17
     17 看哪弟兄和睦同居是何等的善何等的美
@@ -58,7 +58,7 @@ god_h.py 3346 runs 2 chars 29 max 15
     15 误解和误用以色列跳舞的妇女代表
     14 最有能力他的智慧无法测度节神
 god_tight.py 3909 runs 0 chars 0 max 0
-viz43.py 461 runs 0 chars 0 max 0
+viz43.py 487 runs 0 chars 0 max 0
 viz_dev.py 1249 runs 0 chars 0 max 0
-viz_love.py 1344 runs 0 chars 0 max 0
+viz_love.py 1345 runs 0 chars 0 max 0
 TOTAL overlap chars 502
