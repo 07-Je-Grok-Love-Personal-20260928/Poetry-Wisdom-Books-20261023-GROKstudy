@@ -84,7 +84,7 @@ def structure(pid, main):
                 if k != cur_part:
                     cur_part = k; n1 += 1; n2 = 0
                     pt, pic = parts[k-1][0], parts[k-1][1]; pcol = parts[k-1][3] if len(parts[k-1]) > 3 else ''
-                    out.append(f'<div class="part" id="{pid}-part{k}"' + (f' style="--accent:{pcol}"' if pcol else '') + '>' + f'<span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span></div>')
+                    out.append(f'<div class="part" id="{pid}-part{k}"' + (f' style="--accent:{pcol}"' if pcol else '') + '>' + f'<span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span>' + (parts[k-1][4] if len(parts[k-1]) > 4 else '') + '</div>')
                     tree.append(node(1, f'{pid}-part{k}', f'{cnum(n1)}、', pt, pic))
                 n2 += 1; n3 = 0; num = f'{n1}.{n2}'
                 nd = node(2, sid, num, title, ic); tree[-1]['ch'].append(nd)

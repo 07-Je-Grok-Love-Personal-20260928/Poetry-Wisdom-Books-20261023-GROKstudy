@@ -134,3 +134,14 @@ function load(){return P||(P=fetch('assets/devread.json').then(function(r){retur
 document.addEventListener('toggle',function(e){var d=e.target;if(!d.open||!d.closest||!d.closest('.dc'))return;var x=d.querySelector('.dc-x[data-i]');if(!x||x.dataset.ok)return;
 x.textContent='…';load().then(function(a){x.innerHTML=a[+x.dataset.i]||'';x.dataset.ok=1}).catch(function(){x.textContent='加载失败，请刷新重试。'})},true);
 var hov=function(){load();removeEventListener('pointerover',hov)};addEventListener('pointerover',hov,{passive:true,once:true})})();
+/* v4.3.0 图表：靠近视口才把 <template> 里的 SVG/HTML 放进来（IntersectionObserver）；无 IO 的浏览器直接渲染 */
+(function(){var fs=document.querySelectorAll('figure.vz');if(!fs.length)return;
+function r(f){var t=f.querySelector(':scope>template');if(!t)return;var c=f.querySelector('.vz-c');c.innerHTML='';c.appendChild(t.content.cloneNode(true));t.parentNode.removeChild(t);f.classList.add('on');
+ var n=f.querySelector('.vz-net');if(n)net(n);if(f.querySelector('.vz-cal'))cal(f);f.querySelectorAll('figure.vz').forEach(function(g){if(io)io.observe(g);else r(g)})}
+function net(svg){function hl(k,v){svg.classList.add('hl');svg.querySelectorAll('path').forEach(function(p){p.classList.toggle('on',p.getAttribute(k)===v)})}
+ svg.querySelectorAll('.nd').forEach(function(g){var k=g.hasAttribute('data-l')?'data-l':'data-r',v=g.getAttribute(k);g.addEventListener('mouseenter',function(){hl(k,v)});g.addEventListener('focusin',function(){hl(k,v)});g.addEventListener('mouseleave',function(){svg.classList.remove('hl')})})}
+function cal(f){var st={};try{st=JSON.parse(localStorage.getItem('pw-dev')||'{}')}catch(_){}var n=0,cs=f.querySelectorAll('.vz-cal a');cs.forEach(function(a){var on=!!st[a.dataset.k];a.classList.toggle('done',on);if(on)n++});var o=f.querySelector('.cal-done');if(o)o.textContent=n}
+var io=null;if('IntersectionObserver' in window){io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);r(e.target)}})},{rootMargin:'600px 0px'});fs.forEach(function(f){if(!f.parentNode.closest('figure.vz,template'))io.observe(f)})}else fs.forEach(r);
+function recal(){document.querySelectorAll('figure.vz.on').forEach(function(f){if(f.querySelector('.vz-cal'))cal(f)})}
+document.addEventListener('change',function(e){if(e.target.closest&&e.target.closest('.dchk'))setTimeout(recal,0)});window.addEventListener('storage',function(e){if(e.key==='pw-dev')recal()});
+window.addEventListener('beforeprint',function(){fs.forEach(r)})})();
