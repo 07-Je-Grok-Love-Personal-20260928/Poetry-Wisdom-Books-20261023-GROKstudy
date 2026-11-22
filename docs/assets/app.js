@@ -128,3 +128,9 @@ var on=!!c&&y>200;b.classList.toggle('on',on);
 if(c&&c!==cur){cur=c;t.textContent=(c.querySelector('.part-n')||{}).textContent+' · '+(c.querySelector('.part-t')||{}).textContent;b.style.setProperty('--rbc',getComputedStyle(c).getPropertyValue('--accent'))}
 var p=h>0?Math.min(1,y/h):0,pc=Math.round(p*100);if(pc!==lastP){lastP=pc;pp.textContent=pc+'%';b.style.setProperty('--rp',p.toFixed(3))}}
 addEventListener('scroll',function(){if(!tk){tk=true;requestAnimationFrame(up)}},{passive:true});up()})();
+/* v4.2 家庭灵修阅读版：展开日卡时再加载钥节与概述（assets/devread.json），减小首屏 HTML */
+(function(){if(!document.querySelector('.dc-x[data-i]'))return;var P=null;
+function load(){return P||(P=fetch('assets/devread.json').then(function(r){return r.json()}))}
+document.addEventListener('toggle',function(e){var d=e.target;if(!d.open||!d.closest||!d.closest('.dc'))return;var x=d.querySelector('.dc-x[data-i]');if(!x||x.dataset.ok)return;
+x.textContent='…';load().then(function(a){x.innerHTML=a[+x.dataset.i]||'';x.dataset.ok=1}).catch(function(){x.textContent='加载失败，请刷新重试。'})},true);
+var hov=function(){load();removeEventListener('pointerover',hov)};addEventListener('pointerover',hov,{passive:true,once:true})})();

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """v4.2.0：《家庭灵修·诗篇》阅读版——366 天卡片：题目、经文、一句核心（≤60 字，本站原创转述），展开看和合本钥节与较长的概述。按原书目录：五卷（每篇诗一组）＋ 三个附录（按周分组）。"""
-import importlib, re
+import importlib, re, os, json
 from lib import *
 import shell
 from shell import S, H3, hero
@@ -13,7 +13,9 @@ CN = '一二三四五'
 def card(n, i, x):
     return (f'<div class="dc"><label class="dchk"><input type="checkbox" data-k="d{n}" aria-label="第 {n} 天已读"><span>{n}</span></label>'
             f'<details><summary><b class="dc-t">{esc(x["t"])}</b><small class="dc-r">📖 {esc(x["read"])}</small><span class="dc-k">{esc(K[i])}</span></summary>'
-            f'<div class="dc-x"><div class="dv-k">{kvtxt(x["kv"])}</div><p>{esc(SUM[i])}</p></div></details></div>')
+            f'<div class="dc-x" data-i="{i}"></div></details></div>')
+def extra(i, x):
+    return f'<div class="dv-k">{kvtxt(x["kv"])}</div><p>{esc(SUM[i])}</p>'
 def build():
     assert len(K) == len(SUM) == len(D) == 366
     idx = list(range(len(D))); main = [i for i in idx if D[i]['sec'] == 'main']
@@ -53,4 +55,6 @@ def build():
     assert n == 366
     m.append(S('dr-end', '➡️', '继续', '<p class="back-l">➡️ <a href="psalms-devotional.html">家庭灵修篇目页</a> · <a href="psalms-love-read.html">爱上诗篇阅读版</a> · <a href="psalms.html">返回诗篇主页</a></p>'))
     shell.PAGE_PARTS['psalms-devotional-read'] = parts
+    out = os.path.join(os.path.dirname(__file__), '..', 'docs', 'assets'); os.makedirs(out, exist_ok=True)
+    json.dump([extra(i, D[i]) for i in idx], open(os.path.join(out, 'devread.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     return hr, ''.join(m)
