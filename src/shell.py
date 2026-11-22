@@ -56,8 +56,8 @@ BOOK_PARTS = [('核心与总览', '💎', ('core', 'glance', 'bible', 'cov')),
               ('信条与多角度', '📜', ('conf', 'wm', 'views')),
               ('应用与记忆', '🌱', ('app', 'pdf', 'cci2', 'mem', 'pmem'))]
 PAGE_PARTS = {
-  'psalms-love': [('导读与总览', '💎', ('core', 'intro')), ('五卷书逐章', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('结论 · 对照 · 记忆', '🎆', ('final', 'notes', 'mem'))],
-  'psalms-devotional': [('总览', '💎', ('core',)), ('五卷 · 310 天', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('附录 · 56 天', '✝️', ('a1', 'a2', 'a3')), ('对照与记忆', '🧠', ('notes', 'mem'))],
+  'psalms-love': [('导读与总览', '💎', ('core', 'viz', 'intro')), ('五卷书逐章', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('结论 · 对照 · 记忆', '🎆', ('final', 'notes', 'mem'))],
+  'psalms-devotional': [('总览', '💎', ('core', 'viz')), ('五卷 · 310 天', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('附录 · 56 天', '✝️', ('a1', 'a2', 'a3')), ('对照与记忆', '🧠', ('notes', 'mem'))],
   'bible': [('核心与正典', '💎', ('core', 'canon')), ('圣经神学与圣约', '🤝', ('bt', 'cov')), ('历史与地理', '🧭', ('time', 'geo')),
             ('智慧、诗歌与信条', '🦉', ('wm', 'wis', 'poetry')), ('学习路径', '🧭', ('path',))],
   'compare': [('总览与对照', '⚖️', ('over', 'side', 'same', 'diff')), ('历史：异端与会议', '🏛️', ('here', 'map')), ('为什么三份 · 记忆', '🧠', ('why', 'wis', 'mem'))],
@@ -84,7 +84,7 @@ def structure(pid, main):
                 if k != cur_part:
                     cur_part = k; n1 += 1; n2 = 0
                     pt, pic = parts[k-1][0], parts[k-1][1]; pcol = parts[k-1][3] if len(parts[k-1]) > 3 else ''
-                    out.append(f'<div class="part" id="{pid}-part{k}"' + (f' style="--accent:{pcol}"' if pcol else '') + '>' + f'<span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span></div>')
+                    out.append(f'<div class="part" id="{pid}-part{k}"' + (f' style="--accent:{pcol}"' if pcol else '') + '>' + f'<span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span>' + (parts[k-1][4] if len(parts[k-1]) > 4 else '') + '</div>')
                     tree.append(node(1, f'{pid}-part{k}', f'{cnum(n1)}、', pt, pic))
                 n2 += 1; n3 = 0; num = f'{n1}.{n2}'
                 nd = node(2, sid, num, title, ic); tree[-1]['ch'].append(nd)
