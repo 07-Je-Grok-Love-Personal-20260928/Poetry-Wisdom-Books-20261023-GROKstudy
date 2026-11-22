@@ -9,8 +9,8 @@ PAGES = [
  ('psalms', '🎼', '诗篇', '圣约子民的祷告与敬拜'),
  ('psalms-love', '💗', '爱上诗篇', '戈弗雷导读 · 49 章'),
  ('psalms-devotional', '🏡', '家庭灵修', '诗篇 366 天'),
- ('psalms-love-read', '📗', '爱上诗篇·阅读版', '52 单元逐一概述'),
- ('psalms-devotional-read', '📘', '家庭灵修·阅读版', '366 天每日概述'),
+ ('psalms-love-read', '📗', '爱上诗篇·阅读版', '52 章卡片 · 核心与要点'),
+ ('psalms-devotional-read', '📘', '家庭灵修·阅读版', '366 天卡片 · 一句核心'),
  ('proverbs', '🦉', '箴言', '敬畏耶和华的日常智慧'),
  ('eccl', '🌫️', '传道书', '日光之下的虚空与敬畏'),
  ('song', '🌹', '雅歌', '盟约之爱的歌'),
@@ -56,8 +56,6 @@ BOOK_PARTS = [('核心与总览', '💎', ('core', 'glance', 'bible', 'cov')),
               ('信条与多角度', '📜', ('conf', 'wm', 'views')),
               ('应用与记忆', '🌱', ('app', 'pdf', 'cci2', 'mem', 'pmem'))]
 PAGE_PARTS = {
-  'psalms-love-read': [('说明与导论', '📖', ('note', 'intro')), ('五卷书逐篇', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('结论与后记', '🎆', ('final', 'back', 'end'))],
-  'psalms-devotional-read': [('说明', '📝', ('note',)), ('五卷 · 310 天', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('附录 · 56 天', '✝️', ('a1', 'a2', 'a3', 'end'))],
   'psalms-love': [('导读与总览', '💎', ('core', 'intro')), ('五卷书逐章', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('结论 · 对照 · 记忆', '🎆', ('final', 'notes', 'mem'))],
   'psalms-devotional': [('总览', '💎', ('core',)), ('五卷 · 310 天', '📚', ('b1', 'b2', 'b3', 'b4', 'b5')), ('附录 · 56 天', '✝️', ('a1', 'a2', 'a3')), ('对照与记忆', '🧠', ('notes', 'mem'))],
   'bible': [('核心与正典', '💎', ('core', 'canon')), ('圣经神学与圣约', '🤝', ('bt', 'cov')), ('历史与地理', '🧭', ('time', 'geo')),
@@ -71,8 +69,8 @@ def structure(pid, main):
     tok = re.compile(r'<section id="([^"]+)" class="([^"]*)"><h2 id="[^"]+"><span class="hi">([^<]*)</span>(.*?)</h2>|<h3 id="([^"]+)">(.*?)</h3>|<div class="call-h">(.*?)</div>', re.S)
     out = []; pos = 0; tree = []; cur_part = None; part_of = {}
     if parts:
-        for k, (t, ic, sfx) in enumerate(parts, 1):
-            for x in sfx: part_of[x] = k
+        for k, pt_ in enumerate(parts, 1):
+            for x in pt_[2]: part_of[x] = k
     n1 = n2 = n3 = 0; ccount = {}
     sec_n = 0
     def node(lv, id, num, title, icon=''):
@@ -85,8 +83,8 @@ def structure(pid, main):
                 k = part_of.get(sid.split('-', 1)[1], cur_part or 1)
                 if k != cur_part:
                     cur_part = k; n1 += 1; n2 = 0
-                    pt, pic, _ = parts[k-1]
-                    out.append(f'<div class="part" id="{pid}-part{k}"><span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span></div>')
+                    pt, pic = parts[k-1][0], parts[k-1][1]; pcol = parts[k-1][3] if len(parts[k-1]) > 3 else ''
+                    out.append(f'<div class="part" id="{pid}-part{k}"' + (f' style="--accent:{pcol}"' if pcol else '') + '>' + f'<span class="part-n">第{cnum(n1)}部分</span><span class="part-t">{pic} {pt}</span></div>')
                     tree.append(node(1, f'{pid}-part{k}', f'{cnum(n1)}、', pt, pic))
                 n2 += 1; n3 = 0; num = f'{n1}.{n2}'
                 nd = node(2, sid, num, title, ic); tree[-1]['ch'].append(nd)
