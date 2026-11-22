@@ -38,5 +38,12 @@ for p in files:
         worst.append((best, p.split('/')[-1], s[:60]))
         if best > TH: flag += 1
 worst.sort(reverse=True)
-print(f'paragraphs {tot}  N={N}  threshold {TH}  flagged {flag}  max {worst[0][0]:.3f}')
+# 原书讨论题按简报允许原样引用（注明出处），单独列出、不计入 flagged
+import sys as _s; _s.path.insert(0, '/workspace/pw/src')
+import readdata.god_a as _GA
+for _n in 'bcdefgh': __import__('readdata.god_' + _n)
+QS = {q for x in _GA.U for q in x['qs']}
+own = [w for w in worst if w[2] not in QS]
+qflag = sum(1 for w in worst if w[2] in QS and w[0] > TH)
+print(f'paragraphs {tot}  N={N}  threshold {TH}  flagged(all) {flag}  flagged(own text, excl. allowed book discussion questions) {sum(1 for w in own if w[0] > TH)}  max(own) {own[0][0]:.3f}  allowed-questions>{TH}: {qflag}')
 for b, f, s in worst[:12]: print(f'  {b:.3f} {f} {s}')

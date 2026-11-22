@@ -1,5 +1,5 @@
 # v4.3.0 近似重复检查：每段（≥20 汉字）8-gram Jaccard（排除和合本），阈值 0.3
-paragraphs 1111  N=8  threshold 0.3  flagged 1  max 0.333
+paragraphs 1111  N=8  threshold 0.3  flagged(all) 1  flagged(own text, excl. allowed book discussion questions) 0  max(own) 0.231  allowed-questions>0.3: 1
   0.333 god_a.py 诗篇怎样像一座宝矿？默想在学习诗篇中扮演什么角色？
   0.280 god_e.py 诗74 怎样提醒我们：即使在危机中，神的百姓也不失去信心？
   0.231 dev_core2.py 神啊，你是我的神，我要切切寻求你；我的心渴想你。
